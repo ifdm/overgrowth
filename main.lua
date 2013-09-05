@@ -1,11 +1,16 @@
+require './player'
+
 function love.load()
   love.update = function() end
   love.draw = function() end
 end
 
+function love.update()
+  player:update()
+end
+
 function love.run()
   math.randomseed(os.time())
-  math.random()
 
   tickRate = .02
   tickDelta = 0
