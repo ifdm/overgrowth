@@ -35,7 +35,6 @@ function camera.update()
 	--camera.body:applyForce(200, 0)
 end
 
-
 function camera.getX()
 	--return camera.body:getX()
 	return camera.x

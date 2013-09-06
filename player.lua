@@ -1,6 +1,6 @@
 Player = {}
 
-function Player.create(x, y)
+function Player.create(x, y, world)
 	local _body = love.physics.newBody(world, x, y, "dynamic")
 	local _shape = love.physics.newRectangleShape(100,100)
 	local _fixture = love.physics.newFixture(_body, _shape, 1)
