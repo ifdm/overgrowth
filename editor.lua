@@ -27,13 +27,21 @@ end
 
 
 function editor.mousepressed(x, y, button)
-	level.terrain:setPoint(x, y)
+    if button == "l" then
+	   level.terrain:setPoint(x, y)
+    elseif button == "r" then
+        level.terrain:clearPoint(x)
+    elseif button == "wd" then
+        camera.scale(1.5)
+    elseif button == "wu" then
+        camera.scale(0.75)
+    end
 end
 
 
 function drawGrid()
 
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255, 255, 255, 100)
     for x = 0, level.width, 50 do
 
         love.graphics.line(x, 0, x, level.height)
@@ -51,6 +59,7 @@ function editor.exit()
 end
 
 function editor.enter()
+
 
 end
 

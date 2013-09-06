@@ -3,7 +3,6 @@ require 'camera'
 require 'level'
 require 'editor'
 require 'terrain'
-require 'util'
 require 'game'
 
 function love.load()
@@ -52,14 +51,16 @@ function love.update(dt)
 end
 
 function love.draw()
+  camera.set()
   context.draw()
+  camera.unset()
 
 
 end
 
 function love.mousepressed(x, y, button)
-  print ("Mouse x" .. x .. ", Camera x " .. camera.getX())
-  context.mousepressed(-camera.getX()  + x,  y, button)
+  x, y = camera.mousePosition()
+  context.mousepressed(x, y, button)
 end
 
 function love.keypressed(key)

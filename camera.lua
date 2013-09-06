@@ -1,5 +1,4 @@
 camera = {}
-cameraWorld = love.physics.newWorld(0, 9.81*64, true)
 
 
 --Camera follows someObject
@@ -22,17 +21,38 @@ function camera.init(someObject, lag)
 	camera.x = camera.following:getX()
 	camera.y = camera.following:getY()
 	camera.lag = lag
+	camera.scaleX = 1
+	camera.scaleY = 1
+end
+
+function camera.set()
+  love.graphics.push()
+  love.graphics.scale(1 / camera.scaleX, 1 / camera.scaleY)
+  love.graphics.translate(-camera.x, -camera.y)
+end
+
+function camera.unset()
+  love.graphics.pop()
+end
+
+function camera.mousePosition()
+  return love.mouse.getX() * camera.scaleX + camera.x, love.mouse.getY() * camera.scaleY + camera.y
+end
+
+function camera.scale(sx, sy)
+  sx = sx or 1
+  camera.scaleX = camera.scaleX * sx
+  camera.scaleY = camera.scaleY * (sy or sx)
 end
 
 
 function camera.update()
-	local dx = camera.getX() - camera.following:getX()
-	local dy = camera.getY() - camera.following:getY()
+	local dx = camera.getX() - camera.following:getX() + (love.graphics.getWidth()/2)
+	local dy = camera.getY() - camera.following:getY() + (love.graphics.getHeight()/2)
 
-	camera.x = camera.x - (dx/camera.lag)
-	camera.y = camera.y - (dy/camera.lag)
+	camera.x =  camera.x - (dx/camera.lag)
+	camera.y =  camera.y - (dy/camera.lag)
 
-	--camera.body:applyForce(200, 0)
 end
 
 function camera.getX()
