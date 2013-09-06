@@ -1,5 +1,5 @@
 Player = Class {
-	walkSpeed = 1000
+	walkSpeed = 1500
 }
 
 function Player:init()
