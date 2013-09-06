@@ -1,5 +1,4 @@
 Player = Class {
-<<<<<<< HEAD
 	walkSpeed = 1500,
 	jumpSpeed = -10000
 }
