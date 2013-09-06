@@ -1,5 +1,5 @@
 Player = Class {
-	walkSpeed = 220
+	walkSpeed = 1000
 }
 
 function Player:init()
@@ -8,6 +8,7 @@ function Player:init()
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 
 	self.body:setFixedRotation(true)
+	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(.4)
 end
 
