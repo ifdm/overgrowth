@@ -8,6 +8,7 @@ vector = require 'lib/hump/vector'
 require 'lib/util'
 
 require 'class/player'
+require 'class/wall'
 
 function love.load()
 	love.physics.setMeter(64)
@@ -15,10 +16,11 @@ function love.load()
 	player = Player()
 	
 	ground = {}
-  ground.body = love.physics.newBody(world, 800/2, 600) --remember, the shape (the rectangle we create next) anchors to the body from its center, so we have to move it to (650/2, 650-50/2)
-  ground.shape = love.physics.newRectangleShape(800, 50) --make a rectangle with a width of 650 and a height of 50
-  ground.fixture = love.physics.newFixture(ground.body, ground.shape) --attach shape to body
-  ground.fixture:setFriction(0.95)
+	ground.body = love.physics.newBody(world, 800/2, 600) --remember, the shape (the rectangle we create next) anchors to the body from its center, so we have to move it to (650/2, 650-50/2)
+	ground.shape = love.physics.newRectangleShape(800, 50) --make a rectangle with a width of 650 and a height of 50
+	ground.fixture = love.physics.newFixture(ground.body, ground.shape) --attach shape to body
+	
+	wall = Wall(400, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 end
 
 function love.update()
@@ -29,6 +31,7 @@ end
 function love.draw()
 	player:draw()
 	love.graphics.rectangle('fill', 0, 600 - 25, 800, 50)
+	wall:draw()
 end
 
 function love.mousepressed(x, y, button)
