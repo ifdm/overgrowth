@@ -1,5 +1,7 @@
 Player = Class {
-	walkSpeed = 1500
+<<<<<<< HEAD
+	walkSpeed = 1500,
+	jumpSpeed = -10000
 }
 
 function Player:init()
@@ -19,6 +21,17 @@ function Player:update()
 		self.body:applyForce(-self.walkSpeed, 0)
 	elseif love.keyboard.isDown('d') then
 		self.body:applyForce(self.walkSpeed, 0)
+	end
+	if love.keyboard.isDown('w') then
+		self.body:applyForce(0, self.jumpSpeed)
+	end
+end
+
+function Player:keyreleased(key)
+
+	-- Stuff comes up
+	if key == 'w' then
+		self.body:applyForce(0, self.jumpSpeed)
 	end
 end
 

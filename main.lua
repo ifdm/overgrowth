@@ -39,6 +39,11 @@ function love.keypressed(key)
 	--
 end
 
+function love.keyreleased(key)
+	--
+	player:keyreleased(key)
+end
+
 function love.run()
 	math.randomseed(os.time())
 	math.random()
