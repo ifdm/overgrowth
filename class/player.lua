@@ -13,6 +13,7 @@ function Player:init()
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
+	self.fixture:setFriction(.95)
 end
 
 function Player:update()
