@@ -1,5 +1,5 @@
 Mushroom = Class {
-	jumpSpeed = -2000
+	bounceSpeed = -2000
 }
 
 function Mushroom:init(x, y)
@@ -7,7 +7,7 @@ function Mushroom:init(x, y)
 	self.body:setMass(15)
 	self.shape = love.physics.newPolygonShape(0, 0, 150, 0, 150, 64, 0, 64)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
-	fixtureMap[self.fixture] = self
+	self.fixture:setUserData(self)
 
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
