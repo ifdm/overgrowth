@@ -8,7 +8,5 @@ end
 
 function Wall:draw()
 	love.graphics.reset()
-	
-	
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
 end
