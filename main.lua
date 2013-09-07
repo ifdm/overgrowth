@@ -64,14 +64,14 @@ function love.keyreleased(key)
 	player:keyreleased(key)
 end
 
-function beginCollision(afixture, bfixture, collide)
-	local aobj = fixtureMap[afixture]
-	local bobj = fixtureMap[bfixture]
-	if bobj == player then
-		aobj, bobj = bobj, aobj
+function beginCollision(a, b, collide)
+	a = a:getUserData()
+	b = b:getUserData()
+	if b == player then
+		a, b = b, a
 	end
-	if aobj.handleCollision ~= nil then
-		aobj:handleCollision(bobj, collide)
+	if a.handleCollision ~= nil then
+		a:handleCollision(b, collide)
 	end
 end
 

@@ -14,8 +14,7 @@ function Player:init(x, y)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
 	self.fixture:setFriction(.95)
-	
-	fixtureMap[self.fixture] = self
+	self.fixture:setUserData(self)
 end
 
 function Player:update()
