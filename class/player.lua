@@ -4,7 +4,7 @@ Player = Class {
 	maxSpeed = 10000
 }
 
-function Player:init()
+function Player:init(x, y)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
 	self.body:setMass(10)
 	self.shape = love.physics.newRectangleShape(100, 100)
@@ -30,10 +30,17 @@ function Player:keyreleased(key)
 
 	-- Stuff comes up
 	xspeed, yspeed = self.body:getLinearVelocity()
-	print(yspeed)
 	if key == 'w' and yspeed == 0 then
 		self.body:applyLinearImpulse(0, self.jumpSpeed)
 	end
+end
+
+function Player:bounce(bounceSpeed)
+	self.body:applyLinearImpulse(0, bounceSpeed)
+end
+
+function Player:getFixture()
+	return self.fixture
 end
 
 function Player:draw()
