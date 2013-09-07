@@ -19,12 +19,8 @@ function love.load()
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
 	player = Player(0, 0)
 	
-	ground = {}
-	ground.body = love.physics.newBody(world, 800/2, 600) --remember, the shape (the rectangle we create next) anchors to the body from its center, so we have to move it to (650/2, 650-50/2)
-	ground.shape = love.physics.newRectangleShape(800, 50) --make a rectangle with a width of 650 and a height of 50
-	ground.fixture = love.physics.newFixture(ground.body, ground.shape) --attach shape to body
-	
-	wall = Wall(100, 500, {0, 0, 32, 0, 32, 32, 0, 32})
+	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
+	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	mushroom = Mushroom(400, 511)
 end
 
@@ -35,7 +31,7 @@ end
 
 function love.draw()
 	player:draw()
-	love.graphics.rectangle('fill', 0, 600 - 25, 800, 50)
+	ground:draw()
 	wall:draw()
 	mushroom:draw()
 end
@@ -53,19 +49,16 @@ function love.keyreleased(key)
 	player:keyreleased(key)
 end
 
-function beginCollision(a, b, collide)
-	nX, nY = collide:getNormal()
-	print(nX)
-	print(nY)
-	print(a)
-	a = fixtureMap[a]
-	print(a)
-	b = fixtureMap[b]
-	if b == player then
-		a, b = b, a
+function beginCollision(afixture, bfixture, collide)
+	print(afixture == player.fixture)
+	print(fixtureMap[afixture] == fixtureMap[player.fixture])
+	local aobj = fixtureMap[afixture]
+	local bobj = fixtureMap[bfixture]
+	if bobj == player then
+		aobj, bobj = bobj, aobj
 	end
-	if a.handleCollision ~= nil then
-		a:handleCollision(b, collide)
+	if aobj.handleCollision ~= nil then
+		aobj:handleCollision(bobj, collide)
 	end
 end
 
@@ -106,11 +99,11 @@ function love.run()
 			tickDelta = tickDelta - tickRate
 			love.update()
 		end
-    
+
 		love.graphics.clear()
 		love.draw()
 		love.graphics.present()
-    
+
 		love.timer.sleep(.001)
 	end
 end
