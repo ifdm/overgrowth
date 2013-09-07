@@ -17,11 +17,26 @@ function love.load()
 	
 	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
 	wall = Wall(400, 300, {0, 0, 32, 0, 32, 32, 0, 32})
+	
+	camera = Camera()
 end
 
 function love.update()
 	world:update(tickRate)
 	player:update()
+
+	local mx, my = camera:mousepos()
+	camera.x = math.lerp(camera.x, ((player.body:getX() + mx) / 2) - (love.graphics.getWidth() / 2), .25)
+	camera.y = math.lerp(camera.y, ((player.body:getY() + my) / 2) - (love.graphics.getHeight() / 2), .25)
+	if player.body:getX() - camera.x > (love.graphics.getWidth() * .80) then camera.x = player.body:getX() - (love.graphics.getWidth() * .80) end
+	if player.body:getY() - camera.y > (love.graphics.getHeight() * .80) then camera.y = player.body:getY() - (love.graphics.getHeight() * .80) end
+	if (camera.x + love.graphics.getWidth()) - player.body:getX() > (love.graphics.getWidth() * .80) then camera.x = player.body:getX() + (love.graphics.getWidth() * .80) - love.graphics.getWidth() end
+	if (camera.y + love.graphics.getHeight()) - player.body:getY() > (love.graphics.getHeight() * .80) then camera.y = player.body:getY() + (love.graphics.getHeight() * .80) - love.graphics.getHeight() end
+	
+	if camera.x < 0 then camera.x = 0 end
+	if camera.y < 0 then camera.y = 0 end
+	if camera.x + love.graphics.getWidth() > map.width then camera.x = map.width - love.graphics.getWidth() end
+	if camera.y + love.graphics.getHeight() > map.height then camera.y = map.height - love.graphics.getHeight() end
 end
 
 function love.draw()
