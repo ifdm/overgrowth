@@ -15,11 +15,7 @@ function love.load()
 	world = love.physics.newWorld(0, 10 * 64, true)
 	player = Player()
 	
-	ground = {}
-	ground.body = love.physics.newBody(world, 800/2, 600) --remember, the shape (the rectangle we create next) anchors to the body from its center, so we have to move it to (650/2, 650-50/2)
-	ground.shape = love.physics.newRectangleShape(800, 50) --make a rectangle with a width of 650 and a height of 50
-	ground.fixture = love.physics.newFixture(ground.body, ground.shape) --attach shape to body
-	
+	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
 	wall = Wall(400, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 end
 
@@ -30,7 +26,7 @@ end
 
 function love.draw()
 	player:draw()
-	love.graphics.rectangle('fill', 0, 600 - 25, 800, 50)
+	ground:draw()
 	wall:draw()
 end
 
@@ -72,11 +68,11 @@ function love.run()
 			tickDelta = tickDelta - tickRate
 			love.update()
 		end
-    
+
 		love.graphics.clear()
 		love.draw()
 		love.graphics.present()
-    
+
 		love.timer.sleep(.001)
 	end
 end
