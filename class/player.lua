@@ -1,16 +1,18 @@
 Player = Class {
 	walkSpeed = 1000,
-	jumpSpeed = -10000
+	jumpSpeed = -1000,
+	maxSpeed = 10000
 }
 
 function Player:init()
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
+	self.body:setMass(10)
 	self.shape = love.physics.newRectangleShape(100, 100)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
-	self.fixture:setRestitution(.4)
+	self.fixture:setRestitution(0)
 end
 
 function Player:update()
@@ -26,8 +28,10 @@ end
 function Player:keyreleased(key)
 
 	-- Stuff comes up
-	if key == 'w' then
-		self.body:applyForce(0, self.jumpSpeed)
+	xspeed, yspeed = self.body:getLinearVelocity()
+	print(yspeed)
+	if key == 'w' and yspeed == 0 then
+		self.body:applyLinearImpulse(0, self.jumpSpeed)
 	end
 end
 
