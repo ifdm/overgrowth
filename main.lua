@@ -29,8 +29,21 @@ end
 function love.update()
 	world:update(tickRate)
 	player:update()
-
-	camera:lookAt(player.body:getX(), player.body:getY())
+	
+	local px, py = player.body:getX(), player.body:getY()
+	local cx, cy = camera:pos()
+	local mx, my = camera:mousepos()
+	cx = math.lerp(cx, (px + mx) / 2, .25)
+	cy = math.lerp(cy, (py + my) / 2, .25)
+	
+	cx, cy = cx - 400, cy - 300
+	if px - cx > (love.graphics.getWidth() * .80) then cx = px - (love.graphics.getWidth() * .80) end
+	if py - cy > (love.graphics.getHeight() * .80) then cy = py - (love.graphics.getHeight() * .80) end
+	if (cx + love.graphics.getWidth()) - px > (love.graphics.getWidth() * .80) then cx = px + (love.graphics.getWidth() * .80) - love.graphics.getWidth() end
+	if (cy + love.graphics.getHeight()) - py > (love.graphics.getHeight() * .80) then cy = py + (love.graphics.getHeight() * .80) - love.graphics.getHeight() end
+	cx, cy = cx + 400, cy + 300
+	
+	camera:lookAt(cx, cy)
 end
 
 function love.draw()
