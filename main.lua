@@ -12,6 +12,8 @@ require 'class/wall'
 require 'class/mushroom'
 
 function love.load()
+	fixtureMap = {}
+
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
@@ -56,15 +58,14 @@ function beginCollision(a, b, collide)
 	print(nX)
 	print(nY)
 	print(a)
-	print(b)
-	if a == player:getFixture() or b == player:getFixture() then
-		-- we have a player interaction
-		if a == mushroom:getFixture() or b == mushroom:getFixture() then
-			-- we have a player/mushroom interaction
-			if nX == 0 and nY > 0 then
-				player:bounce(mushroom:getJumpSpeed())
-			end
-		end
+	a = fixtureMap[a]
+	print(a)
+	b = fixtureMap[b]
+	if b == player then
+		a, b = b, a
+	end
+	if a.handleCollision ~= nil then
+		a:handleCollision(b, collide)
 	end
 end
 

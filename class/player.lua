@@ -9,11 +9,13 @@ function Player:init(x, y)
 	self.body:setMass(10)
 	self.shape = love.physics.newRectangleShape(100, 100)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
+	fixtureMap[self.fixture] = self
 
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
 	self.fixture:setFriction(.95)
+	self.fixture:setUserData(self)
 end
 
 function Player:update()
@@ -35,12 +37,15 @@ function Player:keyreleased(key)
 	end
 end
 
-function Player:bounce(bounceSpeed)
-	self.body:applyLinearImpulse(0, bounceSpeed)
+function Player:handleCollision(other, collide)
+	nX, nY = collide:getNormal()
+	if other == mushroom then
+		self:bounce(other.bounceSpeed)
+	end
 end
 
-function Player:getFixture()
-	return self.fixture
+function Player:bounce(bounceSpeed)
+	self.body:applyLinearImpulse(0, bounceSpeed)
 end
 
 function Player:draw()
