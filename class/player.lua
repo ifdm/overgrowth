@@ -4,7 +4,7 @@ Player = Class {
 	maxSpeed = 10000
 }
 
-function Player:init()
+function Player:init(x, y)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
 	self.body:setMass(10)
 	self.shape = love.physics.newRectangleShape(100, 100)
@@ -14,6 +14,8 @@ function Player:init()
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
 	self.fixture:setFriction(.95)
+	
+	fixtureMap[self.fixture] = self
 end
 
 function Player:update()
@@ -30,10 +32,20 @@ function Player:keyreleased(key)
 
 	-- Stuff comes up
 	xspeed, yspeed = self.body:getLinearVelocity()
-	print(yspeed)
 	if key == 'w' and yspeed == 0 then
 		self.body:applyLinearImpulse(0, self.jumpSpeed)
 	end
+end
+
+function Player:handleCollision(other, collide)
+	nX, nY = collide:getNormal()
+	if other == mushroom then
+		self:bounce(other.bounceSpeed)
+	end
+end
+
+function Player:bounce(bounceSpeed)
+	self.body:applyLinearImpulse(0, bounceSpeed)
 end
 
 function Player:draw()

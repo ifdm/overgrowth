@@ -9,16 +9,21 @@ require 'lib/util'
 
 require 'class/player'
 require 'class/wall'
+require 'class/mushroom'
 
 function love.load()
+	fixtureMap = {}
+
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
-	player = Player()
+	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
+	player = Player(0, 0)
 	
 	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
 	wall = Wall(400, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	
 	camera = Camera()
+	mushroom = Mushroom(400, 511)
 end
 
 function love.update()
@@ -35,14 +40,15 @@ function love.update()
 	
 	if camera.x < 0 then camera.x = 0 end
 	if camera.y < 0 then camera.y = 0 end
-	if camera.x + love.graphics.getWidth() > map.width then camera.x = map.width - love.graphics.getWidth() end
-	if camera.y + love.graphics.getHeight() > map.height then camera.y = map.height - love.graphics.getHeight() end
+	if camera.x + love.graphics.getWidth() > 2000 then camera.x = 2000 - love.graphics.getWidth() end
+	if camera.y + love.graphics.getHeight() > 600 then camera.y = 600 - love.graphics.getHeight() end
 end
 
 function love.draw()
 	player:draw()
 	ground:draw()
 	wall:draw()
+	mushroom:draw()
 end
 
 function love.mousepressed(x, y, button)
@@ -56,6 +62,29 @@ end
 function love.keyreleased(key)
 	--
 	player:keyreleased(key)
+end
+
+function beginCollision(afixture, bfixture, collide)
+	local aobj = fixtureMap[afixture]
+	local bobj = fixtureMap[bfixture]
+	if bobj == player then
+		aobj, bobj = bobj, aobj
+	end
+	if aobj.handleCollision ~= nil then
+		aobj:handleCollision(bobj, collide)
+	end
+end
+
+function endCollision(a, b, collide)
+    
+end
+
+function preFrameResolve(a, b, collide)
+    
+end
+
+function postFrameResolve(a, b, collide)
+    
 end
 
 function love.run()
