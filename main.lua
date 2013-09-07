@@ -30,25 +30,16 @@ function love.update()
 	world:update(tickRate)
 	player:update()
 
-	local mx, my = camera:mousepos()
-	camera.x = math.lerp(camera.x, ((player.body:getX() + mx) / 2) - (love.graphics.getWidth() / 2), .25)
-	camera.y = math.lerp(camera.y, ((player.body:getY() + my) / 2) - (love.graphics.getHeight() / 2), .25)
-	if player.body:getX() - camera.x > (love.graphics.getWidth() * .80) then camera.x = player.body:getX() - (love.graphics.getWidth() * .80) end
-	if player.body:getY() - camera.y > (love.graphics.getHeight() * .80) then camera.y = player.body:getY() - (love.graphics.getHeight() * .80) end
-	if (camera.x + love.graphics.getWidth()) - player.body:getX() > (love.graphics.getWidth() * .80) then camera.x = player.body:getX() + (love.graphics.getWidth() * .80) - love.graphics.getWidth() end
-	if (camera.y + love.graphics.getHeight()) - player.body:getY() > (love.graphics.getHeight() * .80) then camera.y = player.body:getY() + (love.graphics.getHeight() * .80) - love.graphics.getHeight() end
-	
-	if camera.x < 0 then camera.x = 0 end
-	if camera.y < 0 then camera.y = 0 end
-	if camera.x + love.graphics.getWidth() > 2000 then camera.x = 2000 - love.graphics.getWidth() end
-	if camera.y + love.graphics.getHeight() > 600 then camera.y = 600 - love.graphics.getHeight() end
+	camera:lookAt(player.body:getX(), player.body:getY())
 end
 
 function love.draw()
-	player:draw()
-	ground:draw()
-	wall:draw()
-	mushroom:draw()
+	camera:draw(function()
+		player:draw()
+		ground:draw()
+		wall:draw()
+		mushroom:draw()
+	end)
 end
 
 function love.mousepressed(x, y, button)
