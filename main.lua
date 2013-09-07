@@ -1,16 +1,27 @@
-require './lib/core'
-require './lib/util'
+Camera = require 'lib/hump/camera'
+Class = require 'lib/hump/class'
+Gamestate = require 'lib/hump/gamestate'
+Signals = require 'lib/hump/signal'
+Timer = require 'lib/hump/timer'
+vector = require 'lib/hump/vector'
+
+require 'lib/util'
+
+require 'class/player'
 
 function love.load()
-	--
+	love.physics.setMeter(64)
+	world = love.physics.newWorld(0, 10 * 64, true)
+	player = Player()
 end
 
-function love.update(dt)
-	--
+function love.update()
+	world:update(tickRate)
+	player:update()
 end
 
 function love.draw()
-	--
+	player:draw()
 end
 
 function love.mousepressed(x, y, button)
