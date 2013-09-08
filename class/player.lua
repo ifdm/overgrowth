@@ -16,6 +16,7 @@ function Player:init(x, y)
 	self.fixture:setUserData(self)
 
 	self.inventory = {}
+	self.selection = 1
 	self.canJump = true
 
 	objects[#objects + 1] = self
@@ -49,25 +50,14 @@ function Player:keyreleased(key)
 	if key == 'w' and self.canJump then
 		self:bounce(self.jumpSpeed)
   -- Stuff gets selected
-	elseif key >= '1' and key <= '5' then
-		self.selection = key
+	elseif key:match('^[1-5]$') then
+		self.selection = tonumber(key)
 	end
 end
 
 function Player:handleCollision(other, nX, nY)
 	if nY > 0 then
 		self.canJump = true
-	end
-
-	if getmetatable(other) == Mushroom then
-		if nX == 0 and nY > 0 then
-			self:bounce(other.bounceSpeed)
-		end
-	end
-	
-	if getmetatable(other) == Seed then
-		self.inventory[#self.inventory + 1] = other.type
-		other:collect()
 	end
 end
 
@@ -77,10 +67,11 @@ function Player:bounce(bounceSpeed)
 end
 
 function Player:throw()
-	if #self.inventory > 0 and self.inventory[self.selection] then
-		local throwingSeed = Seed()
-		print('throwing')	
-		throwingSeed:throw(self.inventory[self.selection])
+	local type = self.inventory[self.selection]
+	if type then
+		local throwingSeed = Seed(self.body:getX(), self.body:getY(), type)
+		throwingSeed.grace = 1.5
+		throwingSeed:throw()
 
 		table.remove(self.inventory, self.selection)
 	end

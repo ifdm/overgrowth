@@ -10,39 +10,42 @@ function Seed:init(x, y, type)
 
 	self.body:setFixedRotation(false)
 	self.body:setLinearDamping(0)
-	self.fixture:setRestitution(0)
+	self.fixture:setRestitution(0.25)
 	self.fixture:setFriction(.95)
 	self.fixture:setUserData(self)
 
 	self.type = type
+	self.grace = 0
 	
 	objects[#objects + 1] = self
 end
 
 function Seed:update()
-	
+	self.grace = math.max(self.grace - tickRate, 0)
 end
 
 function Seed:handleCollision(other, nX, nY)
-	if other.inventory then
-		other.inventory[self.type] = other.inventory[self.type] + 1
+	if self.grace == 0 and other.inventory then
+		other.inventory[#other.inventory + 1] = self.type
+		self:collect()
 	end
 end
 
 function Seed:collect()
-	self.collected = true
+	
+	-- Oh god O(n) pls make it stop.
+	for k, obj in pairs(objects) do
+		if obj == self then table.remove(objects, k) break end
+	end
 end
 
 function Seed:throw()
-	self.collected = false
 	-- throw shit
-	local v = vector(self.body:getX(), self.body:getY())
-	self.body:setLinearVelocity(v:angleTo(vector(camera:mousepos())):unpack())
+	local v = vector(camera:mousepos()) - vector(self.body:getPosition())
+	self.body:setLinearVelocity(v:normalized():permul(vector(700, 700)):unpack())
 end
 
 function Seed:draw()
-	if not self.collected then
-		love.graphics.reset()
-		love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
-	end
+	love.graphics.reset()
+	love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
 end
