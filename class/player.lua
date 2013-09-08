@@ -54,9 +54,7 @@ function Player:keyreleased(key)
 	end
 end
 
-function Player:handleCollision(other, collide)
-	nX, nY = collide:getNormal()
-
+function Player:handleCollision(other, nX, nY)
 	if nY > 0 then
 		self.canJump = true
 	end
@@ -74,8 +72,8 @@ function Player:handleCollision(other, collide)
 end
 
 function Player:bounce(bounceSpeed)
-	self.canJump = false
 	self.body:applyLinearImpulse(0, bounceSpeed)
+	self.canJump = false
 end
 
 function Player:throw()

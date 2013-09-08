@@ -23,9 +23,10 @@ function Seed:update()
 	
 end
 
-function Seed:handleCollision(other, collide)
-	nX, nY = colide:getNormal()
-
+function Seed:handleCollision(other, nX, nY)
+	if other.inventory then
+		other.inventory[self.type] = other.inventory[self.type] + 1
+	end
 end
 
 function Seed:collect()

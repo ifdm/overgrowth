@@ -13,6 +13,7 @@ require 'class/mushroom'
 require 'class/seed'
 
 objects = {}
+history = {}
 
 function love.load()
 	fixtureMap = {}
@@ -20,25 +21,36 @@ function love.load()
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
-	player = Player(0, 0)
+	player = Player(96, 400)
 	
-	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
+	ground = Wall(0, 536, {0, 0, 800, 0, 800, 64, 0, 64})
+	leftWall = Wall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
+	cliffWall = Wall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
+	cliffGround = Wall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
+	rightWall = Wall(900, 0, {0, 0, 64, 0, 64, 600, 0, 600})
 	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	mushroom = Mushroom(400, 511)
-	seed = Seed(200, 500, Mushroom)
+	seed = Seed(200, 400, Mushroom)
 	camera = Camera()
 end
 
 function love.update()
 	world:update(tickRate)
 	
-	for _,obj in pairs(objects) do
-		f.exe(obj.update, obj)	
+	for _, obj in pairs(objects) do
+		f.exe(obj.update, obj)
+	end
+	
+	history[tick] = {}
+	table.copy(player)
+	for _, obj in pairs(objects) do
+		history[tick][obj] = table.copy(obj)
 	end
 
 	local px, py = player.body:getX(), player.body:getY()
 	local cx, cy = camera:pos()
 	local mx, my = camera:mousepos()
+	camera.prevx = cx
+	camera.prevy = cy
 	cx = math.lerp(cx, (px + mx) / 2, .25)
 	cy = math.lerp(cy, (py + my) / 2, .25)
 	
@@ -53,11 +65,21 @@ function love.update()
 end
 
 function love.draw()
+	if not history[tick - 1] then return end
+	
+	local z = tickDelta / tickRate
+	local cx, cy = camera:pos()
+	camera.x = math.lerp(camera.prevx, cx, z)
+	camera.y = math.lerp(camera.prevy, cy, z)
 	camera:draw(function()
-		for _,obj in pairs(objects) do
-			f.exe(obj.draw, obj)
+		for _, obj in pairs(objects) do
+			if history[tick - 1][obj] and history[tick][obj] then
+				table.interpolate(history[tick - 1][obj], history[tick][obj], z):draw()
+			end
 		end
 	end)
+	camera.x = cx
+	camera.y = cy
 end
 
 function love.mousepressed(x, y, button)
@@ -73,19 +95,15 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
-	--
 	player:keyreleased(key)
 end
 
 function beginCollision(a, b, collide)
+	nX, nY = collide:getNormal()
 	a = a:getUserData()
 	b = b:getUserData()
-	if b == player then
-		a, b = b, a
-	end
-	if a.handleCollision ~= nil then
-		a:handleCollision(b, collide)
-	end
+	f.exe(a.handleCollision, a, b, nX, nY)
+	f.exe(b.handleCollision, b, a, nX, nY)
 end
 
 function endCollision(a, b, collide)
@@ -104,6 +122,7 @@ function love.run()
 	math.randomseed(os.time())
 	math.random()
 
+	tick = 0
 	tickRate = .02
 	tickDelta = 0
 
@@ -123,6 +142,7 @@ function love.run()
 		tickDelta = tickDelta + delta
 		while tickDelta >= tickRate do
 			tickDelta = tickDelta - tickRate
+			tick = tick + 1
 			love.update()
 		end
 
