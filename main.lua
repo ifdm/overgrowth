@@ -45,6 +45,8 @@ function love.update()
 			f.exe(obj.update, obj)
 		end
 	end
+
+	view:update()
 	
 	history[tick] = {}
 	for _, obj in pairs(objects) do

@@ -44,7 +44,7 @@ end
 function Seed:throw()
 	
 	-- throw shit
-	local v = vector(camera:mousepos()) - vector(self.body:getPosition())
+	local v = vector(view.camera:mousepos()) - vector(self.body:getPosition())
 	self.body:setLinearVelocity(v:normalized():permul(vector(700, 700)):unpack())
 end
 

@@ -14,12 +14,12 @@ function View:init(object)
 end
 
 function View:update()	
-	local px, py = object.body:getX(), object.body:getY()
+	local px, py = self.object.body:getX(), self.object.body:getY()
 	local mx, my = self.camera:mousepos()
 	local cx, cy = self.camera:pos()
 
-	self.prevx = cx
-	self.prevy = cy
+	self.prevX = cx
+	self.prevY = cy
 	cx = math.lerp(cx, (px + mx) / 2, .25)
 	cy = math.lerp(cy, (py + my) / 2, .25)
 	
@@ -36,8 +36,8 @@ end
 function View:draw(fn)
 	local z = tickDelta / tickRate
 	local cx, cy = self.camera:pos()
-	self.camera.x = math.lerp(camera.prevx, cx, z)
-	self.camera.y = math.lerp(camera.prevy, cy, z)
+	self.camera.x = math.lerp(self.prevX, cx, z)
+	self.camera.y = math.lerp(self.prevY, cy, z)
 	self.camera:draw(fn)
 	self.camera.x = cx
 	self.camera.y = cy
