@@ -41,9 +41,11 @@ function love.update()
 	end
 	
 	history[tick] = {}
-	table.copy(player)
 	for _, obj in pairs(objects) do
-		history[tick][obj] = table.copy(obj)
+		history[tick][obj] = {
+			x = obj.body:getX(),
+			y = obj.body:getY()
+		}
 	end
 
 	local px, py = player.body:getX(), player.body:getY()
@@ -73,8 +75,14 @@ function love.draw()
 	camera.y = math.lerp(camera.prevy, cy, z)
 	camera:draw(function()
 		for _, obj in pairs(objects) do
-			if history[tick - 1][obj] and history[tick][obj] then
-				table.interpolate(history[tick - 1][obj], history[tick][obj], z):draw()
+			local previous, current = history[tick - 1][obj], history[tick][obj]
+			if previous and current then
+				
+				local interpolated = table.interpolate(previous, current, z)
+				local obj = table.copy(obj)
+				obj.body:setX(interpolated.x)
+				obj.body:setY(interpolated.y)
+				obj:draw()
 			end
 		end
 	end)
