@@ -13,6 +13,7 @@ require 'class/mushroom'
 require 'class/seed'
 
 objects = {}
+history = {}
 
 function love.load()
 	fixtureMap = {}
@@ -32,8 +33,13 @@ end
 function love.update()
 	world:update(tickRate)
 	
-	for _,obj in pairs(objects) do
-		f.exe(obj.update, obj)	
+	for _, obj in pairs(objects) do
+		f.exe(obj.update, obj)
+	end
+	
+	history[tick] = {}
+	for _, obj in pairs(objects) do
+		history[tick][obj] = table.copy(obj)
 	end
 
 	local px, py = player.body:getX(), player.body:getY()
@@ -53,9 +59,13 @@ function love.update()
 end
 
 function love.draw()
+	if not history[tick - 1] then return end
+	
 	camera:draw(function()
-		for _,obj in pairs(objects) do
-			f.exe(obj.draw, obj)
+		for _, obj in pairs(objects) do
+			if history[tick - 1][obj] and history[tick][obj] then
+				table.interpolate(history[tick - 1][obj], history[tick][obj], tickDelta / tickRate):draw()
+			end
 		end
 	end)
 end
@@ -69,7 +79,6 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
-	--
 	player:keyreleased(key)
 end
 
@@ -100,6 +109,7 @@ function love.run()
 	math.randomseed(os.time())
 	math.random()
 
+	tick = 0
 	tickRate = .02
 	tickDelta = 0
 
@@ -119,6 +129,7 @@ function love.run()
 		tickDelta = tickDelta + delta
 		while tickDelta >= tickRate do
 			tickDelta = tickDelta - tickRate
+			tick = tick + 1
 			love.update()
 		end
 
