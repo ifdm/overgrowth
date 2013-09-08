@@ -1,5 +1,5 @@
 Seed = Class {
-	collected = false
+	remove = false
 }
 
 function Seed:init(x, y, type)
@@ -16,7 +16,7 @@ function Seed:init(x, y, type)
 
 	self.type = type
 	self.grace = 0
-	
+	print('spawning')	
 	objects[#objects + 1] = self
 end
 
@@ -32,14 +32,16 @@ function Seed:handleCollision(other, nX, nY)
 end
 
 function Seed:collect()
-	
-	-- Oh god O(n) pls make it stop.
-	for k, obj in pairs(objects) do
-		if obj == self then table.remove(objects, k) break end
-	end
+
+	-- Mark for object removal
+  self.remove = true	
+	-- Remove object components
+	self.fixture:destroy()
+	self.body:destroy()
 end
 
 function Seed:throw()
+	
 	-- throw shit
 	local v = vector(camera:mousepos()) - vector(self.body:getPosition())
 	self.body:setLinearVelocity(v:normalized():permul(vector(700, 700)):unpack())

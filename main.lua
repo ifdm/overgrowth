@@ -36,8 +36,12 @@ end
 function love.update()
 	world:update(tickRate)
 	
-	for _, obj in pairs(objects) do
-		f.exe(obj.update, obj)
+	for i, obj in pairs(objects) do
+		if obj.remove then
+			table.remove(objects, i)
+		else
+			f.exe(obj.update, obj)
+		end
 	end
 	
 	history[tick] = {}

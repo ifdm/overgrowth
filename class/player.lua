@@ -72,7 +72,7 @@ function Player:throw()
 		local throwingSeed = Seed(self.body:getX(), self.body:getY(), type)
 		throwingSeed.grace = 1.5
 		throwingSeed:throw()
-
+		
 		table.remove(self.inventory, self.selection)
 	end
 end
