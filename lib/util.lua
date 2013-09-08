@@ -54,7 +54,7 @@ function table.copy(x)
   local t = type(x)
   if t ~= 'table' then return x end
   local y = {}
-  for k, v in next, x, nil do y[k] = table.copy(v) end
+  for k, v in next, x, nil do if v ~= x then y[k] = table.copy(v) end end
   setmetatable(y, getmetatable(x))
   return y
 end

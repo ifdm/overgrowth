@@ -41,6 +41,7 @@ function love.update()
 	end
 	
 	history[tick] = {}
+	table.copy(player)
 	for _, obj in pairs(objects) do
 		history[tick][obj] = table.copy(obj)
 	end
@@ -48,6 +49,8 @@ function love.update()
 	local px, py = player.body:getX(), player.body:getY()
 	local cx, cy = camera:pos()
 	local mx, my = camera:mousepos()
+	camera.prevx = cx
+	camera.prevy = cy
 	cx = math.lerp(cx, (px + mx) / 2, .25)
 	cy = math.lerp(cy, (py + my) / 2, .25)
 	
@@ -64,13 +67,19 @@ end
 function love.draw()
 	if not history[tick - 1] then return end
 	
+	local z = tickDelta / tickRate
+	local cx, cy = camera:pos()
+	camera.x = math.lerp(camera.prevx, cx, z)
+	camera.y = math.lerp(camera.prevy, cy, z)
 	camera:draw(function()
 		for _, obj in pairs(objects) do
 			if history[tick - 1][obj] and history[tick][obj] then
-				table.interpolate(history[tick - 1][obj], history[tick][obj], tickDelta / tickRate):draw()
+				table.interpolate(history[tick - 1][obj], history[tick][obj], z):draw()
 			end
 		end
 	end)
+	camera.x = cx
+	camera.y = cy
 end
 
 function love.mousepressed(x, y, button)
