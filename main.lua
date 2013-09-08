@@ -70,14 +70,11 @@ function love.keyreleased(key)
 end
 
 function beginCollision(a, b, collide)
+	nX, nY = collide:getNormal()
 	a = a:getUserData()
 	b = b:getUserData()
-	if b == player then
-		a, b = b, a
-	end
-	if a.handleCollision ~= nil then
-		a:handleCollision(b, collide)
-	end
+	f.exe(a.handleCollision, a, b, nX, nY)
+	f.exe(b.handleCollision, b, a, nX, nY)
 end
 
 function endCollision(a, b, collide)

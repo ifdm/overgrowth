@@ -14,6 +14,12 @@ function Mushroom:init(x, y)
 	self.fixture:setRestitution(0)
 end
 
+function Mushroom:handleCollision(other, nX, nY)
+	if nY > 0 then
+		f.exe(other.bounce, other, self.bounceSpeed)
+	end
+end
+
 function Mushroom:draw()
 	love.graphics.reset()
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
