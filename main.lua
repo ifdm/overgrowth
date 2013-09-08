@@ -21,8 +21,8 @@ function love.load()
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
-	player = Player(96, 400)
-	
+
+	player = Player(96, 400)	
 	ground = Wall(0, 536, {0, 0, 764, 0, 764, 64, 0, 64})
 	leftWall = Wall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
 	cliffWall = Wall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
@@ -31,6 +31,7 @@ function love.load()
 	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	seed = Seed(200, 400, Mushroom)
 	camera = Camera()
+	camera:zoomTo(.75, .75)
 end
 
 function love.update()
@@ -159,6 +160,7 @@ function love.run()
 			love.update()
 		end
 
+		love.graphics.setBackgroundColor(20, 40, 20)
 		love.graphics.clear()
 		love.draw()
 		love.graphics.present()

@@ -80,5 +80,6 @@ end
 
 function Player:draw()
 	love.graphics.reset()
+	love.graphics.setColor(100, 50, 150)
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
 end

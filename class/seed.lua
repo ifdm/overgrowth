@@ -50,5 +50,6 @@ end
 
 function Seed:draw()
 	love.graphics.reset()
+	love.graphics.setColor(100, 175, 100)
 	love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
 end
