@@ -14,6 +14,8 @@ function Seed:init(x, y, type)
 	self.fixture:setUserData(self)
 
 	self.type = type
+	
+	objects[#objects + 1] = self
 end
 
 function Seed:update()

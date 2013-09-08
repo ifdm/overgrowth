@@ -12,6 +12,8 @@ require 'class/wall'
 require 'class/mushroom'
 require 'class/seed'
 
+objects = {}
+
 function love.load()
 	fixtureMap = {}
 
@@ -29,7 +31,11 @@ end
 
 function love.update()
 	world:update(tickRate)
-	player:update()
+	
+	for _,obj in pairs(objects) do
+		f.exe(obj.update, obj)	
+	end
+
 	local px, py = player.body:getX(), player.body:getY()
 	local cx, cy = camera:pos()
 	local mx, my = camera:mousepos()
@@ -48,11 +54,9 @@ end
 
 function love.draw()
 	camera:draw(function()
-		player:draw()
-		ground:draw()
-		wall:draw()
-		mushroom:draw()
-		seed:draw()
+		for _,obj in pairs(objects) do
+			f.exe(obj.draw, obj)
+		end
 	end)
 end
 

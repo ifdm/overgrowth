@@ -17,6 +17,8 @@ function Player:init(x, y)
 
 	self.inventory = {[Mushroom] = 0}
 	self.canJump = true
+
+	objects[#objects + 1] = self
 end
 
 function Player:update()
@@ -29,7 +31,7 @@ function Player:update()
 	elseif love.keyboard.isDown('d') then
 		vx = math.min(vx + self.walkSpeed * tickRate * 10, self.walkSpeed)
 	else
-		vx = math.max(math.abs(vx) - self.walkSpeed * tickRate, 0) * (vx > 0 and 1 or -1)
+		vx = math.max(math.abs(vx) - self.walkSpeed * tickRate * 2, 0) * (vx > 0 and 1 or -1)
 	end
 	
 	self.body:setLinearVelocity(vx, vy)

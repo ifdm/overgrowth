@@ -12,6 +12,8 @@ function Mushroom:init(x, y)
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
+
+	objects[#objects + 1] = self
 end
 
 function Mushroom:handleCollision(other, nX, nY)
