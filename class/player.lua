@@ -7,7 +7,7 @@ Player = Class {
 function Player:init(x, y)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
 	self.body:setMass(10)
-	self.shape = love.physics.newRectangleShape(100, 100)
+	self.shape = love.physics.newRectangleShape(64, 128)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 
 	self.body:setFixedRotation(true)
@@ -17,6 +17,7 @@ function Player:init(x, y)
 	self.fixture:setUserData(self)
 
 	self.inventory = {[Mushroom] = 0}
+	self.canJump = true
 end
 
 function Player:update()
@@ -32,14 +33,17 @@ end
 function Player:keyreleased(key)
 
 	-- Stuff comes up
-	xspeed, yspeed = self.body:getLinearVelocity()
-	if key == 'w' and yspeed == 0 then
-		self.body:applyLinearImpulse(0, self.jumpSpeed)
+	if key == 'w' and self.canJump then
+		self:bounce(self.jumpSpeed)
 	end
 end
 
 function Player:handleCollision(other, collide)
 	nX, nY = collide:getNormal()
+
+	if nY > 0 then
+		self.canJump = true
+	end
 
 	if getmetatable(other) == Mushroom then
 		if nX == 0 and nY > 0 then
@@ -54,6 +58,7 @@ function Player:handleCollision(other, collide)
 end
 
 function Player:bounce(bounceSpeed)
+	self.canJump = false
 	self.body:applyLinearImpulse(0, bounceSpeed)
 end
 
