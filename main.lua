@@ -24,6 +24,7 @@ function love.load()
 	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	mushroom = Mushroom(400, 511)
 	seed = Seed(200, 500, Mushroom)
+	camera = Camera()
 end
 
 function love.update()
