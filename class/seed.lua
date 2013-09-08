@@ -1,4 +1,5 @@
 Seed = Class {
+	collected = false
 }
 
 function Seed:init(x, y, type)
@@ -27,9 +28,20 @@ function Seed:handleCollision(other, collide)
 
 end
 
-Seed.collect = f.empty
+function Seed:collect()
+	self.collected = true
+end
+
+function Seed:throw()
+	self.collected = false
+	-- throw shit
+	local v = vector(self.body:getX(), self.body:getY())
+	self.body:setLinearVelocity(v:angleTo(vector(camera:mousepos())):unpack())
+end
 
 function Seed:draw()
-	love.graphics.reset()
-	love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
+	if not self.collected then
+		love.graphics.reset()
+		love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
+	end
 end

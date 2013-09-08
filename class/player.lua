@@ -15,7 +15,7 @@ function Player:init(x, y)
 	self.fixture:setRestitution(0)
 	self.fixture:setUserData(self)
 
-	self.inventory = {[Mushroom] = 0}
+	self.inventory = {}
 	self.canJump = true
 
 	objects[#objects + 1] = self
@@ -37,11 +37,20 @@ function Player:update()
 	self.body:setLinearVelocity(vx, vy)
 end
 
+function Player:mousereleased(x, y, button)
+	if button == 'l' then
+		self:throw()
+	end
+end
+
 function Player:keyreleased(key)
 
 	-- Stuff comes up
 	if key == 'w' and self.canJump then
 		self:bounce(self.jumpSpeed)
+  -- Stuff gets selected
+	elseif key >= '1' and key <= '5' then
+		self.selection = key
 	end
 end
 
@@ -59,7 +68,7 @@ function Player:handleCollision(other, collide)
 	end
 	
 	if getmetatable(other) == Seed then
-		self.inventory[other.type] = self.inventory[other.type] + 1
+		self.inventory[#self.inventory + 1] = other.type
 		other:collect()
 	end
 end
@@ -67,6 +76,16 @@ end
 function Player:bounce(bounceSpeed)
 	self.canJump = false
 	self.body:applyLinearImpulse(0, bounceSpeed)
+end
+
+function Player:throw()
+	if #self.inventory > 0 and self.inventory[self.selection] then
+		local throwingSeed = Seed()
+		print('throwing')	
+		throwingSeed:throw(self.inventory[self.selection])
+
+		table.remove(self.inventory, self.selection)
+	end
 end
 
 function Player:draw()
