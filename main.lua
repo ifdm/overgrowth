@@ -12,30 +12,27 @@ require 'class/wall'
 require 'class/mushroom'
 require 'class/seed'
 
-objects = {}
-
 function love.load()
 	fixtureMap = {}
 
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
-	player = Player(0, 0)
+	player = Player(96, 400)
 	
-	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
+	ground = Wall(0, 536, {0, 0, 800, 0, 800, 64, 0, 64})
+	leftWall = Wall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
+	cliffWall = Wall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
+	cliffGround = Wall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
+	rightWall = Wall(900, 0, {0, 0, 64, 0, 64, 600, 0, 600})
 	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	mushroom = Mushroom(400, 511)
-	seed = Seed(200, 500, Mushroom)
+	seed = Seed(200, 400, Mushroom)
 	camera = Camera()
 end
 
 function love.update()
 	world:update(tickRate)
-	
-	for _,obj in pairs(objects) do
-		f.exe(obj.update, obj)	
-	end
-
+	player:update()
 	local px, py = player.body:getX(), player.body:getY()
 	local cx, cy = camera:pos()
 	local mx, my = camera:mousepos()
@@ -54,9 +51,11 @@ end
 
 function love.draw()
 	camera:draw(function()
-		for _,obj in pairs(objects) do
-			f.exe(obj.draw, obj)
-		end
+		player:draw()
+		ground:draw()
+		wall:draw()
+		mushroom:draw()
+		seed:draw()
 	end)
 end
 
