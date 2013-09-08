@@ -15,6 +15,8 @@ function Player:init(x, y)
 	self.fixture:setRestitution(0)
 	self.fixture:setFriction(.95)
 	self.fixture:setUserData(self)
+
+	self.inventory = {[Mushroom] = 0}
 end
 
 function Player:update()
@@ -38,8 +40,16 @@ end
 
 function Player:handleCollision(other, collide)
 	nX, nY = collide:getNormal()
-	if other == mushroom then
-		self:bounce(other.bounceSpeed)
+
+	if getmetatable(other) == Mushroom then
+		if nX == 0 and nY > 0 then
+			self:bounce(other.bounceSpeed)
+		end
+	end
+	
+	if getmetatable(other) == Seed then
+		self.inventory[other.type] = self.inventory[other.type] + 1
+		other:collect()
 	end
 end
 

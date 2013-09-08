@@ -10,6 +10,7 @@ require 'lib/util'
 require 'class/player'
 require 'class/wall'
 require 'class/mushroom'
+require 'class/seed'
 
 function love.load()
 	fixtureMap = {}
@@ -20,26 +21,22 @@ function love.load()
 	player = Player(0, 0)
 	
 	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
-	wall = Wall(400, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	
-	camera = Camera()
+	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	mushroom = Mushroom(400, 511)
+	seed = Seed(200, 500, Mushroom)
 end
 
 function love.update()
 	world:update(tickRate)
 	player:update()
-
-	camera:lookAt(player.body:getX(), player.body:getY())
 end
 
 function love.draw()
-	camera:draw(function()
-		player:draw()
-		ground:draw()
-		wall:draw()
-		mushroom:draw()
-	end)
+	player:draw()
+	ground:draw()
+	wall:draw()
+	mushroom:draw()
+	seed:draw()
 end
 
 function love.mousepressed(x, y, button)
