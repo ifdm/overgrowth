@@ -47,11 +47,13 @@ function love.update()
 end
 
 function love.draw()
-	player:draw()
-	ground:draw()
-	wall:draw()
-	mushroom:draw()
-	seed:draw()
+	camera:draw(function()
+		player:draw()
+		ground:draw()
+		wall:draw()
+		mushroom:draw()
+		seed:draw()
+	end)
 end
 
 function love.mousepressed(x, y, button)
