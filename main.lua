@@ -11,6 +11,7 @@ require 'class/player'
 require 'class/wall'
 require 'class/mushroom'
 require 'class/seed'
+require 'class/view'
 
 objects = {}
 history = {}
@@ -30,8 +31,8 @@ function love.load()
 	rightWall = Wall(900, 0, {0, 0, 64, 0, 64, 364, 0, 364})
 	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	seed = Seed(200, 400, Mushroom)
-	camera = Camera()
-	camera:zoomTo(.75, .75)
+
+	view = View(player)
 end
 
 function love.update()
@@ -53,33 +54,13 @@ function love.update()
 		}
 	end
 	history[tick - 1 / tickRate] = nil
-
-	local px, py = player.body:getX(), player.body:getY()
-	local cx, cy = camera:pos()
-	local mx, my = camera:mousepos()
-	camera.prevx = cx
-	camera.prevy = cy
-	cx = math.lerp(cx, (px + mx) / 2, .25)
-	cy = math.lerp(cy, (py + my) / 2, .25)
-	
-	cx, cy = cx - 400, cy - 300
-	if px - cx > (love.graphics.getWidth() * .80) then cx = px - (love.graphics.getWidth() * .80) end
-	if py - cy > (love.graphics.getHeight() * .80) then cy = py - (love.graphics.getHeight() * .80) end
-	if (cx + love.graphics.getWidth()) - px > (love.graphics.getWidth() * .80) then cx = px + (love.graphics.getWidth() * .80) - love.graphics.getWidth() end
-	if (cy + love.graphics.getHeight()) - py > (love.graphics.getHeight() * .80) then cy = py + (love.graphics.getHeight() * .80) - love.graphics.getHeight() end
-	cx, cy = cx + 400, cy + 300
-	
-	camera:lookAt(cx, cy)
 end
 
 function love.draw()
 	if not history[tick - 1] then return end
 	
 	local z = tickDelta / tickRate
-	local cx, cy = camera:pos()
-	camera.x = math.lerp(camera.prevx, cx, z)
-	camera.y = math.lerp(camera.prevy, cy, z)
-	camera:draw(function()
+	view:draw(function()
 		for _, obj in pairs(objects) do
 			local previous, current = history[tick - 1][obj], history[tick][obj]
 			if previous and current then
@@ -92,8 +73,6 @@ function love.draw()
 			end
 		end
 	end)
-	camera.x = cx
-	camera.y = cy
 end
 
 function love.mousepressed(x, y, button)
