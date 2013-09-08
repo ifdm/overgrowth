@@ -1,19 +1,18 @@
 Player = Class {
-	walkSpeed = 1000,
+	walkSpeed = 180,
 	jumpSpeed = -1000,
 	maxSpeed = 10000
 }
 
 function Player:init(x, y)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
-	self.body:setMass(10)
+	self.body:setMass(0, 0, 1000, 0)
 	self.shape = love.physics.newRectangleShape(64, 128)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
-	self.fixture:setFriction(.95)
 	self.fixture:setUserData(self)
 
 	self.inventory = {[Mushroom] = 0}
@@ -22,12 +21,18 @@ end
 
 function Player:update()
 	
+	local vx, vy = self.body:getLinearVelocity()
+	
 	-- Move
 	if love.keyboard.isDown('a') then
-		self.body:applyForce(-self.walkSpeed, 0)
+		vx = math.max(vx - self.walkSpeed * tickRate * 10, -self.walkSpeed)
 	elseif love.keyboard.isDown('d') then
-		self.body:applyForce(self.walkSpeed, 0)
+		vx = math.min(vx + self.walkSpeed * tickRate * 10, self.walkSpeed)
+	else
+		vx = math.max(math.abs(vx) - self.walkSpeed * tickRate, 0) * (vx > 0 and 1 or -1)
 	end
+	
+	self.body:setLinearVelocity(vx, vy)
 end
 
 function Player:keyreleased(key)
