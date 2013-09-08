@@ -21,12 +21,15 @@ function love.load()
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
-	player = Player(0, 0)
+	player = Player(96, 400)
 	
-	ground = Wall(0, 575, {0, 0, 800, 0, 800, 50, 0, 50})
+	ground = Wall(0, 536, {0, 0, 800, 0, 800, 64, 0, 64})
+	leftWall = Wall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
+	cliffWall = Wall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
+	cliffGround = Wall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
+	rightWall = Wall(900, 0, {0, 0, 64, 0, 64, 600, 0, 600})
 	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	mushroom = Mushroom(400, 511)
-	seed = Seed(200, 500, Mushroom)
+	seed = Seed(200, 400, Mushroom)
 	camera = Camera()
 end
 
@@ -83,14 +86,11 @@ function love.keyreleased(key)
 end
 
 function beginCollision(a, b, collide)
+	nX, nY = collide:getNormal()
 	a = a:getUserData()
 	b = b:getUserData()
-	if b == player then
-		a, b = b, a
-	end
-	if a.handleCollision ~= nil then
-		a:handleCollision(b, collide)
-	end
+	f.exe(a.handleCollision, a, b, nX, nY)
+	f.exe(b.handleCollision, b, a, nX, nY)
 end
 
 function endCollision(a, b, collide)

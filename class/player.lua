@@ -45,28 +45,15 @@ function Player:keyreleased(key)
 	end
 end
 
-function Player:handleCollision(other, collide)
-	nX, nY = collide:getNormal()
-
+function Player:handleCollision(other, nX, nY)
 	if nY > 0 then
 		self.canJump = true
-	end
-
-	if getmetatable(other) == Mushroom then
-		if nX == 0 and nY > 0 then
-			self:bounce(other.bounceSpeed)
-		end
-	end
-	
-	if getmetatable(other) == Seed then
-		self.inventory[other.type] = self.inventory[other.type] + 1
-		other:collect()
 	end
 end
 
 function Player:bounce(bounceSpeed)
-	self.canJump = false
 	self.body:applyLinearImpulse(0, bounceSpeed)
+	self.canJump = false
 end
 
 function Player:draw()
