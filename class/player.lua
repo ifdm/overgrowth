@@ -16,6 +16,8 @@ function Player:init(x, y)
 	self.fixture:setUserData(self)
 
 	self.inventory = {[Mushroom] = 0}
+
+	objects[#objects + 1] = self
 end
 
 function Player:update()

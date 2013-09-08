@@ -5,6 +5,8 @@ function Wall:init(x, y, points)
 	self.shape = love.physics.newPolygonShape(unpack(points))
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.fixture:setUserData(self)
+
+	objects[#objects + 1] = self
 end
 
 function Wall:draw()
