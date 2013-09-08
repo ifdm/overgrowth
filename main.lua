@@ -51,6 +51,7 @@ function love.update()
 			y = obj.body:getY()
 		}
 	end
+	history[tick - 1 / tickRate] = nil
 
 	local px, py = player.body:getX(), player.body:getY()
 	local cx, cy = camera:pos()

@@ -49,6 +49,7 @@ function Player:keyreleased(key)
 	-- Stuff comes up
 	if key == 'w' and self.canJump then
 		self:bounce(self.jumpSpeed)
+
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
 		self.selection = tonumber(key)

@@ -34,7 +34,8 @@ end
 function Seed:collect()
 
 	-- Mark for object removal
-  self.remove = true	
+	self.remove = true
+
 	-- Remove object components
 	self.fixture:destroy()
 	self.body:destroy()
