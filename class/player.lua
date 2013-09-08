@@ -13,6 +13,7 @@ function Player:init(x, y)
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
+	self.fixture:setCategory(2)
 	self.fixture:setUserData(self)
 
 	self.inventory = {}

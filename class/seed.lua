@@ -12,6 +12,8 @@ function Seed:init(x, y, type)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0.25)
 	self.fixture:setFriction(.95)
+	self.fixture:setCategory(3)
+	self.fixture:setMask(2)
 	self.fixture:setUserData(self)
 
 	self.type = type
