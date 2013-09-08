@@ -4,7 +4,7 @@ Seed = Class {
 function Seed:init(x, y, type)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
 	self.body:setMass(2)
-	self.shape = love.physics.newCircleShape(10)
+	self.shape = love.physics.newCircleShape(16)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 
 	self.body:setFixedRotation(false)
