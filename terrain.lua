@@ -20,7 +20,6 @@ end
 
 function nearest(n, step)
     return math.floor((n/step)+0.5) *step
-
 end
 
 
@@ -42,10 +41,7 @@ function Terrain:draw()
             lastX = x
            lastY = y
        end
-
     end
-
-
 end
 
 function Terrain:clearPoint(x)
@@ -54,6 +50,6 @@ end
 
 
 function Terrain:setPoint(x, y)
-    self.points[nearest(x, 50)] = y
+    self.points[nearest(x, 50)] = nearest(y, 50)
 end
 

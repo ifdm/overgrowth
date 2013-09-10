@@ -15,7 +15,7 @@ function Level.create(width, height)
  		-- table to hold all our physical objects
 
 
-  		terrain = Terrain.create(width, 300),
+  		terrain = Terrain.create(width, 600),
   		width = width,
   		height = height
 

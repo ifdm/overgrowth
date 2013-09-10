@@ -5,18 +5,6 @@ camera = {}
 --lag determines how quickly the camera will follow the object
 function camera.init(someObject, lag)
 
-	--[[local x = someObject.body:getX()
-	local y = someObject.body:getY()
-	local _body = love.physics.newBody(cameraWorld, x, y, "dynamic")
-	local _shape = love.physics.newRectangleShape(10,10)
-	local _fixture = love.physics.newFixture(_body, _shape, 1)
-
-	camera.shape = _shape
-	camera.fixture = _fixture
-	camera.body = _body
-	]]--
-
-
 	camera.following = someObject.body
 	camera.x = camera.following:getX()
 	camera.y = camera.following:getY()
@@ -55,6 +43,8 @@ function camera.update()
 
 end
 
+
+
 function camera.getX()
 	--return camera.body:getX()
 	return camera.x
@@ -64,6 +54,16 @@ function camera.getY()
 	return camera.y
 	--return camera.body:getY()
 end
+
+function camera.getCenterX()
+	return camera.x + (love.graphics.getWidth()/2)
+end
+
+function camera.getCenterY()
+	return camera.y + (love.graphics.getHeight()/2)
+end
+
+
 
 function camera.draw()
 	love.graphics.reset()
