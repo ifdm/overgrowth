@@ -9,33 +9,56 @@ require 'lib/util'
 
 require 'class/player'
 require 'class/wall'
-require 'class/mushroom'
+require 'class/plants/mushroom'
 require 'class/seed'
 require 'class/view'
 
+require 'class/level'
+
 objects = {}
 history = {}
+fixtureMap = {}
+
+--Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
+plantQueue = {}
 
 function love.load()
-	fixtureMap = {}
+	
 
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
 
-	player = Player(96, 400)	
-	ground = Wall(0, 536, {0, 0, 764, 0, 764, 64, 0, 64})
-	leftWall = Wall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
-	cliffWall = Wall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
-	cliffGround = Wall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
-	rightWall = Wall(900, 0, {0, 0, 64, 0, 64, 364, 0, 364})
-	wall = Wall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	seed = Seed(200, 400, Mushroom)
 
-	view = View(player)
 
-	--Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
+	--New way to make levels. Make as many as you want, and swap between them freely!
+	local level = Level("default")
+
+	level:addWall(0, 536, {0, 0, 764, 0, 764, 64, 0, 64})
+	level:addWall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
+	level:addWall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
+	level:addWall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
+	level:addWall(900, 0, {0, 0, 64, 0, 64, 364, 0, 364})
+	level:addWall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
+	level:setPlayer(96, 400)
+	level:addSeed(200, 400, Mushroom)
+
+	loadLevel("default")
+
+	
+end
+
+function loadLevel(levelName)
+	--Clear everything (SHOULD BE ABSTRACTED OUT)
+	fixtureMap = {}
+	objects = {}
+	history = {}
 	plantQueue = {}
+
+
+	level = levelIndex[levelName]
+	level:enter()
+
 end
 
 function love.update()

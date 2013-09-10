@@ -57,7 +57,7 @@ function Player:keyreleased(key)
 end
 
 function Player:handleCollision(other, nX, nY)
-	if nY > 0 then
+	if nY < 0 then
 		self.canJump = true
 	end
 end
@@ -70,7 +70,7 @@ end
 
 function Player:bounce(bounceSpeed)
 	local _, velY = self.body:getLinearVelocity()
-	self:applyVerticalImpulse(velY * bounceSpeed - 200)
+	self:applyVerticalImpulse(math.max(velY * bounceSpeed - 200, -3500))
 end
 
 function Player:throw()
