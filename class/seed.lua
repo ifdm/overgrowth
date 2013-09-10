@@ -13,7 +13,9 @@ function Seed:init(x, y, type)
 	self.fixture:setRestitution(0.25)
 	self.fixture:setFriction(.95)
 	self.fixture:setCategory(3)
-	self.fixture:setMask(2)
+	
+	--Why?
+	--self.fixture:setMask(2)
 	self.fixture:setUserData(self)
 
 	self.type = type
