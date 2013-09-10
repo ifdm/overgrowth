@@ -44,3 +44,13 @@ Comment headers may be used to section off larger files or group related variabl
 	----------------
 	str = 4
 	stam = 4
+
+### Commits
+When committing, the first line of the commit should be a brief description of changes.  Changes should be separated by semicolons, and the line should not exceed 50 characters.  Vim will automatically color code the first 50 characters of a git commit message.  Follow this brief description by a blank line, then a more detailed description of what has changed (if applicable).  Example:
+
+	Removed all files; All bugs are now fixed;
+	
+	-Removed all class files.
+	-Removed all data files.
+	-Removed all libraries.
+	-All bugs fixed. 
