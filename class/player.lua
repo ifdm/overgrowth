@@ -26,7 +26,6 @@ end
 function Player:update()
 	
 	local vx, vy = self.body:getLinearVelocity()
-	
 	-- Move
 	if love.keyboard.isDown('a') then
 		vx = math.max(vx - self.walkSpeed * tickRate * 10, -self.walkSpeed)
@@ -49,7 +48,7 @@ function Player:keyreleased(key)
 
 	-- Stuff comes up
 	if key == 'w' and self.canJump then
-		self:bounce(self.jumpSpeed)
+		self:applyVerticalImpulse(self.jumpSpeed)
 
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
@@ -63,9 +62,15 @@ function Player:handleCollision(other, nX, nY)
 	end
 end
 
-function Player:bounce(bounceSpeed)
-	self.body:applyLinearImpulse(0, bounceSpeed)
+function Player:applyVerticalImpulse(speed)
+	self.body:applyLinearImpulse(0, speed)
 	self.canJump = false
+end
+
+
+function Player:bounce(bounceSpeed)
+	local _, velY = self.body:getLinearVelocity()
+	self:applyVerticalImpulse(velY * bounceSpeed - 200)
 end
 
 function Player:throw()

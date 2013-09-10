@@ -33,10 +33,20 @@ function love.load()
 	seed = Seed(200, 400, Mushroom)
 
 	view = View(player)
+
+	--Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
+	plantQueue = {}
 end
 
 function love.update()
 	world:update(tickRate)
+	
+for i,seed in pairs(plantQueue) do
+    	seed.type.plant(seed.body:getX(), seed.body:getY())
+    	seed:collect()
+    	table.remove(plantQueue, i)
+    end
+
 	
 	for i, obj in pairs(objects) do
 		if obj.remove then
@@ -45,6 +55,7 @@ function love.update()
 			f.exe(obj.update, obj)
 		end
 	end
+
 
 	view:update()
 	
@@ -110,7 +121,13 @@ function preFrameResolve(a, b, collide)
 end
 
 function postFrameResolve(a, b, collide)
-    
+
+end
+
+function plantLater(seed)
+
+	plantQueue[#plantQueue + 1] = seed
+
 end
 
 function love.run()

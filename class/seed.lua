@@ -20,6 +20,7 @@ function Seed:init(x, y, type)
 
 	self.type = type
 	self.grace = 0
+	self.thrown = false
 	print('spawning')	
 	objects[#objects + 1] = self
 end
@@ -29,6 +30,11 @@ function Seed:update()
 end
 
 function Seed:handleCollision(other, nX, nY)
+
+	if self.thrown == true and other.type == Wall then
+		plantLater(self)
+	end
+
 	if self.grace == 0 and other.inventory then
 		other.inventory[#other.inventory + 1] = self.type
 		self:collect()
@@ -46,7 +52,7 @@ function Seed:collect()
 end
 
 function Seed:throw()
-	
+	self.thrown = true
 	-- throw shit
 	local v = vector(view.camera:mousepos()) - vector(self.body:getPosition())
 	self.body:setLinearVelocity(v:normalized():permul(vector(700, 700)):unpack())
