@@ -1,20 +1,11 @@
 Mushroom = Class {
 	bounceSpeed = -5,
 	maxBounceVelocity = -3500,
-	name = "Mushroom"
+	name = 'Mushroom'
 }
 
-function Mushroom.plant(x, y, angle)
-	local mushroom = {}
-	setmetatable(mushroom, {__index = Mushroom})
-
-	mushroom:init(x, y, angle)
-end
-
-
 function Mushroom:init(x, y, angle)
-	print (""..world:type())
-	local _body = love.physics.newBody(world, x, y, "static")
+	local _body = love.physics.newBody(world, x, y, 'static')
 	self.body = _body
 	self.body:setAngle(angle)
 	self.body:setMass(15)
@@ -30,7 +21,6 @@ function Mushroom:init(x, y, angle)
 end
 
 function Mushroom:handleCollision(other, nX, nY)
-
 	vX, vY = other.body:getLinearVelocity()
 	velV = vector(vX, vY)
 	normV = vector(nX, nY)
@@ -38,8 +28,6 @@ function Mushroom:handleCollision(other, nX, nY)
 	nX, nY = velV:unpack()
 
 	other.body:applyLinearImpulse(nX, math.max(nY * self.bounceSpeed, self.maxBounceVelocity))
-
-
 end
 
 function Mushroom:draw()

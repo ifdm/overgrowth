@@ -23,8 +23,8 @@ function Player:init(x, y)
 end
 
 function Player:update()
-	
 	local vx, vy = self.body:getLinearVelocity()
+	
 	-- Move
 	if love.keyboard.isDown('a') then
 		vx = math.max(vx - self.walkSpeed * tickRate * 10, -self.walkSpeed)
@@ -42,7 +42,6 @@ function Player:mousereleased(x, y, button)
 		self:throw()
 	end
 end
-
 
 --Bad. Next stop, replace this with global key listener that delegates to player.
 function Player:keyreleased(key)
@@ -63,7 +62,6 @@ end
 
 function Player:handleCollision(other, nX, nY)
 end
-
 
 
 function Player:throw()

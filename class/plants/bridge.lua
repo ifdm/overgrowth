@@ -2,20 +2,8 @@ Bridge = Class {
 	name = "Bridge"
 }
 
-
-
-function Bridge.plant(x, y, angle)
-	local bridge = {}
-	setmetatable(bridge, {__index = Bridge})
-	bridge:init(x, y, angle)
-
-end
-
-
-
 function Bridge:init(x, y, angle)
-	local _body = love.physics.newBody(world, x, y, "static")
-	self.body = _body
+	self.body = love.physics.newBody(world, x, y, 'static')
 	self.body:setAngle(angle)
 	self.body:setMass(15)
 	self.shape = love.physics.newPolygonShape(0, 0, 150, 0, 150, 64, 0, 64)
@@ -28,7 +16,6 @@ function Bridge:init(x, y, angle)
 
 	objects[#objects + 1] = self
 end
-
 
 function Bridge:draw()
 	love.graphics.reset()

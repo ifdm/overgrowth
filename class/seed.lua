@@ -29,11 +29,7 @@ function Seed:update()
 	self.grace = math.max(self.grace - tickRate, 0)
 end
 
-
-
-
 function Seed:handleCollision(other, nX, nY)
-
 	if self.thrown == true and other.type == Wall then
 		normalVector = vector(nX, nY)
 		selfVector = normalVector:normalized()

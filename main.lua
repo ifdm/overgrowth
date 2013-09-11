@@ -16,24 +16,20 @@ require 'class/view'
 
 require 'class/level'
 
-objects = {}
-history = {}
-fixtureMap = {}
-
---Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
-plantQueue = {}
-
 function love.load()
-	
+	objects = {}
+	history = {}
+	fixtureMap = {}
+
+	-- Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
+	plantQueue = {}
 
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
 
-
-
-	--New way to make levels. Make as many as you want, and swap between them freely!
-	local level = Level("default")
+	-- New way to make levels. Make as many as you want, and swap between them freely!
+	local level = Level('default')
 
 	level:addWall(0, 536, {0, 0, 764, 0, 764, 64, 0, 64})
 	level:addWall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
@@ -45,34 +41,30 @@ function love.load()
 	level:addSeed(200, 400, Mushroom)
 	level:addSeed(300, 400, Bridge)
 
-	loadLevel("default")
-
-	
+	loadLevel('default')
 end
 
 function loadLevel(levelName)
-	--Clear everything (SHOULD BE ABSTRACTED OUT)
+	
+	-- Clear everything
 	fixtureMap = {}
 	objects = {}
 	history = {}
 	plantQueue = {}
 
-
 	level = levelIndex[levelName]
 	level:enter()
-
 end
 
 function love.update()
 	world:update(tickRate)
 	
-for i,seed in pairs(plantQueue) do
-    	seed.type.plant(seed.body:getX(), seed.body:getY(), seed.angle)
-    	seed:collect()
-    	table.remove(plantQueue, i)
-    end
+	for i,seed in pairs(plantQueue) do
+		seed.type(seed.body:getX(), seed.body:getY(), seed.angle)
+		seed:collect()
+		table.remove(plantQueue, i)
+	end
 
-	
 	for i, obj in pairs(objects) do
 		if obj.remove then
 			table.remove(objects, i)
@@ -80,7 +72,6 @@ for i,seed in pairs(plantQueue) do
 			f.exe(obj.update, obj)
 		end
 	end
-
 
 	view:update()
 	
@@ -138,11 +129,11 @@ function beginCollision(a, b, collide)
 end
 
 function endCollision(a, b, collide)
-    
+	
 end
 
 function preFrameResolve(a, b, collide)
-    
+	
 end
 
 function postFrameResolve(a, b, collide)

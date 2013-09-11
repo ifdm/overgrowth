@@ -1,4 +1,6 @@
-Level = Class{}
+Level = Class {
+	
+}
 
 levelIndex = {}
 
@@ -9,44 +11,43 @@ function Level:init(name)
 	self.pX = 0
 	self.pY = 0
 	levelIndex[name] = self
-
 end
 
-function Level:addWall(_x, _y, _points)
+function Level:addWall(x, y, points)
 	local w = {
-		x = _x, 
-		y = _y,
-		p = _points
+		x = x, 
+		y = y,
+		p = points
 	}	
 	self.walls[#self.walls + 1] = w
 end
 
-function Level:setPlayer(_x, _y)
-	self.pX = _x
-	self.pY = _y
+function Level:setPlayer(x, y)
+	self.pX = x
+	self.pY = y
 end
 
-
-function Level:addSeed(_x, _y, _type)
+function Level:addSeed(x, y, type)
 	local s = {
-		x = _x,
-		y = _y,
-		t = _type
+		x = x,
+		y = y,
+		t = type
 	}
+	
 	self.seeds[#self.seeds + 1] = s
 end
 
-
 function Level:enter()
-	print ("Loading level \"" .. self.name .. "\"")
+	print('Loading level "' .. self.name .. '"')
 
 	for i, w in pairs(self.walls) do
 		Wall(w.x, w.y, w.p)
 	end
+	
 	for i, s in pairs(self.seeds) do
 		Seed(s.x, s.y, s.t)
 	end
+	
 	player = Player(self.pX, self.pY)
 	view = View(player)
-
 end
