@@ -54,6 +54,10 @@ function Player:keyreleased(key)
 			print("jumping")
 			self.body:applyLinearImpulse(0, self.jumpSpeed)
 		end
+	elseif key == 'r' then
+
+		print("reloaded level")
+		loadLevel(level.name)
 
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
