@@ -14,7 +14,7 @@ function Seed:init(x, y, type)
 	self.fixture:setFriction(.95)
 	self.fixture:setCategory(3)
 	
-	--Why?
+	--Why?  Because we'll want the objects to be able to overlap.
 	--self.fixture:setMask(2)
 	self.fixture:setUserData(self)
 
@@ -31,17 +31,16 @@ end
 
 function Seed:handleCollision(other, nX, nY)
 	if self.thrown == true and other.type == Wall then
-		normalVector = vector(nX, nY)
-		selfVector = normalVector:normalized()
-		--selfVector = vector(1, 1)
-		--selfVector:mirrorOn(normalVector)
-		nX, nY = selfVector:unpack()
-		self.angle = math.atan2(nX, -nY)
-		plantLater(self)
+		nX, nY = vector(nx, ny):normalized():unpack()
+		local angle = math.atan2(nX, -nY)
+		table.print(self.type)
+		print(self.type == Mushroom)
+		self.type(nX, nY, angle)
+		self:collect()
 	end
 
 	if self.grace == 0 and other.inventory then
-		print("Picked up seed of type " .. self.type.name)
+		print('Picked up seed of type ' .. self.type.name)
 		other.inventory[#other.inventory + 1] = self.type
 		self:collect()
 	end

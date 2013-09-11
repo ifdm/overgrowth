@@ -13,7 +13,6 @@ require 'class/plants/mushroom'
 require 'class/plants/bridge'
 require 'class/seed'
 require 'class/view'
-
 require 'class/level'
 
 function love.load()
@@ -29,37 +28,13 @@ function love.load()
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
 
 	-- New way to make levels. Make as many as you want, and swap between them freely!
-	local level = Level('default')
-
-	level:addWall(0, 536, {0, 0, 764, 0, 764, 64, 0, 64})
-	level:addWall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
-	level:addWall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
-	level:addWall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
-	level:addWall(900, 0, {0, 0, 64, 0, 64, 364, 0, 364})
-	level:addWall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	level:setPlayer(96, 400)
-	level:addSeed(200, 400, Mushroom)
-	level:addSeed(300, 400, Bridge)
-
-	loadLevel('default')
-end
-
-function loadLevel(levelName)
-	
-	-- Clear everything
-	fixtureMap = {}
-	objects = {}
-	history = {}
-	plantQueue = {}
-
-	level = levelIndex[levelName]
-	level:enter()
+	level = Level('data/level/default.lua'):enter()
 end
 
 function love.update()
 	world:update(tickRate)
 	
-	for i,seed in pairs(plantQueue) do
+	for i, seed in pairs(plantQueue) do
 		seed.type(seed.body:getX(), seed.body:getY(), seed.angle)
 		seed:collect()
 		table.remove(plantQueue, i)
@@ -137,12 +112,6 @@ function preFrameResolve(a, b, collide)
 end
 
 function postFrameResolve(a, b, collide)
-
-end
-
-function plantLater(seed)
-
-	plantQueue[#plantQueue + 1] = seed
 
 end
 

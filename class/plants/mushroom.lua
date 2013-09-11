@@ -5,8 +5,7 @@ Mushroom = Class {
 }
 
 function Mushroom:init(x, y, angle)
-	local _body = love.physics.newBody(world, x, y, 'static')
-	self.body = _body
+	self.body = love.physics.newBody(world, x, y, 'static')
 	self.body:setAngle(angle)
 	self.body:setMass(15)
 	self.shape = love.physics.newPolygonShape(0, 0, 150, 0, 150, 64, 0, 64)
