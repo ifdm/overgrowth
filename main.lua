@@ -80,7 +80,7 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button)
-	--
+	-- 
 end
 
 function love.mousereleased(x, y, button)
@@ -88,7 +88,7 @@ function love.mousereleased(x, y, button)
 end
 
 function love.keypressed(key)
-	--
+	-- 
 end
 
 function love.keyreleased(key)
