@@ -10,6 +10,7 @@ require 'lib/util'
 require 'class/player'
 require 'class/wall'
 require 'class/plants/mushroom'
+require 'class/plants/bridge'
 require 'class/seed'
 require 'class/view'
 
@@ -42,6 +43,7 @@ function love.load()
 	level:addWall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
 	level:setPlayer(96, 400)
 	level:addSeed(200, 400, Mushroom)
+	level:addSeed(300, 400, Bridge)
 
 	loadLevel("default")
 
@@ -65,7 +67,7 @@ function love.update()
 	world:update(tickRate)
 	
 for i,seed in pairs(plantQueue) do
-    	seed.type.plant(seed.body:getX(), seed.body:getY())
+    	seed.type.plant(seed.body:getX(), seed.body:getY(), seed.angle)
     	seed:collect()
     	table.remove(plantQueue, i)
     end

@@ -7,7 +7,7 @@ function Seed:init(x, y, type)
 	self.body:setMass(2)
 	self.shape = love.physics.newCircleShape(16)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
-
+	self.angle = 0
 	self.body:setFixedRotation(false)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0.25)
@@ -29,13 +29,23 @@ function Seed:update()
 	self.grace = math.max(self.grace - tickRate, 0)
 end
 
+
+
+
 function Seed:handleCollision(other, nX, nY)
 
 	if self.thrown == true and other.type == Wall then
+		normalVector = vector(nX, nY)
+		selfVector = normalVector:normalized()
+		--selfVector = vector(1, 1)
+		--selfVector:mirrorOn(normalVector)
+		nX, nY = selfVector:unpack()
+		self.angle = math.atan2(nX, -nY)
 		plantLater(self)
 	end
 
 	if self.grace == 0 and other.inventory then
+		print("Picked up seed of type " .. self.type.name)
 		other.inventory[#other.inventory + 1] = self.type
 		self:collect()
 	end

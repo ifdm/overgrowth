@@ -18,7 +18,6 @@ function Player:init(x, y)
 
 	self.inventory = {}
 	self.selection = 1
-	self.canJump = true
 
 	objects[#objects + 1] = self
 end
@@ -44,11 +43,17 @@ function Player:mousereleased(x, y, button)
 	end
 end
 
+
+--Bad. Next stop, replace this with global key listener that delegates to player.
 function Player:keyreleased(key)
 
-	-- Stuff comes up
-	if key == 'w' and self.canJump then
-		self:applyVerticalImpulse(self.jumpSpeed)
+	-- More robust than a self-enforced canJump is a check if we're falling or going up
+	if key == 'w' then
+		dx, dy = self.body:getLinearVelocity()
+		if dy == 0 then
+			print("jumping")
+			self.body:applyLinearImpulse(0, self.jumpSpeed)
+		end
 
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
@@ -57,21 +62,9 @@ function Player:keyreleased(key)
 end
 
 function Player:handleCollision(other, nX, nY)
-	if nY < 0 then
-		self.canJump = true
-	end
-end
-
-function Player:applyVerticalImpulse(speed)
-	self.body:applyLinearImpulse(0, speed)
-	self.canJump = false
 end
 
 
-function Player:bounce(bounceSpeed)
-	local _, velY = self.body:getLinearVelocity()
-	self:applyVerticalImpulse(math.max(velY * bounceSpeed - 200, -3500))
-end
 
 function Player:throw()
 	local type = self.inventory[self.selection]
