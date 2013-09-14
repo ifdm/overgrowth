@@ -10,6 +10,7 @@ function Level:init(filename)
 	levelIndex[self.name] = self
 end
 
+
 function Level:enter()
 	print('Loading level "' .. self.name .. '"')
 	
@@ -24,6 +25,9 @@ function Level:enter()
 	
 	for _, seed in pairs(self.seeds) do
 		Seed(unpack(seed))
+	end
+	for _, e in pairs(self.entities) do
+		e.c(e.x, e.y, e.a)
 	end
 
 	player = Player(self.px, self.py)

@@ -28,4 +28,9 @@ level.seeds = {
 	{300, 400, Bridge}
 }
 
+level.entities = {
+	{x=350, y=410, c=Laser.create, a=3*math.pi/2 }
+
+}
+
 return level

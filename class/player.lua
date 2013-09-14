@@ -1,7 +1,8 @@
 Player = Class {
 	walkSpeed = 180,
 	jumpSpeed = -1000,
-	maxSpeed = 10000
+	maxSpeed = 10000,
+	name = "Player"
 }
 
 function Player:init(x, y)
@@ -37,6 +38,12 @@ function Player:update()
 	self.body:setLinearVelocity(vx, vy)
 end
 
+function Player:die()
+--Write Me!
+print("Player died")
+
+end
+
 function Player:mousereleased(x, y, button)
 	if button == 'l' then
 		self:throw()
@@ -53,6 +60,10 @@ function Player:keyreleased(key)
 			print("jumping")
 			self.body:applyLinearImpulse(0, self.jumpSpeed)
 		end
+	elseif key == 'r' then
+
+		print("reloaded level")
+		loadLevel(level.name)
 
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
