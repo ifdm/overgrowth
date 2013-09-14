@@ -23,6 +23,7 @@ function Laser:init(x, y, angle)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
 
+	self.hits = {}
 
 	self.targetX = x + (self.boxWidth/2)
 	self.targetY = y + (self.boxHeight/2)
@@ -39,20 +40,17 @@ function Laser:init(x, y, angle)
 end
 
 function LaserRayCastCallback(fixture, x, y, xn, yn, fraction)
-	Laser.curLaserForGlobalRaycast.endPoint = vector(x, y)
+	--Easy optimization to do later: replace this with a priority queue
+	if not fixture:getUserData() then return -1 end
 
-	local object = fixture:getUserData()
-	if object then
-		local name = object.name
-		if name then
-			print(name)
-			if name == Player.name then
-				object:die()
-			end
-		end
-	end
+	Laser.curLaserForGlobalRaycast.hits[#Laser.curLaserForGlobalRaycast.hits + 1] = {
+		x = x,
+		y = y,
+		object = fixture:getUserData()
+	}
 
-	return 0
+
+	return 1
 
 end
 
@@ -60,6 +58,31 @@ function Laser:update()
 	self.endPoint = self.laserPoint:clone()
 	Laser.curLaserForGlobalRaycast = self
 	world:rayCast(self.targetX, self.targetY, self.laserPoint.x, self.laserPoint.y, LaserRayCastCallback)
+
+	local hit = {}
+	local minSquareDist = self.maxLength^2
+	for _, h in pairs(self.hits) do
+		local dist = (h.x - self.targetX)^2 + (h.y - self.targetY)^2
+		if(dist < minSquareDist) then
+			self.endPoint = vector(h.x, h.y)
+			hit = h
+			minSquareDist = dist
+		end
+		
+	end
+	self.hits = {}
+
+	if hit.object then
+		local name = hit.object.name
+		if name then
+			--print(name)
+			if name == Player.name then
+				hit.object:die()
+			end
+		end
+	end
+
+
 
 end
 
