@@ -1,7 +1,8 @@
 Player = Class {
 	walkSpeed = 180,
 	jumpSpeed = -1000,
-	maxSpeed = 10000
+	maxSpeed = 10000,
+	name = "Player"
 }
 
 function Player:init(x, y)
@@ -35,6 +36,12 @@ function Player:update()
 	end
 	
 	self.body:setLinearVelocity(vx, vy)
+end
+
+function Player:die()
+--Write Me!
+print("Player died")
+
 end
 
 function Player:mousereleased(x, y, button)

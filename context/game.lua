@@ -28,6 +28,7 @@ function Game.load()
 	level:setPlayer(96, 400)
 	level:addSeed(200, 400, Mushroom)
 	level:addSeed(300, 400, Bridge)
+	level:addEntity(320, 515, 3*math.pi/2, Laser.create)
 
 	loadLevel("default")
 

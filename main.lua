@@ -17,6 +17,7 @@ require 'class/player'
 require 'class/wall'
 require 'class/plants/mushroom'
 require 'class/plants/bridge'
+require 'class/obstacles/laser'
 require 'class/seed'
 require 'class/view'
 
