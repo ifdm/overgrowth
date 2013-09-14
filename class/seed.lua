@@ -1,5 +1,7 @@
 Seed = Class {
-	remove = false
+	remove = false,
+		-- Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
+	plantQueue = {}
 }
 
 function Seed:init(x, y, type)
@@ -29,13 +31,26 @@ function Seed:update()
 	self.grace = math.max(self.grace - tickRate, 0)
 end
 
+
+function Seed.DoGrowth()
+	for i, seed in pairs(Seed.plantQueue) do
+		seed.t:init(seed.x, seed.y, seed.angle)
+		table.remove(Seed.plantQueue, i)
+	end
+end
+
+
 function Seed:handleCollision(other, nX, nY)
+	--I'm pretty sure the problem is trying to plant things DURING collision detection routine
 	if self.thrown == true and other.type == Wall then
 		nX, nY = vector(nx, ny):normalized():unpack()
-		local angle = math.atan2(nX, -nY)
-		table.print(self.type)
-		print(self.type == Mushroom)
-		self.type(nX, nY, angle)
+		local angle = math.atan2(nX, -nY) + math.pi
+		self.plantQueue[#self.plantQueue + 1] = {
+			t = self.type,
+			x = self.body:getX(),
+			y = self.body:getY(),
+			angle = angle
+		}
 		self:collect()
 	end
 

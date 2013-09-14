@@ -21,8 +21,7 @@ function love.load()
 	history = {}
 	fixtureMap = {}
 
-	-- Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
-	plantQueue = {}
+
 
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
@@ -34,12 +33,8 @@ end
 
 function love.update()
 	world:update(tickRate)
+	Seed.DoGrowth()
 	
-	for i, seed in pairs(plantQueue) do
-		seed.type(seed.body:getX(), seed.body:getY(), seed.angle)
-		seed:collect()
-		table.remove(plantQueue, i)
-	end
 
 	for i, obj in pairs(objects) do
 		if obj.remove then

@@ -6,6 +6,7 @@ Mushroom = Class {
 }
 
 function Mushroom:init(x, y, angle)
+	print("Spawning Mushroom")
 	self.body = love.physics.newBody(world, x, y, 'static')
 	self.body:setAngle(angle)
 	self.body:setMass(15)
