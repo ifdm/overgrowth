@@ -27,7 +27,7 @@ function Level:enter()
 		Seed(unpack(seed))
 	end
 	for _, e in pairs(self.entities) do
-		e.c(e.x, e.y, e.a)
+		e.c(unpack(e.p))
 	end
 
 	player = Player(self.px, self.py)

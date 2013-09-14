@@ -29,7 +29,9 @@ level.seeds = {
 }
 
 level.entities = {
-	{x=350, y=410, c=Laser.create, a=3*math.pi/2 }
+	{c=Laser.create, p={350, 400, math.pi/2, Laser.mode_circular}},
+	{c=Laser.create, p={450, 400, math.pi/2, Laser.mode_sweep}},
+	{c=Laser.create, p={550, 400, 2*math.pi, Laser.mode_static}}
 
 }
 
