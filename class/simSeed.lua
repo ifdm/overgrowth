@@ -66,7 +66,7 @@ self.points[#self.points + 1] = vector(self.body:getX(), self.body:getY())
 end
 function SimSeed:handleCollision(other, nX, nY, x, y)
 
-	if other.type == Wall then
+	if other.name == "Wall" then
 		self.final = vector(x, y)
 		self:collect()
 	end

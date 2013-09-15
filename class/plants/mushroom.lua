@@ -27,14 +27,18 @@ function Mushroom:init(x, y, angle)
 	self.fixture:setRestitution(0)
 
 
-	self.simBody = love.physics.newBody(simWorld, x, y, 'static')
+	self.simBody = love.physics.newBody(simWorld, x - (xC * self.width/2), y - (yC * self.height/2), 'static')
+	self.simBody:setAngle(angle)
+	self.simBody:setMass(15)
+	self.simBody:setFixedRotation(true)
+	self.simBody:setLinearDamping(0)
 	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
 	self.simFixture:setUserData(self)
 
 	objects[#objects + 1] = self
 end
 
-function Mushroom:handleCollision(other, nX, nY)
+function Mushroom:handleCollision(other, nX, nY, x, y)
 	vX, vY = other.body:getLinearVelocity()
 	velV = vector(vX, vY)
 	normV = vector(nX, nY)

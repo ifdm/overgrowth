@@ -16,6 +16,7 @@ function Bridge:init(x, y, angle)
 	self.body = _body
 
 	self.body:setAngle(angle)
+	self.body:isSleepingAllowed(false)
 	self.body:setMass(15)
 	self.shape = love.physics.newPolygonShape(0, 0, self.width, 0, self.width, self.height, 0, self.height)
 
