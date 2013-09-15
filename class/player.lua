@@ -81,11 +81,12 @@ function Player:throw()
 	local type = self.inventory[self.selection]
 	if type then
 		local x = self.body:getX()
+		local cx, cy = view.camera:mousepos()
 		-- throw from the correct side of the player
-		if x < love.mouse:getX() then
-			x = x + 64 -- 64 for player width
+		if x < cx then
+			x = x + 64 -- change this or the trajectory spawn point to match
 		else
-			x = x - 25 -- arbitrary
+			x = x - 64 -- same as above.
 		end
 
 		local throwingSeed = Seed(x, self.body:getY(), type)
