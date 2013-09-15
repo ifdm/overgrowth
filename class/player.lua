@@ -39,9 +39,7 @@ function Player:update()
 end
 
 function Player:die()
---Write Me!
-print("Player died")
-
+	-- self.remove = true
 end
 
 function Player:mousereleased(x, y, button)
