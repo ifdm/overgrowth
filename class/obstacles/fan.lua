@@ -1,6 +1,7 @@
 Fan = Class{
 	name = "Fan",
 	radius = 400,
+	radius2 = 450,
 	fanForRaycast = nil, 
 	donothit = {}
 }
@@ -33,9 +34,6 @@ function Fan:init(x, y, angle, force)
 	self.orthVector = vector(math.cos(angle + math.pi/2), math.sin(angle + math.pi/2))
 	self.targetX = x + (self.unitVector.x * 32) + (self.unitVector.y * 64)
 	self.targetY = y + (self.unitVector.x * 32) + (self.unitVector.y * 64)
-
-	print("angle "..angle)
-	print(self.unitVector)
 
 
 	for i=0, 128, 8 do
@@ -70,9 +68,7 @@ end
 function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
 	if not fixture:getUserData().name then return -1 end
 	if not (fixture:getBody():getType() == "dynamic") then return -1 end
-	--if Fan.donothit[fixture] then return -1 end
 
-	--Fan.donothit[fixture] = 1
 	Fan.fanForRaycast.lineEnds[Fan.fanForRaycast.curLine] = {
 		x0 = nil,
 		y0 = nil,
@@ -83,19 +79,12 @@ function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
 	Fan.fanForRaycast.curHeap:push(fixture, dist)
 	--print("dist ".. dist)
 
-	--local body = fixture:getBody()
-	--body:applyForce((Fan.radius - dist) * Fan.fanForRaycast.force, 0)
-	
-	--if(fixture:getUserData().name == "Player") then 
-		--print("Fan hit something "..fixture:getUserData().name .. " x "..x .. ", y".. y .. ", dist " .. dist .. ", force " .. ((1000 - dist) * 0.35))
-	--end
 
 	return 1
 
 end
 
 function Fan:update()
-	Fan.donothit = {}
 	self.lineEnds = {}
 	Fan.fanForRaycast = self
 	for i, line in pairs(self.lines) do
@@ -117,7 +106,7 @@ function Fan:update()
 			if fixture then
 				local body = fixture:getBody()
 				if body then
-					local force = (self.radius - dist) * self.force
+					local force = (self.radius2^2 - dist) * self.force
 					--print("Force " .. force)
 					body:applyForce(force * self.unitVector.x, force * self.unitVector.y)
 				end
