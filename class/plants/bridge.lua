@@ -1,17 +1,18 @@
 Bridge = Class {
 	name = "Bridge",
-	width = 150,
-	height = 64,
+	width = 64,
+	height = 128,
 	ledgeLookahead = 128, --one meter lookahead to ledges
 	minLedgeDepth = 256,	--ledges must be at least 4 meters deep
 	minLedgeWidth = 256 --ledges must be at least 4 meters wide
 }
 
 function Bridge:init(x, y, angle)
-
-	angle = angle + math.pi/2
-	local _body = love.physics.newBody(world, 
-		x - (self.width * math.cos(angle)), y - (self.height * math.sin(angle)), "static")
+	
+	--angle = angle + math.pi/2
+	local xC = math.cos(angle)
+	local yC = math.sin(angle)
+	local _body = love.physics.newBody(world, x - (xC * self.width/2), y - (yC * self.height/2), "static")
 	self.body = _body
 
 	self.body:setAngle(angle)
@@ -25,14 +26,11 @@ function Bridge:init(x, y, angle)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
 
---[[
-	self.ledgeLeft = {
-		p1 = vector(x  - self.ledgeLookahead, y),
-		p2 = vector(x - ledgeLookahead, y + minLedgeDepth),
-		p3 = vector(x - ledgeLookahead - minLedgeWidth, y + minLedgeDepth)
+	
+	
+	print(self.offsetVector)
+	print(" vs ".. x .." "..y .. " " .. angle)
 
-	}
-]]
 
 
 

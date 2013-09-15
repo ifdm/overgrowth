@@ -6,8 +6,11 @@ Dropper = Class {
 	timer = 3
 }
 
-function Dropper:init(x, y)
-	self.body = love.physics.newBody(world, x, y, 'static')
+function Dropper:init(x, y, angle)
+	local xC = math.cos(angle)
+	local yC = math.sin(angle)
+	local _body = love.physics.newBody(world, x - (xC * self.width/2), y - (yC * self.height/2), 'static')
+	self.body = _body
 	self.shape = love.physics.newPolygonShape(0, 0, self.width, 0, self.width, self.height, 0, self.height)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.fixture:setUserData(self)
