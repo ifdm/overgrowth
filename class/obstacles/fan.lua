@@ -81,7 +81,7 @@ function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
 	}
 	local dist = (x - Fan.fanForRaycast.targetX)^2 + (y - Fan.fanForRaycast.targetY)^2
 	Fan.fanForRaycast.curHeap:push(fixture, dist)
-				print("dist ".. dist)
+	--print("dist ".. dist)
 
 	--local body = fixture:getBody()
 	--body:applyForce((Fan.radius - dist) * Fan.fanForRaycast.force, 0)
@@ -118,7 +118,7 @@ function Fan:update()
 				local body = fixture:getBody()
 				if body then
 					local force = (self.radius - dist) * self.force
-					print("Force " .. force)
+					--print("Force " .. force)
 					body:applyForce(force * self.unitVector.x, force * self.unitVector.y)
 				end
 			end
@@ -127,7 +127,15 @@ function Fan:update()
 
 end
 
+function Fan:handleCollision(other, nX, nY)
+	if other.name then
+		print (other.name)
+	end
+	if other.name == "Player" then
+		other:die()
+	end
 
+end
 
 function Fan:activate()
 

@@ -45,6 +45,7 @@ function Player:update()
 end
 
 function Player:die()
+	
 	-- self.remove = true
 end
 
