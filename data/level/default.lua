@@ -33,7 +33,7 @@ level.entities = {
 	{c=Laser.create, p={350, 400, math.pi/2, Laser.mode_circular}},
 	{c=Laser.create, p={450, 400, math.pi/2, Laser.mode_sweep}},
 	{c=Laser.create, p={550, 400, 2*math.pi, Laser.mode_static}},
-	{c=Fan.create, p={550, 500, 0}}
+	{c=Fan.create, p={550, 500, 0, -.25}}
 
 }
 

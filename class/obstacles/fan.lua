@@ -1,16 +1,15 @@
 Fan = Class{
 	name = "Fan",
-	strength = 0.25,
 	radius = 400,
 	fanForRaycast = nil, 
 	donothit = {}
 }
 
-function Fan.create(x, y, angle)
-	Fan(x, y, angle)
+function Fan.create(x, y, angle, force)
+	Fan(x, y, angle, force)
 end
 
-function Fan:init(x, y, angle)
+function Fan:init(x, y, angle, force)
 	--CREATE BODY
 	local _body = love.physics.newBody(world, x, y, "static")
 	self.body = _body
@@ -26,8 +25,8 @@ function Fan:init(x, y, angle)
 
 	--END BODY
 
+	self.force = force
 	self.lines = {}
-
 	self.targetX = x + 32
 
 	local x0 = self.targetX - self.radius
@@ -58,11 +57,11 @@ function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
 	Fan.donothit[fixture] = 1
 	local dist = (x - Fan.fanForRaycast.targetX)
 	local body = fixture:getBody()
-	body:applyForce((Fan.radius - dist) * Fan.strength, 0)
+	body:applyForce((Fan.radius - dist) * Fan.fanForRaycast.force, 0)
 	
-	if(fixture:getUserData().name == "Player") then 
-		print("Fan hit something "..fixture:getUserData().name .. " x "..x .. ", y".. y .. ", dist " .. dist .. ", force " .. ((1000 - dist) * 0.35))
-	end
+	--if(fixture:getUserData().name == "Player") then 
+		--print("Fan hit something "..fixture:getUserData().name .. " x "..x .. ", y".. y .. ", dist " .. dist .. ", force " .. ((1000 - dist) * 0.35))
+	--end
 
 	return 1
 
