@@ -8,6 +8,7 @@ vector = require 'lib/hump/vector'
 require 'lib/util'
 
 require 'class/player'
+require 'class/simSeed'
 require 'class/wall'
 require 'class/plants/mushroom'
 require 'class/plants/bridge'
@@ -27,7 +28,7 @@ function love.load()
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
-
+	SimSeed.setupSim()
 	-- New way to make levels. Make as many as you want, and swap between them freely!
 	level = Level('data/level/default.lua'):enter()
 end

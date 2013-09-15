@@ -19,12 +19,16 @@ function Player:init(x, y)
 
 	self.inventory = {}
 	self.selection = 1
+	self.tick = 0
 
 	objects[#objects + 1] = self
 end
 
 function Player:update()
 	local vx, vy = self.body:getLinearVelocity()
+	self.tick = (self.tick + 1)%10
+	self:simulateThrow()
+	--if self.tick == 3 then self:simulateThrow() end
 	
 	-- Move
 	if love.keyboard.isDown('a') then
@@ -84,8 +88,17 @@ function Player:throw()
 	end
 end
 
+
+function Player:simulateThrow()
+	
+	SimSeed.throw(self.body:getX(), self.body:getY())
+end
+
 function Player:draw()
 	love.graphics.reset()
 	love.graphics.setColor(100, 50, 150)
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+	for _, p in pairs(SimSeed.points) do
+		love.graphics.circle('fill', p.x, p.y, 2)
+	end
 end
