@@ -80,7 +80,15 @@ end
 function Player:throw()
 	local type = self.inventory[self.selection]
 	if type then
-		local throwingSeed = Seed(self.body:getX(), self.body:getY(), type)
+		local x = self.body:getX()
+		-- throw from the correct side of the player
+		if x < love.mouse:getX() then
+			x = x + 64 -- 64 for player width
+		else
+			x = x - 25 -- arbitrary
+		end
+
+		local throwingSeed = Seed(x, self.body:getY(), type)
 		throwingSeed.grace = 1.5
 		throwingSeed:throw()
 		
