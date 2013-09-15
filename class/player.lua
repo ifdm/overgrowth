@@ -101,6 +101,7 @@ function Player:draw()
 	love.graphics.setColor(100, 50, 150)
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
 	for _, p in pairs(SimSeed.points) do
-		love.graphics.circle('fill', p.x, p.y, 2)
+		--the +6 are an offset because seeds have a radius of 16 pixels!
+		love.graphics.circle('fill', p.x+6, p.y+6, 4)
 	end
 end
