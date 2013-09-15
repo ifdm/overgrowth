@@ -1,10 +1,11 @@
 Bridge = Class {
 	name = "Bridge",
 	width = 64,
-	height = 128,
-	ledgeLookahead = 128, --one meter lookahead to ledges
+	height = 150,
 	minLedgeDepth = 256,	--ledges must be at least 4 meters deep
-	minLedgeWidth = 256 --ledges must be at least 4 meters wide
+	minLedgeWidth = 256, --ledges must be at least 4 meters wide	height = 128,
+	ledgeLookahead = 128 --one meter lookahead to ledges
+
 }
 
 function Bridge:init(x, y, angle)
@@ -14,17 +15,18 @@ function Bridge:init(x, y, angle)
 	local yC = math.sin(angle)
 	local _body = love.physics.newBody(world, x - (xC * self.width/2), y - (yC * self.height/2), "static")
 	self.body = _body
-
-	self.body:setAngle(angle)
-	self.body:isSleepingAllowed(false)
-	self.body:setMass(15)
 	self.shape = love.physics.newPolygonShape(0, 0, self.width, 0, self.width, self.height, 0, self.height)
 
+	self.body:setAngle(angle)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.fixture:setUserData(self)
 
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
+	self.body:isSleepingAllowed(false)
+	self.body:setMass(15)
+	
+
 	self.fixture:setRestitution(0)
 
 	

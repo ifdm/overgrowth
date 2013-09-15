@@ -1,6 +1,7 @@
 Mushroom = Class {
-	bounceSpeed = -4.5,
-	maxBounceVelocity = -3500,
+	bounceSpeed = 0.068,
+	bounceSpeedSeed = 0.005,
+	maxBounceVelocity = 3500,
 	width = 150,
 	height = 64,
 	name = "Mushroom",
@@ -39,19 +40,29 @@ function Mushroom:init(x, y, angle)
 end
 
 function Mushroom:handleCollision(other, nX, nY, x, y)
+	if(self.curvedMushrooms == true) then
+		nY = -nY
+	end
 	vX, vY = other.body:getLinearVelocity()
 	velV = vector(vX, vY)
 	normV = vector(nX, nY)
 	velV:mirrorOn(normV)
-	nX, nY = velV:unpack()
-
+	newX, newY = velV:unpack()
 
 	if(other.name == "Seed") or (other.name == "SimSeed") then
-		other.body:applyLinearImpulse(nX* 0.035, math.max(nY * self.bounceSpeed * 0.075, self.maxBounceVelocity))
+		--other.body:applyLinearImpulse(newX* 0.035, math.max(newY * self.bounceSpeed * 0.075, self.maxBounceVelocity))
+		other.body:applyLinearImpulse(newX * self.bounceSpeedSeed * nX, newY *self.bounceSpeedSeed * nY)
 		return
 	end
---other.body:applyLinearImpulse(nX, nY * self.bounceSpeed)
-	other.body:applyLinearImpulse(math.max(nX * self.bounceSpeed, self.maxBounceVelocity) , math.max(nY * self.bounceSpeed, self.maxBounceVelocity))
+	local bX = newX * self.bounceSpeed * nX
+	local bY = newY * self.bounceSpeed * nY
+	if bX < self.maxBounceVelocity * -1 then bX = self.maxBounceVelocity * -1	end
+	if bX > self.maxBounceVelocity 		then bX = self.maxBounceVelocity  		end
+	if bY < self.maxBounceVelocity * -1 then bY = self.maxBounceVelocity * -1 	end
+	if bY > self.maxBounceVelocity 		then bY = self.maxBounceVelocity 	 	end
+	
+
+	other.body:applyLinearImpulse( bX, bY)
 end
 
 function Mushroom:draw()
