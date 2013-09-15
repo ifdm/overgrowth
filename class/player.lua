@@ -90,7 +90,7 @@ function Player:throw()
 		if x < view.camera:mousepos() then
 			x = x + 64 -- 64 for player width
 		else
-			x = x - 25 -- arbitrary
+			x = x - 64 -- same as above.
 		end
 
 		local throwingSeed = Seed(x, self.body:getY(), type)
