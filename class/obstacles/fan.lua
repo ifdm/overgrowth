@@ -1,6 +1,9 @@
 Fan = Class{
 	name = "Fan",
-	strength = 500
+	strength = 0.25,
+	radius = 400,
+	fanForRaycast = nil, 
+	donothit = {}
 }
 
 function Fan.create(x, y, angle)
@@ -24,8 +27,11 @@ function Fan:init(x, y, angle)
 	--END BODY
 
 	self.lines = {}
-	local x0 = x - 100
-	local x1 = x + 100
+
+	self.targetX = x + 32
+
+	local x0 = self.targetX - self.radius
+	local x1 = self.targetX + self.radius
 
 	for i=y, y+128, 8 do
 		self.lines[#self.lines + 1] = {
@@ -45,22 +51,30 @@ function Fan:init(x, y, angle)
 end
 
 function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
-	--Easy optimization to do later: replace this with a priority queue
-	if not fixture:getUserData() then return -1 end
+	if not fixture:getUserData().name then return -1 end
+	if not (fixture:getBody():getType() == "dynamic") then return -1 end
+	if Fan.donothit[fixture] then return -1 end
 
-	Laser.curLaserForGlobalRaycast.hits[#Laser.curLaserForGlobalRaycast.hits + 1] = {
-		x = x,
-		y = y,
-		object = fixture:getUserData()
-	}
-
+	Fan.donothit[fixture] = 1
+	local dist = (x - Fan.fanForRaycast.targetX)
+	local body = fixture:getBody()
+	body:applyForce((Fan.radius - dist) * Fan.strength, 0)
+	
+	if(fixture:getUserData().name == "Player") then 
+		print("Fan hit something "..fixture:getUserData().name .. " x "..x .. ", y".. y .. ", dist " .. dist .. ", force " .. ((1000 - dist) * 0.35))
+	end
 
 	return 1
 
 end
 
 function Fan:update()
+	Fan.donothit = {}
+	Fan.fanForRaycast = self
+	for _, line in pairs(self.lines) do
+		world:rayCast(line.x0, line.y0, line.x1, line.y1, FanRayCastCallback)
 
+	end
 
 end
 
