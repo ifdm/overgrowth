@@ -6,6 +6,7 @@ Timer = require 'lib/hump/timer'
 vector = require 'lib/hump/vector'
 
 require 'lib/util'
+require 'lib/heap'
 
 require 'class/player'
 require 'class/simSeed'
@@ -18,6 +19,7 @@ require 'class/obstacles/fan'
 require 'class/seed'
 require 'class/view'
 require 'class/level'
+
 
 function love.load()
 	objects = {}
