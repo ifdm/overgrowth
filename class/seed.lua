@@ -44,16 +44,15 @@ function Seed.DoGrowth()
 end
 
 
-function Seed:handleCollision(other, nX, nY)
+function Seed:handleCollision(other, nX, nY, x, y)
 	--I'm pretty sure the problem is trying to plant things DURING collision detection routine
 	if self.thrown == true and other.type == Wall then
 		nX, nY = vector(nX, nY):normalized():unpack()
 		local angle = math.atan2(nX, -nY) + math.pi
-		print("angle?" ..angle .. "from " .. nX .. " " .. nY)
 		self.plantQueue[#self.plantQueue + 1] = {
 			t = self.type,
-			x = self.body:getX(),
-			y = self.body:getY(),
+			x = x,
+			y = y,
 			angle = angle
 		}
 		self:collect()
