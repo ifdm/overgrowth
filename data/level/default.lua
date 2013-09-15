@@ -26,7 +26,7 @@ level.walls = {
 level.seeds = {
 	{200, 400, Mushroom},
 	{300, 400, Bridge},
-	{100, 400, Dropper}
+	{400, 400, Dropper}
 }
 
 level.entities = {
