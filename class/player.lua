@@ -84,15 +84,7 @@ end
 function Player:throw()
 	local type = self.inventory[self.selection]
 	if type then
-		local x = self.body:getX()
-		-- throw from the correct side of the player
-		if x < view.camera:mousepos() then
-			x = x + 64 -- 64 for player width
-		else
-			x = x - 64 -- same as above.
-		end
-
-		local throwingSeed = Seed(x, self.body:getY(), type)
+		local throwingSeed = Seed(self.body:getX(), self.body:getY(), type)
 		throwingSeed.grace = 1.5
 		throwingSeed:throw()
 		
@@ -100,16 +92,8 @@ function Player:throw()
 		return
 	end
 
-	if self.debugThrow then 
-		local x = self.body:getX()
-		-- throw from the correct side of the player
-		if x < view.camera:mousepos() then
-			x = x + 64 -- 64 for player width
-		else
-			x = x - 64 -- arbitrary
-		end
-		
-		local throwingSeed = Seed(x, self.body:getY(), "test")
+	if self.debugThrow then		
+		local throwingSeed = Seed(self.body:getX(), self.body:getY(), "test")
 		throwingSeed.grace = 1.5
 		throwingSeed:throw()
 	end
@@ -117,15 +101,7 @@ end
 
 
 function Player:simulateThrow()
-	local x = self.body:getX()
-	-- throw from the correct side of the player
-	if x < view.camera:mousepos() then
-		x = x + 64 -- 64 for player width
-	else
-		x = x - 64 -- arbitrary
-	end
-	
-	SimSeed.throw(x, self.body:getY())
+	SimSeed.throw(self.body:getX(), self.body:getY())
 end
 
 function Player:draw()

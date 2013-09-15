@@ -76,6 +76,8 @@ function Seed:collect()
 end
 
 function Seed:throw()
+	self.fixture:setMask(2)
+	
 	self.thrown = true
 	-- throw shit
 	local v = vector(view.camera:mousepos()) - vector(self.body:getPosition())
