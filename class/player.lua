@@ -7,7 +7,8 @@ Player = Class {
 
 function Player:init(x, y)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
-	self.body:setMass(0, 0, 1000, 0)
+	--A 1000 kg person? When!? Where!?
+	self.body:setMassData(0, 0, 60, 0)
 	self.shape = love.physics.newRectangleShape(64, 128)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 
@@ -17,6 +18,7 @@ function Player:init(x, y)
 	self.fixture:setCategory(2)
 	self.fixture:setUserData(self)
 
+	self.debugThrow = true
 	self.inventory = {}
 	self.selection = 1
 	self.tick = 0
@@ -65,7 +67,8 @@ function Player:keyreleased(key)
 	elseif key == 'r' then
 
 		print("reloaded level")
-		loadLevel(level.name)
+		--NEED to fix this, but for the prototype it's okay, I guess
+		level = Level('data/level/default.lua'):enter()
 
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
@@ -78,11 +81,13 @@ end
 
 
 function Player:throw()
+	
+
 	local type = self.inventory[self.selection]
 	if type then
 		local x = self.body:getX()
 		-- throw from the correct side of the player
-		if x < love.mouse:getX() then
+		if x < view.camera:mousepos() then
 			x = x + 64 -- 64 for player width
 		else
 			x = x - 25 -- arbitrary
@@ -93,19 +98,42 @@ function Player:throw()
 		throwingSeed:throw()
 		
 		table.remove(self.inventory, self.selection)
+		return
+	end
+
+
+	if self.debugThrow then 
+		local x = self.body:getX()
+		-- throw from the correct side of the player
+		if x < view.camera:mousepos() then
+			x = x + 64 -- 64 for player width
+		else
+			x = x - 25 -- arbitrary
+		end
+		local throwingSeed = Seed(x, self.body:getY(), "test")
+		throwingSeed.grace = 1.5
+		throwingSeed:throw()
 	end
 end
 
 
 function Player:simulateThrow()
+	local x = self.body:getX()
+		-- throw from the correct side of the player
+		if x < view.camera:mousepos() then
+			x = x + 64 -- 64 for player width
+		else
+			x = x - 25 -- arbitrary
+		end
 	
-	SimSeed.throw(self.body:getX(), self.body:getY())
+	SimSeed.throw(x, self.body:getY())
 end
 
 function Player:draw()
 	love.graphics.reset()
 	love.graphics.setColor(100, 50, 150)
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+
 	for _, p in pairs(SimSeed.points) do
 		--the +6 are an offset because seeds have a radius of 16 pixels!
 		love.graphics.circle('fill', p.x+6, p.y+6, 4)
