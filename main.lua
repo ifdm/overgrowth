@@ -14,6 +14,7 @@ require 'class/plants/mushroom'
 require 'class/plants/bridge'
 require 'class/plants/dropper'
 require 'class/obstacles/laser'
+require 'class/obstacles/fan'
 require 'class/seed'
 require 'class/view'
 require 'class/level'
@@ -37,24 +38,22 @@ function love.update()
 	world:update(tickRate)
 	Seed.DoGrowth()
 	
+	history[tick] = {}
+
 
 	for i, obj in pairs(objects) do
 		if obj.remove then
 			table.remove(objects, i)
 		else
 			f.exe(obj.update, obj)
-		end
-	end
-
-	view:update()
-	
-	history[tick] = {}
-	for _, obj in pairs(objects) do
-		history[tick][obj] = {
+			history[tick][obj] = {
 			x = obj.body:getX(),
 			y = obj.body:getY()
 		}
+		end
+		
 	end
+	view:update()
 	history[tick - 1 / tickRate] = nil
 end
 

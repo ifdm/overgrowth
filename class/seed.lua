@@ -1,12 +1,13 @@
 Seed = Class {
 	remove = false,
+	name = "Seed",
 		-- Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
 	plantQueue = {}
 }
 
 function Seed:init(x, y, type)
 	self.body = love.physics.newBody(world, x, y, 'dynamic')
-	self.body:setMass(2)
+	self.body:setMassData(0, 0, 2, 0)
 	self.shape = love.physics.newCircleShape(16)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.angle = 0
@@ -34,8 +35,10 @@ end
 
 function Seed.DoGrowth()
 	for i, seed in pairs(Seed.plantQueue) do
-		seed.t:init(seed.x, seed.y, seed.angle)
-		table.remove(Seed.plantQueue, i)
+		if not (seed.t == "test") then
+			seed.t:init(seed.x, seed.y, seed.angle)
+			table.remove(Seed.plantQueue, i)
+		end
 	end
 end
 
@@ -54,7 +57,7 @@ function Seed:handleCollision(other, nX, nY)
 		self:collect()
 	end
 
-	if self.grace == 0 and other.inventory then
+	if self.grace == 0 and other.inventory and not (self.type == "test") then
 		print('Picked up seed of type ' .. self.type.name)
 		other.inventory[#other.inventory + 1] = self.type
 		self:collect()

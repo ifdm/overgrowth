@@ -22,6 +22,11 @@ function Mushroom:init(x, y, angle)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
 
+
+	self.simBody = love.physics.newBody(simWorld, x, y, 'static')
+	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
+	self.simFixture:setUserData(self)
+
 	objects[#objects + 1] = self
 end
 
@@ -31,6 +36,12 @@ function Mushroom:handleCollision(other, nX, nY)
 	normV = vector(nX, nY)
 	velV:mirrorOn(normV)
 	nX, nY = velV:unpack()
+
+
+	if(other.name == "Seed") or (other.name == "SimSeed") then
+		other.body:applyLinearImpulse(nX* 0.035, math.max(nY * self.bounceSpeed * 0.075, self.maxBounceVelocity))
+		return
+	end
 
 	other.body:applyLinearImpulse(nX, math.max(nY * self.bounceSpeed, self.maxBounceVelocity))
 end

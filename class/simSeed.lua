@@ -1,5 +1,6 @@
 SimSeed = {
-	initialized = false
+	initialized = false,
+	name = "SimSeed"
 }
 function SimSeed.setupSim()
 	simWorld = love.physics.newWorld(0, 10 * 64, true)
@@ -31,14 +32,13 @@ function SimSeed:init(x, y)
 	self.body = love.physics.newBody(simWorld, x, y, 'dynamic')
 
 	self.body:setMass(2)
-	self.shape = love.physics.newCircleShape(5)
+	self.shape = love.physics.newCircleShape(16)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.body:setFixedRotation(false)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0.25)
 	self.fixture:setFriction(.95)
 	self.fixture:setCategory(3)
-	self.fixture:setSensor(false)
 
 	self.fixture:setUserData(self)
 	self.initialized = true
@@ -69,8 +69,8 @@ function SimSeed:handleCollision(other, nX, nY)
 		self:collect()
 	end
 
-	if other.type == Mushroom then
-		print ("Hit mushroom!")
+	if other.name == "Mushroom" then
+
 	end
 
 end
