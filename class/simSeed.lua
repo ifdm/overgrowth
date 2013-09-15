@@ -9,10 +9,11 @@ end
 
 function SimSeed.simBeginCollision(a, b, collide)
 	nX, nY = collide:getNormal()
+	x, y = collide:getPositions()
 	a = a:getUserData()
 	b = b:getUserData()
-	f.exe(a.handleCollision, a, b, nX, nY)
-	f.exe(b.handleCollision, b, a, nX, nY)
+	f.exe(a.handleCollision, a, b, nX, nY, x, y)
+	f.exe(b.handleCollision, b, a, nX, nY, x, y)
 end
 
 function SimSeed.simEndCollision(a, b, collide)
@@ -50,6 +51,7 @@ function SimSeed:reset(x, y)
 	self.grace = 1.5
 	self.points = {}
 	self.collected = false
+	self.final = {}
 end
 
 function SimSeed:update()
@@ -62,15 +64,11 @@ function SimSeed:recallPoint()
 self.points[#self.points + 1] = vector(self.body:getX(), self.body:getY())
 
 end
-function SimSeed:handleCollision(other, nX, nY)
+function SimSeed:handleCollision(other, nX, nY, x, y)
 
-	if other.type == Wall then
-		self:recallPoint()
+	if other.name == "Wall" then
+		self.final = vector(x, y)
 		self:collect()
-	end
-
-	if other.name == "Mushroom" then
-
 	end
 
 end

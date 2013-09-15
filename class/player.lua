@@ -45,6 +45,7 @@ function Player:update()
 end
 
 function Player:die()
+	
 	-- self.remove = true
 end
 
@@ -132,8 +133,22 @@ function Player:draw()
 	love.graphics.setColor(100, 50, 150)
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
 
+	local a = 100
+	local r = 0
+	local g = 100
+	local b = 100
 	for _, p in pairs(SimSeed.points) do
+		
+		love.graphics.setColor(r, g, b, a)
+		a = a - 1
+		g = g + 1
+		b = b - 1
 		--the +6 are an offset because seeds have a radius of 16 pixels!
 		love.graphics.circle('fill', p.x+6, p.y+6, 4)
+	end
+
+	if SimSeed.final.x and SimSeed.final.y then
+		love.graphics.setColor(160, 20, 30, 255)
+		love.graphics.circle("line", SimSeed.final.x,  SimSeed.final.y, 30)
 	end
 end

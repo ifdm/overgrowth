@@ -44,7 +44,7 @@ function Laser:init(x, y, angle, mode)
 	
 	--END SETUP
 
-	self.angle = self.angle + (self.step * self.direction)
+	--self.angle = self.angle + (self.step * self.direction)
 	self.unitVector = vector(math.cos(self.angle), math.sin(self.angle))
 	self.unitVector = self.unitVector:normalized()
 	self.offsetVector = vector(self.targetX, self.targetY)

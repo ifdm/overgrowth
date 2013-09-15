@@ -6,6 +6,7 @@ Timer = require 'lib/hump/timer'
 vector = require 'lib/hump/vector'
 
 require 'lib/util'
+require 'lib/heap'
 
 require 'class/player'
 require 'class/simSeed'
@@ -18,6 +19,7 @@ require 'class/obstacles/fan'
 require 'class/seed'
 require 'class/view'
 require 'class/level'
+
 
 function love.load()
 	objects = {}
@@ -93,11 +95,12 @@ function love.keyreleased(key)
 end
 
 function beginCollision(a, b, collide)
-	nX, nY = collide:getNormal()
-	a = a:getUserData()
-	b = b:getUserData()
-	f.exe(a.handleCollision, a, b, nX, nY)
-	f.exe(b.handleCollision, b, a, nX, nY)
+	local nX, nY = collide:getNormal()
+	local x , y  = collide:getPositions()
+	local a = a:getUserData()
+	local b = b:getUserData()
+	f.exe(a.handleCollision, a, b, nX, nY, x, y)
+	f.exe(b.handleCollision, b, a, nX, nY, x, y)
 end
 
 function endCollision(a, b, collide)
