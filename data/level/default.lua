@@ -31,7 +31,10 @@ level.seeds = {
 	{400, 400, Dropper}
 }
 
+--Even though it says entities, you can pretty much use this to make whatever you want
 level.entities = {
+	{c=Checkpoint.create, p={100, 300}},
+	{c=Checkpoint.create, p={300, 300}},
 	{c=Laser.create, p={350, 400, math.pi/2, Laser.mode_circular}},
 	{c=Laser.create, p={450, 400, math.pi/2, Laser.mode_sweep}},
 	{c=Laser.create, p={550, 400, 2*math.pi, Laser.mode_static}},

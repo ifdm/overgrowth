@@ -47,7 +47,8 @@ function Player:update()
 end
 
 function Player:die()
-	
+	self.body:setLinearVelocity(0, 0)
+	self.body:setPosition(Checkpoint.active.body:getX(), Checkpoint.active.body:getY())
 	-- self.remove = true
 end
 

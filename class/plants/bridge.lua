@@ -112,8 +112,4 @@ function Bridge:draw()
 	love.graphics.reset()
 	love.graphics.setColor(30, 150, 30)
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
-	--love.graphics.setColor(0, 0, 255)
-	--local x = self.body:getX()
-	--local y = self.body:getY()
-	--love.graphics.polygon('fill',x -  self.ledgeLookahead, y,x - self.ledgeLookahead, y + self.minLedgeDepth, x - self.ledgeLookahead - self.minLedgeWidth, y + self.minLedgeDepth )
 end
