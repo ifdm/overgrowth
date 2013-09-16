@@ -52,6 +52,7 @@ function SimSeed:reset(x, y)
 	self.points = {}
 	self.collected = false
 	self.final = {}
+	self.preview = nil
 end
 
 function SimSeed:update()
@@ -68,6 +69,17 @@ function SimSeed:handleCollision(other, nX, nY, x, y)
 
 	if other.name == "Wall" then
 		self.final = vector(x, y)
+		if player.inventory[player.selection] then
+			local name = player.inventory[player.selection].name
+			if name == "Bridge" or name == "Mushroom" then
+				local a, s, xP, yP = player.inventory[player.selection]:getAngleShapeAndPosition(x, y, math.atan2(nX, -nY) + math.pi)
+	
+				self.preview = {a = a, s = s, xP = xP, yP = yP}
+			end
+		end
+	
+			
+		
 		self:collect()
 	end
 

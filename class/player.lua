@@ -23,6 +23,8 @@ function Player:init(x, y)
 	self.selection = 1
 	self.tick = 0
 
+	self.tbody = love.physics.newBody(simWorld, 0, 0, 'static')
+
 	objects[#objects + 1] = self
 end
 
@@ -45,7 +47,8 @@ function Player:update()
 end
 
 function Player:die()
-	
+	self.body:setLinearVelocity(0, 0)
+	self.body:setPosition(Checkpoint.active.body:getX(), Checkpoint.active.body:getY())
 	-- self.remove = true
 end
 
@@ -126,5 +129,17 @@ function Player:draw()
 	if SimSeed.final.x and SimSeed.final.y then
 		love.graphics.setColor(160, 20, 30, 255)
 		love.graphics.circle("line", SimSeed.final.x,  SimSeed.final.y, 30)
+	end
+
+	if SimSeed.preview then
+		love.graphics.setColor(100, 100, 100, 100)
+		local an = SimSeed.preview.a
+		local sh = SimSeed.preview.s
+		local xp = SimSeed.preview.xP
+		local yp = SimSeed.preview.yP
+		self.tbody:setPosition(xp, yp)
+		self.tbody:setAngle(an)
+		love.graphics.polygon('fill',self.tbody:getWorldPoints(sh:getPoints()))
+		
 	end
 end
