@@ -3,7 +3,7 @@ Fan = Class{
 	radius = 400,
 	radius2 = 450,
 	width = 50,
-	height = 120,
+	height = 128,
 	fanForRaycast = nil, 
 	donothit = {}
 }
@@ -36,7 +36,7 @@ function Fan:init(x, y, angle, force)
 	self.orthVector = vector(math.cos(angle + math.pi/2), math.sin(angle + math.pi/2))
 
 
-	for i=0, self.height, 12 do
+	for i=0, self.height, 16 do
 		local cX = x + self.orthVector.x * i
 		local cY = y + self.orthVector.y * i
 
@@ -68,8 +68,11 @@ end
 function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
 	if not fixture:getUserData().name then return -1 end
 
-	local dist = (x - Fan.fanForRaycast.targetX)^2 + (y - Fan.fanForRaycast.targetY)^2
-	Fan.fanForRaycast.curHeap:push({fixture = fixture, d = dist, x = x, y = y}, 1000000-dist)
+	Fan.fanForRaycast.hits[#Fan.fanForRaycast.hits + 1] = {
+		x = x,
+		y = y,
+		object = fixture:getUserData()
+	}
 
 	return 1
 
@@ -77,10 +80,11 @@ end
 
 function Fan:update()
 	self.lineEnds = {}
+
 	Fan.fanForRaycast = self
 	for i, line in pairs(self.lines) do
-		self.curHeap = Heap()
 		self.curLine = i
+		self.hits = {}
 		self.targetX = line.x0
 		self.targetY = line.y0
 		world:rayCast(line.x0, line.y0, line.x1, line.y1, FanRayCastCallback)
@@ -95,22 +99,28 @@ function Fan:update()
 		
 		self.lineEnds[i].x0 = line.x0
 		self.lineEnds[i].y0 = line.y0
-		if not self.curHeap:isempty() then
-			--retPack ==>> returnPackage
-			local retPack, dist = self.curHeap:pop()
-			local fixture = retPack.fixture
-			dist = retPack.d
-			self.lineEnds[i].x1 = retPack.x
-			self.lineEnds[i].y1 = retPack.y
-			self.lineEnds[i].text = "r = " .. math.floor(dist)
-			if fixture then
-				local body = fixture:getBody()
-				if body then
-					if body:getType() == "dynamic" then
-						local force = (self.radius2^2 - dist) * self.force
-						print("Force " .. force)
-						body:applyForce(force * self.unitVector.x, force * self.unitVector.y)
-					end
+		local hit = {}
+		local minSquareDist = self.radius2^2
+
+		for _, h in pairs(self.hits) do 
+			local dist = (h.x - self.targetX)^2 + (h.y - self.targetY)^2
+			if(dist < minSquareDist) then
+				self.endPoint = vector(h.x, h.y)
+				hit = h
+				minSquareDist = dist
+			end
+		end
+
+		if hit.object then
+			self.lineEnds[i].x1 = hit.x
+			self.lineEnds[i].y1 = hit.y
+			self.lineEnds[i].text = "r = " .. math.floor(minSquareDist)
+
+			local body = hit.object.body
+			if body then
+				if body:getType() == "dynamic" then
+					local force = (self.radius2^2 - minSquareDist) * self.force
+					body:applyForce(force * self.unitVector.x, force * self.unitVector.y)
 				end
 			end
 		end

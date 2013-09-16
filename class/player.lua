@@ -23,6 +23,8 @@ function Player:init(x, y)
 	self.selection = 1
 	self.tick = 0
 
+	self.tbody = love.physics.newBody(simWorld, 0, 0, 'static')
+
 	objects[#objects + 1] = self
 end
 
@@ -160,9 +162,9 @@ function Player:draw()
 		local sh = SimSeed.preview.s
 		local xp = SimSeed.preview.xP
 		local yp = SimSeed.preview.yP
-		local body = love.physics.newBody(simWorld, xp, yp, 'static')
-		body:setAngle(an)
-		love.graphics.polygon('fill', body:getWorldPoints(sh:getPoints()))
-		body:destroy()
+		self.tbody:setPosition(xp, yp)
+		self.tbody:setAngle(an)
+		love.graphics.polygon('fill',self.tbody:getWorldPoints(sh:getPoints()))
+		
 	end
 end
