@@ -1,5 +1,5 @@
 Laser = Class{
-	maxLength = 500,
+	maxLength = 800,
 	name = "Laser",
 	radius = 30,
 	curLaserForGlobalRaycast,
@@ -10,7 +10,6 @@ Laser = Class{
 }
 
 function Laser.create(x, y, angle, mode)
-	print(mode)
 	Laser(x, y, angle, mode)
 end
 
@@ -58,15 +57,13 @@ end
 
 function LaserRayCastCallback(fixture, x, y, xn, yn, fraction)
 	--Easy optimization to do later: replace this with a priority queue
-	if not fixture:getUserData() then return -1 end
+	if not fixture:getUserData().name then return -1 end
 
 	Laser.curLaserForGlobalRaycast.hits[#Laser.curLaserForGlobalRaycast.hits + 1] = {
 		x = x,
 		y = y,
 		object = fixture:getUserData()
 	}
-
-
 	return 1
 
 end

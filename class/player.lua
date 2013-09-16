@@ -2,7 +2,9 @@ Player = Class {
 	walkSpeed = 180,
 	jumpSpeed = -1000,
 	maxSpeed = 10000,
-	name = "Player"
+	name = "Player",
+	infiniteSeeds = true,
+	godMode = true
 }
 
 function Player:init(x, y)
@@ -47,8 +49,10 @@ function Player:update()
 end
 
 function Player:die()
-	self.body:setLinearVelocity(0, 0)
-	self.body:setPosition(Checkpoint.active.body:getX(), Checkpoint.active.body:getY())
+	if self.godMode == false then
+		self.body:setLinearVelocity(0, 0)
+		self.body:setPosition(Checkpoint.active.body:getX(), Checkpoint.active.body:getY())
+	end
 	-- self.remove = true
 end
 
@@ -64,7 +68,7 @@ function Player:keyreleased(key)
 	-- More robust than a self-enforced canJump is a check if we're falling or going up
 	if key == 'w' then
 		dx, dy = self.body:getLinearVelocity()
-		if dy == 0 then
+		if dy == 0 or self.godMode == true then
 			print("jumping")
 			self.body:applyLinearImpulse(0, self.jumpSpeed)
 		end
@@ -77,6 +81,10 @@ function Player:keyreleased(key)
   -- Stuff gets selected
 	elseif key:match('^[1-5]$') then
 		self.selection = tonumber(key)
+	elseif key == 'g' then 
+		self.godMode = not self.godMode
+	elseif key == 'i' then
+		self.infiniteSeeds = not self.infiniteSeeds
 	end
 end
 
@@ -101,7 +109,9 @@ function Player:throw()
 		throwingSeed.grace = 1.5
 		throwingSeed:throw()
 		
-		table.remove(self.inventory, self.selection)
+		if not self.infiniteSeeds == true then
+			table.remove(self.inventory, self.selection)
+		end
 		return
 	end
 

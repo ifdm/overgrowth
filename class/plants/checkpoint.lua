@@ -1,5 +1,5 @@
 Checkpoint = Class{
-	name = "Checkpoint",
+	--name = "Checkpoint",
 	active = nil,
 	activeID = nil,
 	gid = 0
