@@ -67,12 +67,9 @@ end
 
 function FanRayCastCallback(fixture, x, y, xn, yn, fraction)
 	if not fixture:getUserData().name then return -1 end
-	--if not (fixture:getBody():getType() == "dynamic") then return  end
 
 	local dist = (x - Fan.fanForRaycast.targetX)^2 + (y - Fan.fanForRaycast.targetY)^2
 	Fan.fanForRaycast.curHeap:push({fixture = fixture, d = dist, x = x, y = y}, 1000000-dist)
-	--print("dist ".. dist)
-
 
 	return 1
 
@@ -99,7 +96,7 @@ function Fan:update()
 		self.lineEnds[i].x0 = line.x0
 		self.lineEnds[i].y0 = line.y0
 		if not self.curHeap:isempty() then
-			--retPack = returnPackage
+			--retPack ==>> returnPackage
 			local retPack, dist = self.curHeap:pop()
 			local fixture = retPack.fixture
 			dist = retPack.d

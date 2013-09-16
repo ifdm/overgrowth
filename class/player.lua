@@ -153,4 +153,16 @@ function Player:draw()
 		love.graphics.setColor(160, 20, 30, 255)
 		love.graphics.circle("line", SimSeed.final.x,  SimSeed.final.y, 30)
 	end
+
+	if SimSeed.preview then
+		love.graphics.setColor(100, 100, 100, 100)
+		local an = SimSeed.preview.a
+		local sh = SimSeed.preview.s
+		local xp = SimSeed.preview.xP
+		local yp = SimSeed.preview.yP
+		local body = love.physics.newBody(simWorld, xp, yp, 'static')
+		body:setAngle(an)
+		love.graphics.polygon('fill', body:getWorldPoints(sh:getPoints()))
+		body:destroy()
+	end
 end

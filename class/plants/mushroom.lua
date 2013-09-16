@@ -8,18 +8,45 @@ Mushroom = Class {
 	curvedMushrooms = false
 }
 
-function Mushroom:init(x, y, angle)
+
+--Lazy, didn't integrate with rest of Mushroom class.
+function Mushroom:getAngleShapeAndPosition(x, y, angle)
 	local xC = math.cos(angle)
 	local yC = math.sin(angle)
-	local _body = love.physics.newBody(world, x - (xC * self.width/2), y - (yC * self.height/2), 'static')
+
+	local xPos = x - (xC * self.width/2)
+	local yPos = y - (yC * self.height/2)
+
+	--WTF. Please, fix this if you have any ideas
+	if yC == -1 then
+		yPos = y + self.width/2
+	end
+	if yC == 1 then
+		yPos = y - self.width/2
+	end
+
+	local shape = {}
+	if self.curvedMushrooms == true then
+		shape = love.physics.newCircleShape(60)
+	else
+		shape = love.physics.newPolygonShape(0, 0, self.width, 0, self.width, self.height, 0, self.height)
+	end
+	
+	return angle, shape, xPos, yPos
+end
+
+function Mushroom:init(x, y, angle)
+
+	local a, _shape, xPos, yPos = self:getAngleShapeAndPosition(x, y, angle)
+	self.xPos = xPos
+	self.yPos = yPos
+	local _body = love.physics.newBody(world, xPos, yPos, "static")
 	self.body = _body
+	self.shape = _shape
+
 	self.body:setAngle(angle)
 	self.body:setMass(15)
-	if self.curvedMushrooms == true then
-		self.shape = love.physics.newCircleShape(60)
-	else
-		self.shape = love.physics.newPolygonShape(0, 0, self.width, 0, self.width, self.height, 0, self.height)
-	end
+	
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.fixture:setUserData(self)
 
@@ -28,7 +55,7 @@ function Mushroom:init(x, y, angle)
 	self.fixture:setRestitution(0)
 
 
-	self.simBody = love.physics.newBody(simWorld, x - (xC * self.width/2), y - (yC * self.height/2), 'static')
+	self.simBody = love.physics.newBody(simWorld, xPos, yPos, 'static')
 	self.simBody:setAngle(angle)
 	self.simBody:setMass(15)
 	self.simBody:setFixedRotation(true)
