@@ -13,6 +13,7 @@ function Bridge:getAngleShapeAndPosition(x, y, angle)
 	local xC = math.cos(angle)
 	local yC = math.sin(angle)
 
+
 	local xPos = x - (xC * self.width/2)
 	local yPos = y - (yC * self.height/2)
 
@@ -51,7 +52,10 @@ function Bridge:getAngleShapeAndPosition(x, y, angle)
 		else -- go UP!
 			--LOL do nothing
 		end
+	else --uh-oh, bad angle! Let's pretend it was all a bad dream
+		return self:getAngleShapeAndPosition(x, y, 0)
 	end
+
 
 	local shape = love.physics.newPolygonShape(0, 0, self.width, 0, self.width, self.height, 0, self.height)
 	return angle, shape, xPos, yPos
@@ -81,7 +85,7 @@ function Bridge:init(x, y, angle)
 	self.body = _body
 	self.shape = _shape
 
-	self.body:setAngle(angle)
+	self.body:setAngle(a)
 	self.fixture = love.physics.newFixture(self.body, self.shape, 1)
 	self.fixture:setUserData(self)
 
@@ -93,7 +97,7 @@ function Bridge:init(x, y, angle)
 	self.fixture:setRestitution(0)
 
 	self.simBody = love.physics.newBody(simWorld, xPos, yPos, 'static')
-	self.simBody:setAngle(angle)
+	self.simBody:setAngle(a)
 	self.simBody:setMass(15)
 	self.simBody:setFixedRotation(true)
 	self.simBody:setLinearDamping(0)
