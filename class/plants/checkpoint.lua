@@ -27,6 +27,14 @@ function Checkpoint:init(x, y)
 end
 
 
+function Checkpoint:destroy()
+	self.body:destroy()
+	self.fixture:destroy()
+
+end
+
+
+
 function Checkpoint:handleCollision(object, nX, nY, x, y)
 	if object.name == "Player" then
 		Checkpoint.active = self

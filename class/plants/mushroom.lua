@@ -35,6 +35,13 @@ function Mushroom:getAngleShapeAndPosition(x, y, angle)
 	return angle, shape, xPos, yPos
 end
 
+
+function Mushroom:destroy()
+	self.body:destroy()
+	self.fixture:destroy()
+
+end
+
 function Mushroom:init(x, y, angle)
 
 	local a, _shape, xPos, yPos = self:getAngleShapeAndPosition(x, y, angle)

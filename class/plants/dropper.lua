@@ -37,6 +37,13 @@ function Dropper:draw()
 	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
 end
 
+
+function Dropper:destroy()
+	self.body:destroy()
+	self.fixture:destroy()
+
+end
+
 Drop = Class {
 	name = 'Drop'
 }
