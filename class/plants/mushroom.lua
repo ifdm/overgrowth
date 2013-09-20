@@ -38,8 +38,6 @@ end
 
 function Mushroom:destroy()
 	self.body:destroy()
-	self.fixture:destroy()
-
 end
 
 function Mushroom:init(x, y, angle)

@@ -61,6 +61,11 @@ function Bridge:getAngleShapeAndPosition(x, y, angle)
 	return angle, shape, xPos, yPos
 end
 
+function Bridge:destroy()
+	self.body:destroy()
+end
+
+
 --returns 1 if it's clear, 0 otherwise
 function Bridge:doRaycast(x, y)
 	Bridge.ledgeCheck = 1

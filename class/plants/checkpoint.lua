@@ -29,7 +29,6 @@ end
 
 function Checkpoint:destroy()
 	self.body:destroy()
-	self.fixture:destroy()
 
 end
 

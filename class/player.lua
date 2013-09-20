@@ -85,6 +85,8 @@ function Player:keyreleased(key)
 		self.godMode = not self.godMode
 	elseif key == 'i' then
 		self.infiniteSeeds = not self.infiniteSeeds
+	elseif key == 'p' then
+		Seed.persistentDebug = not Seed.persistentDebug
 	end
 end
 

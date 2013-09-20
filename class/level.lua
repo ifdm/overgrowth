@@ -14,6 +14,8 @@ end
 function Level:enter()
 	print('Loading level "' .. self.name .. '"')
 	
+	
+
 	fixtureMap = {}
 	objects = {}
 	history = {}

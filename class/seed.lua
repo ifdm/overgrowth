@@ -1,6 +1,7 @@
 Seed = Class {
 	remove = false,
 	name = "Seed",
+	persistentDebug = false,
 		-- Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
 	plantQueue = {}
 }
@@ -44,6 +45,11 @@ end
 
 function Seed:handleCollision(other, nX, nY, x, y)
 	--I'm pretty sure the problem is trying to plant things DURING collision detection routine
+	if self.type == "test" and self.persistentDebug then
+		return
+	end
+	
+
 	if self.thrown == true and other.type == Wall then
 		nX, nY = vector(nX, nY):normalized():unpack()
 		local angle = math.atan2(nX, -nY) + math.pi

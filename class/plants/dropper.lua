@@ -40,8 +40,6 @@ end
 
 function Dropper:destroy()
 	self.body:destroy()
-	self.fixture:destroy()
-
 end
 
 Drop = Class {
