@@ -1,98 +1,50 @@
 Game = {}
 
-
-
-function Game.load()
+function Game:enter()
 	objects = {}
 	history = {}
 	fixtureMap = {}
-
-	--Since planting happens during physics updates, need to queue events for later (feel free to remove if there's a better way)
-	plantQueue = {}
 
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
-	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
+	world:setCallbacks(Game.beginCollision, f.empty, f.empty, f.empty)
+	SimSeed.setupSim()
 
-
-
-	--New way to make levels. Make as many as you want, and swap between them freely!
-	local level = Level("default")
-
-	level:addWall(0, 536, {0, 0, 764, 0, 764, 64, 0, 64})
-	level:addWall(0, 0, {0, 0, 64, 0, 64, 600, 0, 600})
-	level:addWall(700, 300, {0, 0, 64, 0, 64, 300, 0, 300})
-	level:addWall(700, 300, {0, 0, 200, 0, 200, 64, 0, 64})
-	level:addWall(900, 0, {0, 0, 64, 0, 64, 364, 0, 364})
-	level:addWall(100, 300, {0, 0, 32, 0, 32, 32, 0, 32})
-	level:setPlayer(96, 400)
-	level:addSeed(200, 400, Mushroom)
-	level:addSeed(300, 400, Bridge)
-	level:addEntity(320, 515, 3*math.pi/2, Laser.create)
-
-	loadLevel("default")
-
-	
+	-- New way to make levels. Make as many as you want, and swap between them freely!
+	level = Level('data/level/default.lua'):enter()
 end
 
-function Game.unload()
-
-
-end
-
-function loadLevel(levelName)
-	--Clear everything (SHOULD BE ABSTRACTED OUT)
-	fixtureMap = {}
-	objects = {}
-	history = {}
-	plantQueue = {}
-
-
-	level = levelIndex[levelName]
-	level:enter()
-
-end
-
-function Game.update()
+function Game:update()
 	world:update(tickRate)
+	Seed.grow()
 	
-for i,seed in pairs(plantQueue) do
-    	seed.type.plant(seed.body:getX(), seed.body:getY(), seed.angle)
-    	seed:collect()
-    	table.remove(plantQueue, i)
-    end
+	history[tick] = {}
 
-	
 	for i, obj in pairs(objects) do
 		if obj.remove then
 			table.remove(objects, i)
+			f.exe(obj.destroy, obj)
 		else
 			f.exe(obj.update, obj)
+			history[tick][obj] = {
+				x = obj.body:getX(),
+				y = obj.body:getY()
+			}
 		end
 	end
 
-
 	view:update()
-	
-	history[tick] = {}
-	for _, obj in pairs(objects) do
-		history[tick][obj] = {
-			x = obj.body:getX(),
-			y = obj.body:getY()
-		}
-	end
 	history[tick - 1 / tickRate] = nil
 end
 
-function Game.draw()
+function Game:draw()
 	if not history[tick - 1] then return end
 	
 	local z = tickDelta / tickRate
 	view:draw(function()
 		for _, obj in pairs(objects) do
 			local previous, current = history[tick - 1][obj], history[tick][obj]
-			if previous and current then
-				
+			if previous and current then				
 				local interpolated = table.interpolate(previous, current, z)
 				local obj = table.copy(obj)
 				obj.body:setX(interpolated.x)
@@ -103,46 +55,23 @@ function Game.draw()
 	end)
 end
 
-function Game.mousepressed(x, y, button)
-	--
-end
-
-function Game.mousereleased(x, y, button)
+function Game:mousereleased(x, y, button)
 	player:mousereleased(x, y, button)
 end
 
-function Game.keypressed(key)
-	--
-end
-
-function Game.keyreleased(key)
+function Game:keyreleased(key)
 	player:keyreleased(key)
 end
 
-
-
-function beginCollision(a, b, collide)
-	nX, nY = collide:getNormal()
-	a = a:getUserData()
-	b = b:getUserData()
-	f.exe(a.handleCollision, a, b, nX, nY)
-	f.exe(b.handleCollision, b, a, nX, nY)
-end
-
-function endCollision(a, b, collide)
-    
-end
-
-function preFrameResolve(a, b, collide)
-    
-end
-
-function postFrameResolve(a, b, collide)
-
+function Game.beginCollision(a, b, collide)
+	local nX, nY = collide:getNormal()
+	local x , y  = collide:getPositions()
+	local a = a:getUserData()
+	local b = b:getUserData()
+	f.exe(a.handleCollision, a, b, nX, nY, x, y)
+	f.exe(b.handleCollision, b, a, nX, nY, x, y)
 end
 
 function plantLater(seed)
-
 	plantQueue[#plantQueue + 1] = seed
-
 end
