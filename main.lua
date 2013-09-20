@@ -21,18 +21,16 @@ require 'class/seed'
 require 'class/view'
 require 'class/level'
 
-
 function love.load()
 	objects = {}
 	history = {}
 	fixtureMap = {}
 
-
-
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(beginCollision, endCollision, preFrameResolve, postFrameResolve)
 	SimSeed.setupSim()
+
 	-- New way to make levels. Make as many as you want, and swap between them freely!
 	level = Level('data/level/default.lua'):enter()
 end
@@ -43,7 +41,6 @@ function love.update()
 	
 	history[tick] = {}
 
-
 	for i, obj in pairs(objects) do
 		if obj.remove then
 			table.remove(objects, i)
@@ -51,12 +48,12 @@ function love.update()
 		else
 			f.exe(obj.update, obj)
 			history[tick][obj] = {
-			x = obj.body:getX(),
-			y = obj.body:getY()
-		}
+				x = obj.body:getX(),
+				y = obj.body:getY()
+			}
 		end
-		
 	end
+
 	view:update()
 	history[tick - 1 / tickRate] = nil
 end
@@ -68,8 +65,7 @@ function love.draw()
 	view:draw(function()
 		for _, obj in pairs(objects) do
 			local previous, current = history[tick - 1][obj], history[tick][obj]
-			if previous and current then
-				
+			if previous and current then				
 				local interpolated = table.interpolate(previous, current, z)
 				local obj = table.copy(obj)
 				obj.body:setX(interpolated.x)
