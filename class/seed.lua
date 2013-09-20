@@ -18,8 +18,6 @@ function Seed:init(x, y, type)
 	self.fixture:setCategory(3)
 	self.body:setBullet(true)
 	
-	--Why?  Because we'll want the objects to be able to overlap.
-	--self.fixture:setMask(2)
 	self.fixture:setUserData(self)
 
 	self.type = type
@@ -34,7 +32,7 @@ function Seed:update()
 end
 
 
-function Seed.DoGrowth()
+function Seed.grow()
 	for i, seed in pairs(Seed.plantQueue) do
 		if not (seed.t == "test") then
 			seed.t:init(seed.x, seed.y, seed.angle)
@@ -66,13 +64,12 @@ function Seed:handleCollision(other, nX, nY, x, y)
 end
 
 function Seed:collect()
-
 	-- Mark for object removal
 	self.remove = true
+end
 
-	-- Remove object components
+function Seed:destroy()
 	self.fixture:destroy()
-	self.body:destroy()
 end
 
 function Seed:throw()

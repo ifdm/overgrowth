@@ -39,7 +39,7 @@ end
 
 function love.update()
 	world:update(tickRate)
-	Seed.DoGrowth()
+	Seed.grow()
 	
 	history[tick] = {}
 
@@ -47,6 +47,7 @@ function love.update()
 	for i, obj in pairs(objects) do
 		if obj.remove then
 			table.remove(objects, i)
+			f.exe(obj.destroy, obj)
 		else
 			f.exe(obj.update, obj)
 			history[tick][obj] = {
