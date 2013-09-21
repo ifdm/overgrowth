@@ -1,7 +1,7 @@
 Game = {}
 
 function Game:enter()
-	debug = false
+	debug = true
 	objects = {}
 	history = {}
 	fixtureMap = {}
