@@ -102,9 +102,10 @@ function table.clear(t, v)
   table.with(t, function(_, k) t[k] = v end)
 end
 
-function table.merge(t1, t2)
+function table.merge(t1, t2, shallow)
   t2 = t2 or {}
-  for k, v in pairs(t1) do t2[k] = table.copy(v) end
+  local f = shallow and f.id or table.copy
+  for k, v in pairs(t1) do t2[k] = f(v) end
   return t2
 end
 
@@ -151,5 +152,6 @@ end
 -- Functions
 f = {}
 f.empty = function() end
+f.id = function(x) return x end
 f.exe = function(x, ...) if x then x(...) end end
 f.ego = function(f) return function(x, ...) x[f](x, ...) end end

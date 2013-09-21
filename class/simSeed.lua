@@ -56,7 +56,7 @@ function SimSeed:handleCollision(other, nX, nY, x, y)
 		self.final = vector(x, y)
 		local seed = player.inventory[player.selection]
 		if seed then
-			if seed.type == Bridge or seed.type == Mushroom then
+			if seed == Bridge or seed == Mushroom then
 				local a, s, xP, yP = seed:getAngleShapeAndPosition(x, y, math.atan2(nX, -nY) + math.pi)
 				self.preview = {a = a, s = s, xP = xP, yP = yP}
 			end

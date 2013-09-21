@@ -3,8 +3,11 @@ Level = Class {}
 levelIndex = {}
 
 function Level:init(filename)
-	local data = love.filesystem.load(filename)()
-	table.merge(data, self)
+	local data = require(filename)
+	table.merge(data, self, true)
+	self.walls = data.walls
+	self.seeds = data.seeds
+	self.entities = data.entities
 	levelIndex[self.name] = self
 end
 

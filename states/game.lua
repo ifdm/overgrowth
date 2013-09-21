@@ -10,7 +10,7 @@ function Game:enter()
 	world:setCallbacks(Game.beginCollision, f.empty, f.empty, f.empty)
 	SimSeed.setupSim()
 
-	level = Level('levels/default.lua'):enter()
+	level = Level('levels/default'):enter()
 end
 
 function Game:update()
