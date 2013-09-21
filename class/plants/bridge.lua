@@ -62,7 +62,6 @@ end
 
 function Bridge:destroy()
 	self.body:destroy()
-	self.simBody:destroy()
 end
 
 function Bridge:doRaycast(x, y)
@@ -111,14 +110,6 @@ function Bridge:grow()
 	self.body:setMass(15)
 	
 	self.fixture:setRestitution(0)
-
-	self.simBody = love.physics.newBody(simWorld, xPos, yPos, 'static')
-	self.simBody:setAngle(a)
-	self.simBody:setMass(15)
-	self.simBody:setFixedRotation(true)
-	self.simBody:setLinearDamping(0)
-	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
-	self.simFixture:setUserData(self)
 	
 	self.grown = true
 end
