@@ -20,6 +20,8 @@ function Seed:init(x, y, type)
 	self.fixture:setUserData(self)
 
 	self.type = type
+	print(type)
+	print(self.type)
 	self.grace = 0
 	self.thrown = false
 	objects[#objects + 1] = self
@@ -77,10 +79,27 @@ function Seed:throw()
 	
 	local v = vector(view.camera:mousepos()) - vector(self.body:getPosition())
 	self.body:setLinearVelocity(v:normalized():permul(vector(700, 700)):unpack())
+
+	for i = 1, #objects do
+		if objects[i].__index == self.type then
+			objects[i].remove = true
+		end
+	end
 end
 
 function Seed:draw()
+	local colors = 
+	{
+		[Mushroom] = {100, 175, 100},
+		[Bridge] = {175, 100, 100},
+		[Dropper] = {100, 100, 175},
+		test = {100, 100, 100}
+	}
+	local color = colors[self.type]
+	if not color then
+		color = {000, 000, 000}
+	end
 	love.graphics.reset()
-	love.graphics.setColor(100, 175, 100)
+	love.graphics.setColor(unpack(color))
 	love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
 end

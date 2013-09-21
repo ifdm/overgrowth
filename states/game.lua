@@ -22,6 +22,7 @@ function Game:update()
 	for i, obj in pairs(objects) do
 		if obj.remove then
 			table.remove(objects, i)
+			print("Object removed.")
 			f.exe(obj.destroy, obj)
 		else
 			f.exe(obj.update, obj)
