@@ -16,13 +16,13 @@ Style Guide
 		else
 			self:unfriend(you)
 		end
-
-
+		
+		
 		return
 		
 	end
-
-
+	
+	
 	canDance()
 
 Should be
@@ -33,10 +33,10 @@ Should be
 		else
 			self:unfriend(you)
 		end
-
+		
 		return
 	end
-
+	
 	canDance()
 
 - (Almost) always have a blank line above a return.
