@@ -71,7 +71,7 @@ function SimSeed:collect()
 end
 
 function SimSeed.runSim()
-	for i = 1, 100 do
+	for i = 0, 100, 1 do
 		simWorld:update(tickRate)
 		if SimSeed.collected then return end
 		SimSeed:update()
