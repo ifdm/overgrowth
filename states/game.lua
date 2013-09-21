@@ -1,6 +1,7 @@
 Game = {}
 
 function Game:enter()
+	debug = false
 	objects = {}
 	history = {}
 	fixtureMap = {}
@@ -57,6 +58,7 @@ function Game:mousereleased(x, y, button)
 end
 
 function Game:keyreleased(key)
+	if key == '`' then debug = not debug end
 	player:keyreleased(key)
 end
 
