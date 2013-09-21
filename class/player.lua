@@ -53,7 +53,7 @@ function Player:keyreleased(key)
 	-- More robust than a self-enforced canJump is a check if we're falling or going up
 	if key == 'w' then
 		dx, dy = self.body:getLinearVelocity()
-		if dy == 0 then
+		if dy == 0 or debug then
 			self.body:applyLinearImpulse(0, self.jumpSpeed)
 		end
 	elseif key == 'r' then
