@@ -55,7 +55,7 @@ function Seed:collect()
 end
 
 function Seed:destroy()
-	self.fixture:destroy()
+	self.body:destroy()
 end
 
 function Seed:throw()

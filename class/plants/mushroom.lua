@@ -35,6 +35,7 @@ end
 
 function Mushroom:destroy()
 	self.body:destroy()
+	self.simBody:destroy()
 end
 
 function Mushroom:init(x, y, angle)

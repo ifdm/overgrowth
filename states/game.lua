@@ -18,13 +18,7 @@ function Game:update()
 	
 	history[tick] = {}
 
-	bridgeCount = 0
-
 	for i, obj in pairs(objects) do
-		if obj.__index == Bridge then
-			bridgeCount = bridgeCount + 1
-		end
-
 		if obj.remove then
 			table.remove(objects, i)
 			print("Object removed.")
@@ -38,8 +32,6 @@ function Game:update()
 			}
 		end
 	end
-
-	print(bridgeCount)
 
 	view:update()
 	history[tick - 1 / tickRate] = nil
@@ -78,8 +70,4 @@ function Game.beginCollision(a, b, collide)
 	local b = b:getUserData()
 	f.exe(a.handleCollision, a, b, nX, nY, x, y)
 	f.exe(b.handleCollision, b, a, nX, nY, x, y)
-end
-
-function plantLater(seed)
-	plantQueue[#plantQueue + 1] = seed
 end
