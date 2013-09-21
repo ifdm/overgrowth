@@ -109,5 +109,5 @@ function Mushroom:grow()
 	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
 	self.simFixture:setUserData(self)
 	
-	self.grown = false
+	self.grown = true
 end
