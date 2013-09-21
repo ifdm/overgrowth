@@ -1,6 +1,5 @@
 Seed = Class {
-	remove = false,
-	persistentDebug = false
+	remove = false
 }
 
 function Seed:init(x, y, type)
@@ -31,20 +30,14 @@ end
 function Seed:handleCollision(other, nX, nY, x, y)
 
 	-- Problem is trying to plant things DURING collision detection routine
-	if self.type == 'test' and self.persistentDebug then
-		return
-	end
-
 	if self.thrown == true and other.type == Wall then
 		nX, nY = vector(nX, nY):normalized():unpack()
 		local angle = math.atan2(nX, -nY) + math.pi
-		if self.type ~= 'test' then
-			self.type(x, y, angle)
-		end
+		self.type(x, y, angle)
 		self:collect()
 	end
 
-	if self.grace == 0 and other.inventory and self.type ~= 'test' then
+	if self.grace == 0 and other.inventory then
 		other.inventory[#other.inventory + 1] = self.type
 		self:collect()
 	end
@@ -79,10 +72,8 @@ function Seed:draw()
 		[Dropper] = {100, 100, 175},
 		test = {100, 100, 100}
 	}
-	local color = colors[self.type]
-	if not color then
-		color = {000, 000, 000}
-	end
+	
+	local color = colors[self.type] or {0, 0, 0}
 	
 	love.graphics.reset()
 	love.graphics.setColor(unpack(color))

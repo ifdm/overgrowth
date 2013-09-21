@@ -35,7 +35,6 @@ end
 
 function Mushroom:destroy()
 	self.body:destroy()
-	self.simBody:destroy()
 end
 
 function Mushroom:init(x, y, angle)
@@ -58,7 +57,7 @@ function Mushroom:handleCollision(other, nX, nY, x, y)
 	velV:mirrorOn(normV)
 	newX, newY = velV:unpack()
 
-	if other.__index == Seed or other.__index == SimSeed then
+	if other.__index == Seed then
 		other.body:applyLinearImpulse(newX * self.bounceSpeedSeed * nX, newY *self.bounceSpeedSeed * nY)
 		return
 	end
@@ -100,14 +99,6 @@ function Mushroom:grow()
 	self.body:setFixedRotation(true)
 	self.body:setLinearDamping(0)
 	self.fixture:setRestitution(0)
-
-	self.simBody = love.physics.newBody(simWorld, xPos, yPos, 'static')
-	self.simBody:setAngle(self.angle)
-	self.simBody:setMass(15)
-	self.simBody:setFixedRotation(true)
-	self.simBody:setLinearDamping(0)
-	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
-	self.simFixture:setUserData(self)
 	
 	self.grown = true
 end

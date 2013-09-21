@@ -9,7 +9,6 @@ require 'lib/util'
 require 'lib/heap'
 
 require 'class/player'
-require 'class/simseed'
 require 'class/wall'
 require 'class/plants/mushroom'
 require 'class/plants/bridge'

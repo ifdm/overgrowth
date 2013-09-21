@@ -8,7 +8,6 @@ function Game:enter()
 	love.physics.setMeter(64)
 	world = love.physics.newWorld(0, 10 * 64, true)
 	world:setCallbacks(Game.beginCollision, f.empty, f.empty, f.empty)
-	SimSeed.setupSim()
 
 	level = Level('levels/default'):enter()
 end
@@ -22,7 +21,6 @@ function Game:update()
 		if obj.remove then
 			table.remove(objects, i)
 			f.exe(obj.destroy, obj)
-
 		else
 			f.exe(obj.update, obj)
 			history[tick][obj] = {
