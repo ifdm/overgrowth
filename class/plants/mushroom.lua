@@ -66,11 +66,11 @@ function Mushroom:handleCollision(other, nX, nY, x, y)
 	local bX = newX * self.bounceSpeed * nX
 	local bY = newY * self.bounceSpeed * nY
 	
-	if bX < self.maxBounceVelocity * -1 then bX = self.maxBounceVelocity * -1	end
+	if bX < self.maxBounceVelocity * -1 then bX = self.maxBounceVelocity * -1 end
 	if bX > self.maxBounceVelocity      then bX = self.maxBounceVelocity      end
 	if bY < self.maxBounceVelocity * -1 then bY = self.maxBounceVelocity * -1 end
 	if bY > self.maxBounceVelocity      then bY = self.maxBounceVelocity      end
-	
+
 	other.body:applyLinearImpulse(bX, bY)
 end
 
@@ -109,5 +109,5 @@ function Mushroom:grow()
 	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
 	self.simFixture:setUserData(self)
 	
-	self.grown = false
+	self.grown = true
 end

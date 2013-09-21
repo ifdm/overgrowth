@@ -67,7 +67,7 @@ function Player:keyreleased(key)
 			self.body:applyLinearImpulse(0, self.jumpSpeed)
 		end
 	elseif key == 'r' then
-		level = Level('data/level/default.lua'):enter()
+		level = Level('levels/default'):enter()
 	elseif key:match('^[1-5]$') then
 		self.selection = tonumber(key)
 	elseif key == 'g' then 

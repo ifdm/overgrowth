@@ -13,6 +13,10 @@ end
 
 function Level:enter()
 	print('Loading level "' .. self.name .. '"')
+
+	for _, obj in pairs(objects) do
+		f.exe(obj.destory, obj)
+	end
 	
 	fixtureMap = {}
 	objects = {}
