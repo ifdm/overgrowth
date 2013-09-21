@@ -63,8 +63,8 @@ end
 function Bridge:destroy()
 	print("Bridge destroyed.")
 	self.body:destroy()
-	self.fixture:destroy()
 	self.shape:destroy()
+	self.fixture:destroy()
 	self.simBody:destroy()
 	self.simFixture:destroy()
 end

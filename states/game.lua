@@ -19,11 +19,18 @@ function Game:update()
 	
 	history[tick] = {}
 
+	bridgeCount = 0
+
 	for i, obj in pairs(objects) do
+		if obj.__index == Bridge then
+			bridgeCount = bridgeCount + 1
+		end
+
 		if obj.remove then
 			table.remove(objects, i)
 			print("Object removed.")
 			f.exe(obj.destroy, obj)
+
 		else
 			f.exe(obj.update, obj)
 			history[tick][obj] = {
@@ -32,6 +39,8 @@ function Game:update()
 			}
 		end
 	end
+
+	print(bridgeCount)
 
 	view:update()
 	history[tick - 1 / tickRate] = nil
