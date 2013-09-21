@@ -83,8 +83,24 @@ function ledgeRaycastCallback(fixture, x, y, xn, yn, fraction)
 end
 
 function Bridge:init(x, y, angle)
+	self.grown = false
+	self.x, self.y, self.angle = x, y, angle
 
-	local a, _shape, xPos, yPos = self:getAngleShapeAndPosition(x, y, angle)
+	objects[#objects + 1] = self
+end
+
+function Bridge:update()
+	if not self.grown then self:grow() end
+end
+
+function Bridge:draw()
+	love.graphics.reset()
+	love.graphics.setColor(30, 150, 30)
+	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+end
+
+function Bridge:grow()
+	local a, _shape, xPos, yPos = self:getAngleShapeAndPosition(self.x, self.y, self.angle)
 	self.xPos = xPos
 	self.yPos = yPos
 	self.body = love.physics.newBody(world, xPos, yPos, 'static')
@@ -107,12 +123,6 @@ function Bridge:init(x, y, angle)
 	self.simBody:setLinearDamping(0)
 	self.simFixture = love.physics.newFixture(self.simBody, self.shape, 1)
 	self.simFixture:setUserData(self)
-
-	objects[#objects + 1] = self
-end
-
-function Bridge:draw()
-	love.graphics.reset()
-	love.graphics.setColor(30, 150, 30)
-	love.graphics.polygon('fill', self.body:getWorldPoints(self.shape:getPoints()))
+	
+	self.grown = true
 end

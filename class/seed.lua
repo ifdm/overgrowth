@@ -1,7 +1,6 @@
 Seed = Class {
 	remove = false,
-	persistentDebug = false,
-	plantQueue = {}
+	persistentDebug = false
 }
 
 function Seed:init(x, y, type)
@@ -20,8 +19,6 @@ function Seed:init(x, y, type)
 	self.fixture:setUserData(self)
 
 	self.type = type
-	print(type)
-	print(self.type)
 	self.grace = 0
 	self.thrown = false
 	objects[#objects + 1] = self
@@ -29,15 +26,6 @@ end
 
 function Seed:update()
 	self.grace = math.max(self.grace - tickRate, 0)
-end
-
-function Seed.grow()
-	for i, seed in pairs(Seed.plantQueue) do
-		if seed.t ~= 'test' then
-			seed.t:init(seed.x, seed.y, seed.angle)
-			table.remove(Seed.plantQueue, i)
-		end
-	end
 end
 
 function Seed:handleCollision(other, nX, nY, x, y)
@@ -50,12 +38,9 @@ function Seed:handleCollision(other, nX, nY, x, y)
 	if self.thrown == true and other.type == Wall then
 		nX, nY = vector(nX, nY):normalized():unpack()
 		local angle = math.atan2(nX, -nY) + math.pi
-		self.plantQueue[#self.plantQueue + 1] = {
-			t = self.type,
-			x = x,
-			y = y,
-			angle = angle
-		}
+		if self.type ~= 'test' then
+			self.type(x, y, angle)
+		end
 		self:collect()
 	end
 
@@ -88,8 +73,7 @@ function Seed:throw()
 end
 
 function Seed:draw()
-	local colors = 
-	{
+	local colors = {
 		[Mushroom] = {100, 175, 100},
 		[Bridge] = {175, 100, 100},
 		[Dropper] = {100, 100, 175},
@@ -99,6 +83,7 @@ function Seed:draw()
 	if not color then
 		color = {000, 000, 000}
 	end
+	
 	love.graphics.reset()
 	love.graphics.setColor(unpack(color))
 	love.graphics.circle('fill', self.body:getX(), self.body:getY(), self.shape:getRadius())
