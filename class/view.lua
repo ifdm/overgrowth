@@ -26,6 +26,8 @@ function View:update()
 	if py - cy > (self.h * .80) then cy = py - (self.h * .80) end
 	if (cx + self.w) - px > (self.w * .80) then cx = px + (self.w * .80) - self.w end
 	if (cy + self.h) - py > (self.h * .80) then cy = py + (self.h * .80) - self.h end
+	if cx < 0 then cx = 0 end
+	if cy < 0 then cy = 0 end
 	cx, cy = cx + 400, cy + 300
 	
 	self.camera:lookAt(cx, cy)
