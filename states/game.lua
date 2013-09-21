@@ -15,7 +15,6 @@ end
 
 function Game:update()
 	world:update(tickRate)
-	Seed.grow()
 	
 	history[tick] = {}
 
