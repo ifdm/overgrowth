@@ -1,7 +1,5 @@
-overgrowth
-==========
-
-IFDM Capstone Game.
+Overgrowth
+----------
 
 - - - 
 

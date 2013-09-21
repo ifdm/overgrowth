@@ -54,7 +54,7 @@ function table.copy(x)
   local t = type(x)
   if t ~= 'table' then return x end
   local y = {}
-  for k, v in next, x, nil do y[k] = table.copy(v) end
+  for k, v in next, x, nil do if v ~= x then y[k] = table.copy(v) end end
   setmetatable(y, getmetatable(x))
   return y
 end
@@ -153,9 +153,3 @@ f = {}
 f.empty = function() end
 f.exe = function(x, ...) if x then x(...) end end
 f.ego = function(f) return function(x, ...) x[f](x, ...) end end
-
--- Timing
-timer = {}
-timer.tic = function() _t1 = love.timer.getMicroTime() end
-timer.toc = function() return love.timer.getMicroTime() - _t1 end
-timer.rot = function(val, f) if not val or val == 0 then return val end if val < tickRate then f() return 0 end return val - tickRate end
