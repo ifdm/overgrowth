@@ -6,6 +6,47 @@ Overgrowth
 Style Guide
 -----------
 
+### It's the little things
+- Avoid unnecessary whitespace:
+
+	function canDance(you)
+		if you.wantTo then
+			
+			friends.leaveBehind()
+		else
+			self:unfriend(you)
+		end
+
+
+		return
+		
+	end
+
+
+	canDance()
+
+Should be
+
+	function canDance(you)
+		if you.wantTo then
+			friends.leaveBehind()
+		else
+			self:unfriend(you)
+		end
+
+		return
+	end
+
+	canDance()
+
+- (Almost) always have a blank line above a return.
+- Always use single quotes.  Because they're classy and stuff.
+- Every mathematical operator should be surrounded by spaces.
+- `if`'s hardly ever need parentheses.
+- Filenames should always consist of lowercase letters.  If you *really* need a filename with multiple words, use hyphens.
+- Variables are camelCased, not StudlyCased or snake_cased.
+- Classes are StudlyCased, not camelCased or snake_cased.
+
 ### Editor
 Set your text editor to indent using tabs.  The tab width should be 2.  As a general rule, indentation used to indent functional code blocks should use tabs, and any indentation used to visually align any text should use spaces.  Example:
 
@@ -52,9 +93,6 @@ When committing, the first line of the commit should be a brief description of c
 	-Removed all data files.
 	-Removed all libraries.
 	-All bugs fixed.
-
-### Whitespace
-Avoid unnecessary blank lines.
 
 - - -
 
