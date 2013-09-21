@@ -9,6 +9,7 @@ Style Guide
 ### It's the little things
 - Avoid unnecessary whitespace:
 
+```lua
 	function canDance(you)
 		if you.wantTo then
 			
@@ -24,9 +25,11 @@ Style Guide
 	
 	
 	canDance()
+```
 
 Should be
 
+```lua
 	function canDance(you)
 		if you.wantTo then
 			friends.leaveBehind()
@@ -38,6 +41,7 @@ Should be
 	end
 	
 	canDance()
+```
 
 - (Almost) always have a blank line above a return.
 - Always use single quotes.  Because they're classy and stuff.
@@ -62,6 +66,7 @@ Lines 1, 2, 3, and 6 would use exclusively tabs.  Lines 4 and 5 would use one in
 ### Comments
 When using single line comments, type `--`, followed by a single space, followed by the comment.  Any comment that is not a line of code should have a blank newline above it.  Example:
 
+```lua
 	function dance()
 		
 		-- Time to get down and dirty.
@@ -69,9 +74,11 @@ When using single line comments, type `--`, followed by a single space, followed
 		player:getOnFloor()
 		-- with('all', 'walkTheDinosaur')
 	end
+```
 
 Comment headers may be used to section off larger files or group related variables and functions.  Comment headers are similar to normal comments, except they have sixteen hyphens above and below them:
 
+```lua
 	----------------
 	-- Meta Info
 	----------------
@@ -83,6 +90,7 @@ Comment headers may be used to section off larger files or group related variabl
 	----------------
 	str = 4
 	stam = 4
+```
 
 ### Commits
 When committing, the first line of the commit should be a brief description of changes.  Changes should be separated by semicolons, and the line should not exceed 50 characters.  Vim will automatically color code the first 50 characters of a git commit message.  Follow this brief description by a blank line, then a more detailed description of what has changed (if applicable).  Example:
