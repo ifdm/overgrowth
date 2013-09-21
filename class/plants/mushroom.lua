@@ -36,8 +36,8 @@ end
 function Mushroom:mousereleased(x, y, button)
 	if button == 'r' then
 		x, y = view.camera:mousepos()
-
-		if math.inside(x, y, self.x - self.width / 2, self.y - self.height / 2, self.width, self.height) then
+		--print(x, y, self.xPos - self.width, self.yPos - self.height, self.width, self.height)
+		if math.inside(x, y, self.xPos - self.width, self.yPos - self.height, self.width, self.height) then
 			self.remove = true
 		end
 	end
