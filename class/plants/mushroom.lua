@@ -33,6 +33,14 @@ function Mushroom:getAngleShapeAndPosition(x, y, angle)
 	return angle, shape, xPos, yPos
 end
 
+function Mushroom:mousereleased(x, y, button)
+	if button == 'r' then
+		if self.shape:testPoint(self.body:getX(), self.body:getY(), 0, x, y) then
+			self.remove = true
+		end
+	end
+end
+
 function Mushroom:destroy()
 	self.body:destroy()
 end

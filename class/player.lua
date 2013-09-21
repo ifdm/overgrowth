@@ -38,10 +38,8 @@ function Player:update()
 end
 
 function Player:die()
-	if self.godMode == false then
-		self.body:setLinearVelocity(0, 0)
-		self.body:setPosition(Checkpoint.active.body:getX(), Checkpoint.active.body:getY())
-	end
+	self.body:setLinearVelocity(0, 0)
+	self.body:setPosition(Checkpoint.active.body:getX(), Checkpoint.active.body:getY())
 end
 
 function Player:mousereleased(x, y, button)
@@ -67,11 +65,13 @@ end
 
 function Player:throw()
 	local type = self.inventory[self.selection]
-	
+
 	if type then
 		local throwingSeed = Seed(self.body:getX(), self.body:getY(), type)
+		
 		throwingSeed.grace = 1.5
 		throwingSeed:throw()
+
 		return
 	end
 end
