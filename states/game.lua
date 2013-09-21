@@ -54,7 +54,9 @@ function Game:draw()
 end
 
 function Game:mousereleased(x, y, button)
-	player:mousereleased(x, y, button)
+	for _, obj in pairs(objects) do
+		f.exe(obj.mousereleased, obj, x, y, button)
+	end
 end
 
 function Game:keyreleased(key)
