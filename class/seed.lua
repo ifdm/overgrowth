@@ -57,12 +57,6 @@ function Seed:throw()
 	
 	local v = vector(view.camera:mousepos()) - vector(self.body:getPosition())
 	self.body:setLinearVelocity(v:normalized():permul(vector(700, 700)):unpack())
-
-	for i = 1, #objects do
-		if objects[i].__index == self.type then
-			objects[i].remove = true
-		end
-	end
 end
 
 function Seed:draw()
