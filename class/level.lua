@@ -30,6 +30,8 @@ function Level:enter()
 	for _, e in pairs(self.entities) do
 		e.c(unpack(e.p))
 	end
+	
+	Vine(100, 250)
 
 	player = Player(self.px, self.py)
 	view = View(player)
