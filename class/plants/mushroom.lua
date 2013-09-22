@@ -33,6 +33,16 @@ function Mushroom:getAngleShapeAndPosition(x, y, angle)
 	return angle, shape, xPos, yPos
 end
 
+function Mushroom:mousereleased(x, y, button)
+	if button == 'r' then
+		x, y = view.camera:mousepos()
+		--print(x, y, self.xPos - self.width, self.yPos - self.height, self.width, self.height)
+		if math.inside(x, y, self.xPos - self.width, self.yPos - self.height, self.width, self.height) then
+			self.remove = true
+		end
+	end
+end
+
 function Mushroom:destroy()
 	self.body:destroy()
 end
@@ -65,11 +75,11 @@ function Mushroom:handleCollision(other, nX, nY, x, y)
 	local bX = newX * self.bounceSpeed * nX
 	local bY = newY * self.bounceSpeed * nY
 	
-	if bX < self.maxBounceVelocity * -1 then bX = self.maxBounceVelocity * -1	end
+	if bX < self.maxBounceVelocity * -1 then bX = self.maxBounceVelocity * -1 end
 	if bX > self.maxBounceVelocity      then bX = self.maxBounceVelocity      end
 	if bY < self.maxBounceVelocity * -1 then bY = self.maxBounceVelocity * -1 end
 	if bY > self.maxBounceVelocity      then bY = self.maxBounceVelocity      end
-	
+
 	other.body:applyLinearImpulse(bX, bY)
 end
 

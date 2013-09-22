@@ -1,7 +1,7 @@
 require 'require'
 
 function love.load()
-	Gamestate.registerEvents()
+  Gamestate.registerEvents()
   Gamestate.switch(Game)
 end
 
