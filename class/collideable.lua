@@ -1,0 +1,3 @@
+Collideable = {
+	name = 'Collideable'
+}

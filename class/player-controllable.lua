@@ -1,0 +1,3 @@
+PlayerControllable = {
+	name = 'PlayerControllable'
+}
