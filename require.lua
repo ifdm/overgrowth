@@ -8,6 +8,8 @@ vector = require 'lib/hump/vector'
 require 'lib/util'
 unitSize = 32
 
+actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
+
 require 'states/game'
 
 require 'class/collide-component'
