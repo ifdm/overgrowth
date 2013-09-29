@@ -1,6 +1,6 @@
 Player = Class {
 	name = 'Player',
-	
+
 	controls = {
 		keyreleased = {
 			a = 'left',
@@ -9,11 +9,11 @@ Player = Class {
 		}
 	},
 	
-	state = {
-		
-	},
-	
-	components = {ControlComponent, CollideComponent, PhysicsComponent}
+	components = {ControlComponent, CollideComponent, PhysicsComponent, DrawComponent}
 }
 
 Player:include(Entity)
+
+function Player:init()
+	Entity.init(self)
+end

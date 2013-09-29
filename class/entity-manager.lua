@@ -4,12 +4,12 @@ function EntityManager:init()
 	self.entities = {}
 end
 
-function EntityManager:register(entity, vars)
+function EntityManager:register(entity)
 	local e = entity()
 	table.insert(self.entities, e)
-	table.merge(vars, e)
+	return e
 end
 
-for action in pairs(actions) do
+for _, action in pairs(actions) do
 	EntityManager[action] = function(self) table.with(self.entities, f.ego(action)) end
 end
