@@ -1,0 +1,3 @@
+CollideComponent = {
+	name = 'CollideComponent'
+}

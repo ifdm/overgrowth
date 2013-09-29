@@ -1,0 +1,3 @@
+PlayerControlComponent = {
+	name = 'PlayerControlComponent'
+}

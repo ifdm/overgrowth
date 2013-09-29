@@ -1,3 +1,0 @@
-PlayerControllable = {
-	name = 'PlayerControllable'
-}

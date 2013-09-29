@@ -9,7 +9,7 @@ Player = Class {
 		}
 	},
 	
-	components = {Controllable, Collideable}
+	components = {ControlComponent, CollideComponent}
 }
 
 Player:include(Entity)

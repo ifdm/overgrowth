@@ -1,7 +1,7 @@
-Drawable = {
-	name = 'Drawable'
+DrawComponent = {
+	name = 'DrawComponent'
 }
 
-function Drawable:draw()
+function DrawComponent:draw()
 	love.graphics.draw(self.sprite, self.x, self.y, self.angle, self.scaleX, self.scaleY)
 end
