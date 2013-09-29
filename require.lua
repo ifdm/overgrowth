@@ -6,10 +6,9 @@ Timer = require 'lib/hump/timer'
 vector = require 'lib/hump/vector'
 
 require 'lib/util'
-unitSize = 32
 
 -- Globals :)
-actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
+actions = {'init', 'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
 unitSize = 32
 
 require 'states/game'

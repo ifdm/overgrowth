@@ -2,18 +2,6 @@ Entity = Class {
 	name = 'Entity'
 }
 
-local actions = {
-	init = {},
-	update = {},
-	draw = {},
-	keypressed = {},
-	keyreleased = {},
-	mousepressed = {},
-	mousereleased = {},
-	sakujo = {},
-	quit = {}
-}
-
 function Entity:boot()
 	for i, component in pairs(self.components) do
 		if _G[self.name .. component.name] then
@@ -21,30 +9,28 @@ function Entity:boot()
 		end
 	end
 	
-	self.actions = table.copy(actions)
+	self.actions = {}
 	
 	for k, component in pairs(self.components) do
-		for action, _ in pairs(self.actions) do
+		for _, action in pairs(actions) do
+			self.actions[action] = self.actions[action] or {}
 			if component[action] then
 				table.insert(self.actions[action], component[action])
 			end
 		end
 		
 		for key, f in pairs(table.except(component, actions)) do
-			if type(f) == 'function' and key ~= 'init' then
-				self[key] = f
-			end
+			if type(f) == 'function' then self[key] = f end
 		end
 	end
 end
 
-for action, _ in pairs(actions) do
+for _, action in pairs(actions) do
 	Entity[action] = function(self) self:act(action) end
 end
 
 function Entity:init()
 	self.state = {}
-	
 	self:act('init')
 end
 
