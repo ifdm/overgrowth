@@ -7,6 +7,8 @@ vector = require 'lib/hump/vector'
 
 require 'lib/util'
 
+actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
+
 require 'states/game'
 
 require 'class/collideable'

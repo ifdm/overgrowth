@@ -5,18 +5,6 @@ function Game:enter()
 	entityManager:register(Player)
 end
 
-function Game:update()
-	entityManager:update()
-end
-
-function Game:draw()
-	entityManager:draw()
-end
-
-function Game:mousereleased(x, y, button)
-	--
-end
-
-function Game:keyreleased(key)
-	--
+for action in pairs(actions) do
+	Game[action] = function() entityManager[action](entityManager) end
 end
