@@ -7,9 +7,10 @@ function Game:enter()
 	p.state.pos.x = 3 * unitSize
 	p.state.pos.y = 2 * unitSize
 	
-	local w = entityManager:register(Wall)
-	w.state.pos.x = 10 * unitSize
-	w.state.pos.y = 10 * unitSize
+	local g = entityManager:register(Wall)
+	g.state.pos.x = 0 * unitSize
+	g.state.pos.y = 18 * unitSize
+	g.state.mask.width = 25
 end
 
 for _, action in pairs(actions) do
