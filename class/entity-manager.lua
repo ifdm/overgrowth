@@ -4,8 +4,10 @@ function EntityManager:init()
 	self.entities = {}
 end
 
-function EntityManager:register(entity)
-	table.insert(self.entities, entity())
+function EntityManager:register(entity, vars)
+	local e = entity()
+	table.insert(self.entities, e)
+	table.merge(vars, e)
 end
 
 for action in pairs(actions) do

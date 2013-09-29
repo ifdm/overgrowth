@@ -29,6 +29,12 @@ function Entity:boot()
 				table.insert(self.actions[action], component[action])
 			end
 		end
+		
+		for key, f in pairs(table.except(component, actions)) do
+			if type(f) == 'function' and key ~= 'init' then
+				self[key] = f
+			end
+		end
 	end
 end
 

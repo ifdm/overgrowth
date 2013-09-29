@@ -1,3 +1,0 @@
-CollideComponent = {
-	name = 'CollideComponent'
-}

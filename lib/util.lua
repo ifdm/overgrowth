@@ -104,8 +104,10 @@ end
 
 function table.merge(t1, t2, shallow)
   t2 = t2 or {}
-  local f = shallow and f.id or table.copy
-  for k, v in pairs(t1) do t2[k] = f(v) end
+  for k, v in pairs(t1) do
+    if not shallow and type(v) == 'table' then t2[k] = table.merge(t1[k], t2[k], shallow)
+    else t2[k] = v end
+  end
   return t2
 end
 

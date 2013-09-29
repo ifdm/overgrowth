@@ -7,15 +7,19 @@ vector = require 'lib/hump/vector'
 
 require 'lib/util'
 
+-- Globals :)
 actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
+unitSize = 32
 
 require 'states/game'
 
-require 'class/collide-component'
 require 'class/control-component'
 require 'class/draw-component'
-require 'class/player-control-component'
+require 'class/physics-component'
+
 require 'class/entity'
 require 'class/entity-manager'
+
 require 'class/player'
+require 'class/player-control-component'
 Player:boot()
