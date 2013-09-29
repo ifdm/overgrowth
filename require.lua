@@ -6,6 +6,7 @@ Timer = require 'lib/hump/timer'
 vector = require 'lib/hump/vector'
 
 require 'lib/util'
+unitSize = 32
 
 require 'states/game'
 
@@ -13,6 +14,7 @@ require 'class/collide-component'
 require 'class/control-component'
 require 'class/draw-component'
 require 'class/player-control-component'
+require 'class/player-draw-component'
 require 'class/entity'
 require 'class/entity-manager'
 require 'class/player'

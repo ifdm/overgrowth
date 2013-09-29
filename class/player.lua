@@ -1,6 +1,6 @@
 Player = Class {
 	name = 'Player',
-	
+
 	controls = {
 		keyreleased = {
 			a = 'left',
@@ -9,7 +9,7 @@ Player = Class {
 		}
 	},
 	
-	components = {ControlComponent, CollideComponent}
+	components = {ControlComponent, CollideComponent, DrawComponent}
 }
 
 Player:include(Entity)
