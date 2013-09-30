@@ -10,7 +10,7 @@ require 'lib/util'
 -- Globals :)
 actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
 
-require "data/world"
+require 'data/world'
 
 require 'states/game'
 
