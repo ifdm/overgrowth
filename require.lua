@@ -6,11 +6,11 @@ Timer = require 'lib/hump/timer'
 vector = require 'lib/hump/vector'
 
 require 'lib/util'
-unitSize = 32
 
 -- Globals :)
 actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
-unitSize = 32
+
+require "data/world"
 
 require 'states/game'
 
@@ -24,8 +24,14 @@ require 'class/entity-manager'
 require 'class/player'
 require 'class/player-control-component'
 require 'class/player-draw-component'
+require 'class/player-physics-component'
 Player:boot()
 
 require 'class/wall'
 require 'class/wall-draw-component'
 Wall:boot()
+
+require 'class/seed'
+require 'class/seed-draw-component'
+require 'class/seed-physics-component'
+Seed:boot()
