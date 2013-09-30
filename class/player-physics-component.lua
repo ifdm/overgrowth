@@ -3,7 +3,6 @@ PlayerPhysicsComponent = {
 }
 
 function PlayerPhysicsComponent:init()
-	print('asdf')
 	PhysicsComponent.init(self)
 end
 
@@ -13,4 +12,9 @@ end
 
 function PlayerPhysicsComponent:right()
 	self.state.vel.x = 1
+end
+
+function PlayerPhysicsComponent:update()
+	self.state.acc = gravity * unitSize
+	PhysicsComponent.update(self)
 end

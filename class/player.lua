@@ -9,7 +9,7 @@ Player = Class {
 		}
 	},
 	
-	components = {ControlComponent, CollideComponent, PhysicsComponent, DrawComponent}
+	components = {ControlComponent, PhysicsComponent, DrawComponent}
 }
 
 Player:include(Entity)
