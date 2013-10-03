@@ -11,7 +11,7 @@ function Entity:boot()
 	
 	self.actions = {}
 	
-	for k, component in pairs(self.components) do
+	for k, component in ipairs(self.components) do
 		for _, action in pairs(actions) do
 			self.actions[action] = self.actions[action] or {}
 			if component[action] then

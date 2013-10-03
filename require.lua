@@ -8,7 +8,7 @@ vector = require 'lib/hump/vector'
 require 'lib/util'
 
 -- Globals :)
-actions = {'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
+actions = {'init', 'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
 
 require 'data/world'
 
