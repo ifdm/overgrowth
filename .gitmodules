@@ -4,3 +4,6 @@
 [submodule "levels"]
 	path = levels
 	url = https://github.com/ifdm/overgrowth-levels
+[submodule "editor"]
+	path = editor
+	url = https://github.com/ifdm/overgrowth-editor
