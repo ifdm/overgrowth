@@ -8,8 +8,8 @@ function EntityManager:init()
 	self.entities = {}
 end
 
-function EntityManager:register(entity)
-	local e = entity()
+function EntityManager:register(entity, ...)
+	local e = entity(...)
 	table.insert(self.entities, e)
 	return e
 end

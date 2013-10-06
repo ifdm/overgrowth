@@ -3,12 +3,14 @@ PhysicsComponent = {
 }
 
 function PhysicsComponent:init()
-	self.state.pos = vector(0, 0)
-	self.state.vel = vector(0, 0)
-	self.state.acc = vector(0, 0)
+	if self.body and self.shape then
+		self.fixture = love.physics.newFixture(self.body, self.shape, 1.0)
+	end
 end
 
 function PhysicsComponent:update()
-	self.state.vel = self.state.vel + self.state.acc * tickRate
-	self.state.pos = self.state.pos + self.state.vel * tickRate
+	if self.body then
+		self.x = self.body:getX()
+		self.y = self.body:getY()
+	end
 end

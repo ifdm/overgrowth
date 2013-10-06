@@ -9,6 +9,12 @@ Player = Class {
 		}
 	},
 	
+	render = {
+		rectangle = function(self)
+			return 'fill', self.x, self.y, 16, 32
+		end,
+	},
+	
 	components = {PhysicsComponent, ControlComponent, DrawComponent}
 }
 
