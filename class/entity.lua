@@ -3,8 +3,6 @@ Entity = Class {
 }
 
 function Entity:boot()
-	print(self.name, self.render)
-	
 	for i, component in pairs(self.components) do
 		local subclass = _G[self.name .. component.name]
 		if subclass then

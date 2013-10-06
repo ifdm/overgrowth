@@ -159,12 +159,11 @@ f.exe = function(x, ...) if x then x(...) end end
 f.ego = function(f) return function(x, ...) x[f](x, ...) end end
 
 function io.load(dir)
-	print(dir)
 	for _, file in ipairs(love.filesystem.enumerate(dir)) do
-		if file:match('\.lua') then print('\t' .. file) require(dir .. '/' .. file:gsub('\.lua', '')) end
+		if file:match('\.lua') then require(dir .. '/' .. file:gsub('\.lua', '')) end
 	end
 	
 	for _, file in ipairs(love.filesystem.enumerate(dir)) do
-		if love.filesystem.isDirectory(dir .. '/' .. file) then print('\t' .. file) io.load(dir .. '/' .. file) end
+		if love.filesystem.isDirectory(dir .. '/' .. file) then io.load(dir .. '/' .. file) end
 	end
 end

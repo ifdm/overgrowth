@@ -46,7 +46,6 @@ end
 -- deeply copies `other' into `class'. keys in `other' that are already
 -- defined in `class' are omitted
 local function include(class, other)
-	print(other)
 	return include_helper(class, other, {})
 end
 
