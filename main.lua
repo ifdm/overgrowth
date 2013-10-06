@@ -1,8 +1,8 @@
-require 'require'
-
 function love.load()
-  Gamestate.registerEvents()
-  Gamestate.switch(Game)
+	require 'require'
+	
+	Gamestate.registerEvents()
+	Gamestate.switch(Game)
 end
 
 function love.run()

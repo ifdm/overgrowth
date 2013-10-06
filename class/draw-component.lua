@@ -3,6 +3,8 @@ DrawComponent = {
 }
 
 function DrawComponent:draw()
+	assert(self.render, self.name .. ' can\'t draw!')
+	
 	if #self.render then
 		for _, v in ipairs(self.render) do love.graphics[v.fn](v.args(self)) end
 	else	

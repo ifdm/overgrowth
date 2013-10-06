@@ -7,5 +7,5 @@ function LevelPhysicsComponent:init()
 end
 
 function LevelPhysicsComponent:update()
-	self.world:update(delta)
+	self.world:update(tickRate)
 end

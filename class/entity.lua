@@ -3,6 +3,8 @@ Entity = Class {
 }
 
 function Entity:boot()
+	print(self.name, self.render)
+	
 	for i, component in pairs(self.components) do
 		local subclass = _G[self.name .. component.name]
 		if subclass then
@@ -32,7 +34,6 @@ for _, action in pairs(actions) do
 end
 
 function Entity:init()
-	self.state = {}
 	self:act('init')
 end
 
@@ -40,4 +41,8 @@ function Entity:act(action)
 	table.with(self.actions[action], function(f)
 		f(self)
 	end)
+end
+
+function Entity:all()
+	return Game.entityManager.byClass[self.name]
 end

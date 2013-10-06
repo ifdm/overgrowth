@@ -1,3 +1,5 @@
 Level = Class {
-	components = {EditorComponent}
+	name = 'Level',
+	components = {PhysicsComponent, EditorComponent},
+	__includes = Entity
 }

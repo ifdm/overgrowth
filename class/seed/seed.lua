@@ -6,11 +6,6 @@ Seed = Class {
 			return 'fill', self.x, self.y, 32
 		end
 	},
-	components = {PhysicsComponent, DrawComponent}
+	components = {PhysicsComponent, DrawComponent},
+	__includes = Entity
 }
-
-Seed:include(Entity)
-
-function Seed:init()
-	Entity.init(self)
-end

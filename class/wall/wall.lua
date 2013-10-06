@@ -1,11 +1,12 @@
 Wall = Class {
 	name = 'Wall',
 	
-	components = {PhysicsComponent, DrawComponent}
+	render = {
+		rectangle = function(self)
+			return 'fill', self.x, self.y, 16, 16
+		end
+	},
+	
+	components = {PhysicsComponent, DrawComponent},
+	__includes = Entity
 }
-
-Wall:include(Entity)
-
-function Wall:init()
-	Entity.init(self)
-end

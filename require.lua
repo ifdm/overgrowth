@@ -15,8 +15,9 @@ require 'states/game'
 
 io.load('class')
 
+Seed:boot()
 Player:boot()
 Wall:boot()
-Seed:boot()
+Level:boot()
 
 require 'editor/editor'

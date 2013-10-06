@@ -9,11 +9,12 @@ Player = Class {
 		}
 	},
 	
-	components = {PhysicsComponent, ControlComponent, DrawComponent}
+	render = {
+		rectangle = function(self)
+			return 'fill', self.x, self.y, 16, 32
+		end
+	},
+	
+	components = {PhysicsComponent, ControlComponent, DrawComponent},
+	__includes = Entity
 }
-
-Player:include(Entity)
-
-function Player:init(...)
-	Entity.init(self, ...)
-end
