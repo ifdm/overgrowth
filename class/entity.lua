@@ -4,8 +4,10 @@ Entity = Class {
 
 function Entity:boot()
 	for i, component in pairs(self.components) do
-		if _G[self.name .. component.name] then
-			self.components[i] = _G[self.name .. component.name]
+		local subclass = _G[self.name .. component.name]
+		if subclass then
+			if not getmetatable(subclass) then setmetatable(subclass, {__index = component}) end
+			self.components[i] = subclass
 		end
 	end
 	
