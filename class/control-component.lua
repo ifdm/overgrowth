@@ -3,5 +3,7 @@ ControlComponent = {
 }
 
 function ControlComponent:keyreleased(key)
-	self[self.controls.keyreleased[key]]()
+	if self.controls.keyreleased[key] then
+		self[self.controls.keyreleased[key]]()
+	end
 end
