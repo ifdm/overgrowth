@@ -2,19 +2,10 @@ Game = {}
 
 function Game:enter()
 	self.entityManager = EntityManager()
-	
-	local p = self.entityManager:register(Player)
-	p.state.pos.x = 3 * unitSize
-	p.state.pos.y = 2 * unitSize
-	
-	local g = self.entityManager:register(Wall)
-	g.state.pos.x = 0 * unitSize
-	g.state.pos.y = 18 * unitSize
-	g.state.mask.width = 25
-	
-	local s = self.entityManager:register(Seed)
-	s.state.pos.x = 20 * unitSize
-	s.state.pos.y = 9 * unitSize
+	self.entityManager:register(Level)
+	self.entityManager:register(Player)
+	self.entityManager:register(Wall)
+	self.entityManager:register(Seed)
 end
 
 for _, action in pairs(actions) do
