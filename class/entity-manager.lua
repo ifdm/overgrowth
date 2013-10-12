@@ -1,7 +1,11 @@
 EntityManager = Class {}
 
 for _, action in pairs(actions) do
-	EntityManager[action] = function(self) table.with(self.entities, f.ego(action)) end
+	EntityManager[action] = function(self, ...)
+		for _, v in pairs(self.entities) do
+			v[action](v, ...)
+		end
+	end
 end
 
 function EntityManager:init()

@@ -9,6 +9,6 @@ function Game:enter()
 end
 
 for _, action in pairs(actions) do
-	Game[action] = function(self) f.exe(self.entityManager[action], self.entityManager) end
+	Game[action] = function(self, ...) f.exe(self.entityManager[action], self.entityManager, ...) end
 	Game.init = f.empty()
 end

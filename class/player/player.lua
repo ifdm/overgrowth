@@ -11,6 +11,7 @@ Player = Class {
 	
 	render = {
 		rectangle = function(self)
+			love.graphics.setColor(255, 255, 255)
 			return 'fill', self.x, self.y, 16, 32
 		end
 	},

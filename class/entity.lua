@@ -28,16 +28,17 @@ function Entity:boot()
 end
 
 for _, action in pairs(actions) do
-	Entity[action] = function(self) self:act(action) end
+	Entity[action] = function(self, ...) self:act(action, ...) end
 end
 
 function Entity:init()
 	self:act('init')
 end
 
-function Entity:act(action)
+function Entity:act(action, ...)
+	local args = {...}
 	table.with(self.actions[action], function(f)
-		f(self)
+		f(self, unpack(args))
 	end)
 end
 
