@@ -5,8 +5,6 @@ PlayerPhysicsComponent = {
 function PlayerPhysicsComponent:init()
 	self.body = love.physics.newBody(Level:all()[1].world, 400, 300, 'dynamic')
 	self.shape = love.physics.newRectangleShape(0, 0, 16, 32)
-	self.moveSpeed = 350
-	self.jumpSpeed = 200
 	self.direction = vector(0, 0)
 
 	PhysicsComponent.init(self)

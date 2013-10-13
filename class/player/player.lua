@@ -20,6 +20,9 @@ Player = Class {
 			return 'fill', self:getBoundingBox()
 		end
 	},
+
+	moveSpeed = 350,
+	jumpSpeed = 200,
 	
 	components = {PhysicsComponent, ControlComponent, DrawComponent},
 	__includes = Entity

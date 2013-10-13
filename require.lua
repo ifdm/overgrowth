@@ -17,6 +17,7 @@ io.load('class')
 
 Player:boot()
 Wall:boot()
+Mushroom:boot()
 Level:boot()
 
 require 'editor/editor'

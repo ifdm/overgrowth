@@ -14,7 +14,6 @@ function EntityManager:init()
 end
 
 function EntityManager:register(entity)
-	print('name' .. entity.name)
 	local e = entity()
 	table.insert(self.entities, e)
 	

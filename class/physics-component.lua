@@ -5,6 +5,7 @@ PhysicsComponent = {
 function PhysicsComponent:init()
 	if self.body and self.shape then
 		self.fixture = love.physics.newFixture(self.body, self.shape, 1.0)
+		self.fixture:setUserData(self)
 	end
 end
 

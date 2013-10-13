@@ -4,6 +4,7 @@ function Game:enter()
 	entityManager = EntityManager()
 	entityManager:register(Level)
 	entityManager:register(Player)
+	entityManager:register(Mushroom)
 	entityManager:register(Wall)
 
 	Editor:init()

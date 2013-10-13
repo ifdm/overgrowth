@@ -16,8 +16,8 @@ Wall = Class {
 		
 		tools = {
 			'select',
-			'polygon',
-			'move'
+			'move',
+			'polygon'
 		}
 	},
 	
