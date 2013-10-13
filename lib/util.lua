@@ -60,6 +60,7 @@ function table.copy(x)
 end
 
 function table.has(t, x, deep)
+	if not t or not x then return end
 	local f = deep and table.eq or rawequal
 	for _, v in pairs(t) do if f(v, x) then return true end end
 	return false
