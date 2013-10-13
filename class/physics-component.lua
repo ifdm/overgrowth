@@ -14,3 +14,10 @@ function PhysicsComponent:update()
 		self.y = self.body:getY()
 	end
 end
+
+function PhysicsComponent:getBoundingBox()
+	if self.body and self.shape then
+		local tx, ty, bx, by = self.shape:computeAABB(self.body:getX(), self.body:getY(), 0)
+		return tx, ty, bx - tx, by - ty
+	end
+end

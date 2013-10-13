@@ -3,16 +3,16 @@ Player = Class {
 
 	controls = {
 		keyreleased = {
-			a = 'left',
+			--[[a = 'left',
 			d = 'right',
-			w = 'jump'
+			w = 'jump']]
 		}
 	},
 	
 	render = {
 		rectangle = function(self)
 			love.graphics.setColor(255, 255, 255)
-			return 'fill', self.x, self.y, 16, 32
+			return 'fill', self:getBoundingBox()
 		end
 	},
 	

@@ -158,6 +158,7 @@ f.empty = function() end
 f.id = function(x) return x end
 f.exe = function(x, ...) if x then x(...) end end
 f.ego = function(f) return function(x, ...) x[f](x, ...) end end
+f.egoexe = function(fn) return function(x, ...) f.exe(x[fn], x, ...) end end
 
 function io.load(dir)
 	for _, file in ipairs(love.filesystem.enumerate(dir)) do

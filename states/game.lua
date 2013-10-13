@@ -1,14 +1,20 @@
 Game = {}
 
 function Game:enter()
-	self.entityManager = EntityManager()
-	self.entityManager:register(Level)
-	self.entityManager:register(Player)
-	self.entityManager:register(Wall)
-	self.entityManager:register(Seed)
+	entityManager = EntityManager()
+	entityManager:register(Level)
+	entityManager:register(Player)
+	entityManager:register(Wall)
+	entityManager:register(Seed)
+
+	Editor:init()
+	self.editing = true
 end
 
 for _, action in pairs(actions) do
-	Game[action] = function(self, ...) f.exe(self.entityManager[action], self.entityManager, ...) end
+	Game[action] = function(self, ...)
+		f.exe(entityManager[action], entityManager, ...)
+		f.exe(self.editing and Editor[action], Editor, ...)
+	end
 	Game.init = f.empty()
 end

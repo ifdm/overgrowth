@@ -4,7 +4,7 @@ Wall = Class {
 	render = {
 		rectangle = function(self)
 			love.graphics.setColor(255, 255, 255)
-			return 'fill', self.x, self.y, 16, 16
+			return 'fill', self:getBoundingBox()
 		end
 	},
 	
@@ -15,10 +15,9 @@ Wall = Class {
 		},
 		
 		tools = {
-			polygon = 'points',
-			move = function(x, y)
-				self.body:setPosition(x, y)
-			end
+			'select',
+			'polygon',
+			'move'
 		}
 	},
 	

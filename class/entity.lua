@@ -21,8 +21,9 @@ function Entity:boot()
 			end
 		end
 		
-		for key, f in pairs(table.except(component, actions)) do
-			if type(f) == 'function' then self[key] = f end
+		local m = getmetatable(component)
+		for key, f in pairs(table.except(table.merge(component, m and table.copy(m.__index)), actions)) do
+			if type(f) == 'function' and key ~= 'name' then self[key] = f end
 		end
 	end
 end
@@ -43,5 +44,5 @@ function Entity:act(action, ...)
 end
 
 function Entity:all()
-	return Game.entityManager.byClass[self.name]
+	return entityManager.byClass[self.name]
 end

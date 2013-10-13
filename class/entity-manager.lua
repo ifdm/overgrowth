@@ -14,6 +14,7 @@ function EntityManager:init()
 end
 
 function EntityManager:register(entity)
+	print('name' .. entity.name)
 	local e = entity()
 	table.insert(self.entities, e)
 	
@@ -21,4 +22,12 @@ function EntityManager:register(entity)
 	table.insert(self.byClass[entity.name], e)
 	
 	return e
+end
+
+function EntityManager:filter(fn)
+	return table.filter(self.entities, fn)
+end
+
+function EntityManager:ego(key)
+	return table.with(self.entities, f.egoexe(key))
 end

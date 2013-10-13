@@ -1,3 +1,0 @@
-PlayerControlComponent = {
-	name = 'PlayerControlComponent'
-}

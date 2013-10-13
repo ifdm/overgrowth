@@ -1,6 +1,6 @@
 function love.load()
 	require 'require'
-	
+
 	Gamestate.registerEvents()
 	Gamestate.switch(Game)
 end
@@ -11,7 +11,7 @@ function love.run()
 
 	tick = 0
 	tickRate = .02
-	tickDelta = 0
+	tickDelta = tickRate
 
 	if love.load then love.load(arg) end
 
