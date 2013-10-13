@@ -15,7 +15,6 @@ require 'states/game'
 
 io.load('class')
 
-Seed:boot()
 Player:boot()
 Wall:boot()
 Level:boot()
