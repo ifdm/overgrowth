@@ -5,7 +5,6 @@ function Game:enter()
 	entityManager:register(Level)
 	entityManager:register(Player)
 	entityManager:register(Wall)
-	entityManager:register(Seed)
 
 	Editor:init()
 	self.editing = true

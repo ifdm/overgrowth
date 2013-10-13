@@ -2,10 +2,15 @@ Player = Class {
 	name = 'Player',
 
 	controls = {
+		keypressed = {
+			a = 'move',
+			d = 'move',
+			w = 'jump'
+		},
+
 		keyreleased = {
-			--[[a = 'left',
-			d = 'right',
-			w = 'jump']]
+			a = 'move',
+			d = 'move',
 		}
 	},
 	
