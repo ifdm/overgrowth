@@ -41,3 +41,16 @@ end
 function WallEditorComponent:deselect()
 	self.selected = false
 end
+
+----------------
+-- IO
+----------------
+function WallEditorComponent:save()
+	local x, y, w, h = self:getBoundingBox()
+	return {
+		x = x,
+		y = y,
+		w = w,
+		h = h
+	}
+end

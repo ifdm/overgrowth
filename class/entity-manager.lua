@@ -13,8 +13,8 @@ function EntityManager:init()
 	self.byClass = {}
 end
 
-function EntityManager:register(entity)
-	local e = entity()
+function EntityManager:register(entity, ...)
+	local e = entity(...)
 	table.insert(self.entities, e)
 	
 	self.byClass[entity.name] = self.byClass[entity] or {}

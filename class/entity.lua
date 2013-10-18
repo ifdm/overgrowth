@@ -32,8 +32,8 @@ for _, action in pairs(actions) do
 	Entity[action] = function(self, ...) self:act(action, ...) end
 end
 
-function Entity:init()
-	self:act('init')
+function Entity:init(...)
+	self:act('init', ...)
 end
 
 function Entity:act(action, ...)
