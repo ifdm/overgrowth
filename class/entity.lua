@@ -2,6 +2,8 @@ Entity = Class {
 	name = 'Entity'
 }
 
+local actions = {'init', 'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased'}
+
 function Entity:boot()
 	for i, component in pairs(self.components) do
 		local subclass = _G[self.name .. component.name]

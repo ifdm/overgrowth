@@ -152,6 +152,34 @@ function table.print(t, n)
 	end
 end
 
+function table.stringify(t, pretty, n)
+	n = n or 0
+	if t == nil then return t end
+	local str = ''
+	if type(t) == 'string' then 
+		str = str .. '\'' .. t:gsub('\'', '\\\'') .. '\''
+	elseif type(t) ~= 'table' then
+		str = str .. t
+	else
+		local c = table.count(t)
+		if c == 0 then
+			str = str .. '{}'
+		elseif c == 1 then
+			for k, v in pairs(t) do str = str .. '{' .. k .. (pretty and ' = ' or '=') .. table.stringify(v, pretty, n + 1) .. '}' end
+		else
+			str = str .. '{' .. (pretty and '\n' or '')
+			for k, v in pairs(t) do
+				if pretty then str = str .. string.rep('  ', n + 1) end
+				str = str .. k .. (pretty and ' = ' or '=') .. table.stringify(v, pretty, n + 1) .. ',' .. (pretty and '\n' or '')
+				indent = true
+			end
+			str = str:sub(1, pretty and -3 or -2) .. (pretty and '\n' .. string.rep('  ', n) or '') .. '}'
+		end
+	end
+
+	return str
+end
+
 -- Functions
 f = {}
 f.empty = function() end

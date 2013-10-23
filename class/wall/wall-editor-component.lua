@@ -24,7 +24,7 @@ end
 function WallEditorComponent:move(delta)
 	if self.selected then
 		self.body:setX(self.body:getX() + delta.x)
-		self.body:setY(self.body:getY() + delta.y)		
+		self.body:setY(self.body:getY() + delta.y)
 	end
 end
 

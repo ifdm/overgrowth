@@ -1,19 +1,18 @@
-LevelPhysicsComponent = {
-	name = 'LevelPhysicsComponent'
+Level = Class {
+	name = 'Level'
 }
 
-function LevelPhysicsComponent:init()
+function Level:init(filename)
 	self.world = love.physics.newWorld(0.0, 1000.0, true)
 	self.world:setCallbacks(function(a, b, contact)
 		local dx, dy = contact:getNormal()
-		a, b = a:getUserData(), b:getUserData()
-		print(a.name, b.name, a.collideWith, b.collideWith)
-		
+		a, b = a:getUserdata(), b:getUserData()
+
 		if a.collideWith then
 			f.exe(a.collideWith[b.name], a, b, dx, dy)
 			f.exe(a.collideWith['*'], a, b, dx, dy)
 		end
-		
+
 		if b.collideWith then
 			f.exe(b.collideWith[a.name], b, a, dx, dy)
 			f.exe(b.collideWith['*'], b, a, dx, dy)
@@ -21,6 +20,6 @@ function LevelPhysicsComponent:init()
 	end)
 end
 
-function LevelPhysicsComponent:update()
+function Level:update()
 	self.world:update(tickRate)
 end

@@ -1,20 +1,23 @@
 Game = {}
 
 function Game:enter()
-	entityManager = EntityManager()
-	entityManager:register(Level)
-	entityManager:register(Player)
-	entityManager:register(Mushroom)
-	entityManager:register(Wall)
+	self.level = Level('filename')
+	self.entities = EntityManager(self.level.entities)
+	self.editor = Editor
 
-	Editor:init()
+	self.paused = false
 	self.editing = true
 end
 
-for _, action in pairs(actions) do
-	Game[action] = function(self, ...)
-		f.exe(entityManager[action], entityManager, ...)
-		f.exe(self.editing and Editor[action], Editor, ...)
-	end
-	Game.init = f.empty()
+function Game:update()
+	if self.paused then return end
+
+	self.level:update()
+	self.entities:update()
+	if self.editing then self.editor:update() end
+end
+
+function Game:draw()
+	self.entities:draw()
+	if self.editing then self.editor:draw() end
 end

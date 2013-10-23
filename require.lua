@@ -7,9 +7,6 @@ vector = require 'lib/hump/vector'
 
 require 'lib/util'
 
--- Globals :)
-actions = {'init', 'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased', 'sakujo', 'quit'}
-
 require 'data/world'
 require 'states/game'
 
@@ -18,6 +15,5 @@ io.load('class')
 Player:boot()
 Wall:boot()
 Mushroom:boot()
-Level:boot()
 
 require 'editor/editor'
