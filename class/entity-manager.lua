@@ -3,7 +3,7 @@ EntityManager = Class {}
 function EntityManager:init(entities)
 	self.entities = {}
 
-	for _, t in pairs(self.entities) do
+	for _, t in pairs(entities) do
 		local e = t.entity
 		table.insert(self.entities, e(t.data))
 	end

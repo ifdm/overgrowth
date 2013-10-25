@@ -1,7 +1,8 @@
 Game = {}
 
 function Game:enter()
-	self.level = Level('filename')
+	self.level = Level('/levels/default.lua')
+	table.print(self.level.entities)
 	self.entities = EntityManager(self.level.entities)
 	self.editor = Editor
 
@@ -20,6 +21,12 @@ end
 function Game:draw()
 	self.entities:draw()
 	if self.editing then self.editor:draw() end
+	if math.lineDistance(love.mouse:getX(), love.mouse:getY(), 0, 400, 800, 400) < 100 then
+		love.graphics.setColor(0, 255, 0)
+	else
+		love.graphics.setColor(255, 0, 0)
+	end
+	love.graphics.line(0, 400, 800, 400)
 end
 
 function Game:keypressed(key)

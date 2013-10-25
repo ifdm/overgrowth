@@ -4,6 +4,17 @@ function math.anglerp(d1, d2, z) return d1 + (math.anglediff(d1, d2) * z) end
 function math.distance(x1, y1, x2, y2) return ((x2 - x1) ^ 2 + (y2 - y1) ^ 2) ^ .5 end
 function math.direction(x1, y1, x2, y2) return -math.atan2(x2 - x1, y2 - y1) end
 function math.inside(px, py, rx, ry, rw, rh) return px >= rx and px <= rx + rw and py >= ry and py <= ry + rh end
+function math.lineDistance(px, py, x1, y1, x2, y2)
+	local a, b, c = math.distance(px, py, x1, y1), math.distance(px, py, x2, y2), math.distance(x1, y1, x2, y2)
+	if b^2 > a^2 + c^2 then
+		return a
+	elseif a^2 > b^2 +c^2 then
+		return b
+	else
+		local s = (a + b + c) / 2
+		return 2 / c * (s * (s - a) * (s - b) * (s - c))^0.5
+	end
+end
 function math.anglediff(d1, d2) return math.rad((((math.deg(d2) - math.deg(d1) % 360) + 540) % 360) - 180) end
 function math.hcora(cx, cy, cr, rx, ry, rw, rh) -- Hot circle on rectangle action.
 	local hw, hh = rw / 2, rh / 2
