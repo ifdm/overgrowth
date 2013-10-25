@@ -1,0 +1,9 @@
+[submodule "editor"]
+	path = editor
+	url = https://github.com/ifdm/overgrowth-editor
+[submodule "media/art"]
+	path = media/art
+	url = https://github.com/ifdm/overgrowth-art
+[submodule "levels"]
+	path = levels
+	url = https://github.com/ifdm/overgrowth-levels
