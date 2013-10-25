@@ -2,9 +2,9 @@ WallPhysicsComponent = {
 	name = 'WallPhysicsComponent'
 }
 
-function WallPhysicsComponent:init(data)
-	self.body = love.physics.newBody(Game.level.world, data.x, data.y, 'kinematic')
-	self.shape = love.physics.newRectangleShape(0, 0, data.w, data.h)
+function WallPhysicsComponent:init()
+	self.body = love.physics.newBody(Game.level.world, 400, 384, 'kinematic')
+	self.shape = love.physics.newRectangleShape(0, 0, 800, 200)
 	
 	PhysicsComponent.init(self)
 end

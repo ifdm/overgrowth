@@ -1,7 +1,7 @@
 Game = {}
 
 function Game:enter()
-	self.level = Level('/levels/default.lua')
+	self.level = Level('filename')
 	self.entities = EntityManager(self.level.entities)
 	self.editor = Editor
 
