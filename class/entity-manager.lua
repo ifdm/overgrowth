@@ -4,7 +4,7 @@ function EntityManager:init(entities)
 	self.entities = {}
 
 	for _, t in pairs(entities) do
-		local e = t.entity
+		local e = _G[t.entity]
 		table.insert(self.entities, e(t.data))
 	end
 end
@@ -15,6 +15,12 @@ end
 
 function EntityManager:filter(fn)
 	return table.filter(self.entities, fn)
+end
+
+function EntityManager:destroy()
+	for _, e in pairs(self.entities) do
+		e:destroy()
+	end
 end
 
 function EntityManager:update()

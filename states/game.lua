@@ -1,8 +1,7 @@
 Game = {}
 
 function Game:enter()
-	self.level = Level('/levels/default.lua')
-	table.print(self.level.entities)
+	self.level = Level('levels/default.lua')
 	self.entities = EntityManager(self.level.entities)
 	self.editor = Editor
 
