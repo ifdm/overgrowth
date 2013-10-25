@@ -30,3 +30,15 @@ end
 function EntityManager:draw()
 	table.with(self.entities, f.ego('draw'))
 end
+
+function EntityManager:keypressed(key)
+	table.with(self.entities, function(e)
+		e:keypressed(key)
+	end)
+end
+
+function EntityManager:keyreleased(key)
+	table.with(self.entities, function(e)
+		e:keyreleased(key)
+	end)
+end

@@ -23,10 +23,16 @@ function Game:draw()
 end
 
 function Game:keypressed(key)
+	self.entities:keypressed(key)
+end
+
+function Game:keyreleased(key)
 	if key == 'r' then
 		self.entities:destroy()
 		self.entities = EntityManager(self.level.entities)
 	elseif key == 'p' then
 		self.paused = not self.paused
 	end
+
+	self.entities:keyreleased(key)
 end
