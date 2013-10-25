@@ -3,10 +3,13 @@ Level = Class {
 }
 
 function Level:init(filename)
+	local data = love.filesystem.load(filename)()
+	table.merge(data, self)
+
 	self.world = love.physics.newWorld(0.0, 1000.0, true)
 	self.world:setCallbacks(function(a, b, contact)
 		local dx, dy = contact:getNormal()
-		a, b = a:getUserdata(), b:getUserData()
+		a, b = a:getUserData(), b:getUserData()
 
 		if a.collideWith then
 			f.exe(a.collideWith[b.name], a, b, dx, dy)

@@ -1,7 +1,7 @@
 Game = {}
 
 function Game:enter()
-	self.level = Level('filename')
+	self.level = Level('/levels/default.lua')
 	self.entities = EntityManager(self.level.entities)
 	self.editor = Editor
 
@@ -20,4 +20,13 @@ end
 function Game:draw()
 	self.entities:draw()
 	if self.editing then self.editor:draw() end
+end
+
+function Game:keypressed(key)
+	if key == 'r' then
+		self.entities:destroy()
+		self.entities = EntityManager(self.level.entities)
+	elseif key == 'p' then
+		self.paused = not self.paused
+	end
 end

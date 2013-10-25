@@ -9,6 +9,10 @@ function PhysicsComponent:init()
 	end
 end
 
+function PhysicsComponent:destroy()
+	if self.body then self.body:destroy() end
+end
+
 function PhysicsComponent:update()
 	if self.body then
 		self.x = self.body:getX()

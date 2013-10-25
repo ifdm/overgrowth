@@ -2,9 +2,9 @@ PlayerPhysicsComponent = {
 	name = 'PlayerPhysicsComponent'
 }
 
-function PlayerPhysicsComponent:init()
-	self.body = love.physics.newBody(Game.level.world, 400, 300, 'dynamic')
-	self.shape = love.physics.newRectangleShape(0, 0, 16, 32)
+function PlayerPhysicsComponent:init(data)
+	self.body = love.physics.newBody(Game.level.world, data.x, data.y, 'dynamic')
+	self.shape = love.physics.newRectangleShape(0, 0, data.w, data.y)
 	self.direction = vector(0, 0)
 
 	PhysicsComponent.init(self)

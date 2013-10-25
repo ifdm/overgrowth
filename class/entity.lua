@@ -2,7 +2,7 @@ Entity = Class {
 	name = 'Entity'
 }
 
-local actions = {'init', 'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased'}
+local actions = {'init', 'destroy', 'update', 'draw', 'keypressed', 'keyreleased', 'mousepressed', 'mousereleased'}
 
 function Entity:boot()
 	for i, component in pairs(self.components) do
