@@ -54,6 +54,10 @@ local function clone(other)
 	return include({}, other)
 end
 
+local function isa(self, other)
+	return getmetatable(self).__index == other
+end
+
 local function new(class)
 	-- mixins
 	local inc = class.__includes or {}
@@ -68,6 +72,7 @@ local function new(class)
 	class.init    = class.init    or class[1] or function() end
 	class.include = class.include or include
 	class.clone   = class.clone   or clone
+	class.isa     = class.isa     or isa
 
 	-- constructor call
 	return setmetatable(class, {__call = function(c, ...)
