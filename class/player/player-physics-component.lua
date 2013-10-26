@@ -6,6 +6,8 @@ function PlayerPhysicsComponent:init(data)
 	self.body = love.physics.newBody(Game.level.world, data.x, data.y, 'dynamic')
 	self.shape = love.physics.newRectangleShape(0, 0, data.w, data.h)
 	self.direction = vector(0, 0)
+	
+	self.grounded = false
 
 	PhysicsComponent.init(self)
 
@@ -25,5 +27,8 @@ function PlayerPhysicsComponent:move(key)
 end
 
 function PlayerPhysicsComponent:jump()
-	self.body:applyLinearImpulse(0, -self.jumpSpeed)
+	if self.grounded then
+		self.body:applyLinearImpulse(0, -self.jumpSpeed)
+		self.grounded = false
+	end
 end
