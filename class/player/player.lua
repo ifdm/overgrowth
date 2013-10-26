@@ -21,6 +21,14 @@ Player = Class {
 		end
 	},
 
+	collideWith = {
+		['*'] = function(self, other, dx, dy)
+			if other:isa(Wall) and dy < 0 then
+				self.grounded = true
+			end
+		end
+	},
+
 	moveSpeed = 350,
 	jumpSpeed = 200,
 	
