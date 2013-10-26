@@ -4,7 +4,9 @@ WallPhysicsComponent = {
 
 function WallPhysicsComponent:init(data)
 	self.body = love.physics.newBody(Game.level.world, data.x, data.y, 'kinematic')
-	self.shape = love.physics.newRectangleShape(0, 0, data.w, data.h)
+	self.shape = love.physics.newChainShape(true, unpack(data.points))
+
+	self.points = data.points
 	
 	PhysicsComponent.init(self)
 end

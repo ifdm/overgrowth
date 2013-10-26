@@ -20,12 +20,12 @@ end
 function Game:draw()
 	self.entities:draw()
 	if self.editing then self.editor:draw() end
-	if math.lineDistance(love.mouse:getX(), love.mouse:getY(), 0, 400, 800, 400) < 100 then
+	if math.lineDistance(love.mouse:getX(), love.mouse:getY(), 0, 400, 800, 200) < 100 then
 		love.graphics.setColor(0, 255, 0)
 	else
 		love.graphics.setColor(255, 0, 0)
 	end
-	love.graphics.line(0, 400, 800, 400)
+	love.graphics.line(0, 400, 800, 200)
 end
 
 function Game:keypressed(key)

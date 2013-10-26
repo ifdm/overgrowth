@@ -2,9 +2,9 @@ Wall = Class {
 	name = 'Wall',
 	
 	render = {
-		rectangle = function(self)
+		polygon = function(self)
 			love.graphics.setColor(255, 255, 255)
-			return 'fill', self:getBoundingBox()
+			return 'fill', self.body:getWorldPoints(unpack(self.points))
 		end
 	},
 	
