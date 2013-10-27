@@ -4,7 +4,7 @@ Wall = Class {
 	render = {
 		polygon = function(self)
 			love.graphics.setColor(255, 255, 255)
-			return 'fill', self.body:getWorldPoints(unpack(self.points))
+			return 'fill', self.points
 		end
 	},
 	

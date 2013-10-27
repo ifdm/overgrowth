@@ -3,7 +3,7 @@ Game = {}
 function Game:enter()
 	self.level = Level('levels/default.lua')
 	self.entities = EntityManager(self.level.entities)
-	self.editor = Editor
+	self.editor = Editor:init()
 
 	self.paused = false
 	self.editing = true
@@ -20,19 +20,17 @@ end
 function Game:draw()
 	self.entities:draw()
 	if self.editing then self.editor:draw() end
-	if math.lineDistance(love.mouse:getX(), love.mouse:getY(), 0, 400, 800, 200) < 100 then
-		love.graphics.setColor(0, 255, 0)
-	else
-		love.graphics.setColor(255, 0, 0)
-	end
-	love.graphics.line(0, 400, 800, 200)
 end
 
 function Game:keypressed(key)
+	if self.editing then self.editor:keypressed(key) end
+
 	self.entities:keypressed(key)
 end
 
 function Game:keyreleased(key)
+	if self.editing then self.editor:keyreleased(key) end
+
 	if key == 'r' then
 		self.entities:destroy()
 		self.entities = EntityManager(self.level.entities)
@@ -41,4 +39,12 @@ function Game:keyreleased(key)
 	end
 
 	self.entities:keyreleased(key)
+end
+
+function Game:mousepressed(x, y, button)
+	if self.editing then self.editor:mousepressed(x, y, button) end
+end
+
+function Game:mousereleased(x, y, button)
+	if self.editing then self.editor:mousereleased(x, y, button) end
 end

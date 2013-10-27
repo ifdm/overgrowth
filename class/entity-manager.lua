@@ -17,6 +17,10 @@ function EntityManager:filter(fn)
 	return table.filter(self.entities, fn)
 end
 
+function EntityManager:ego(fn)
+	return table.with(self.entities, f.egoexe(fn))
+end
+
 function EntityManager:destroy()
 	for _, e in pairs(self.entities) do
 		e:destroy()

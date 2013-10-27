@@ -13,18 +13,18 @@ end
 function WallEditorComponent:draw()
 	if self.selected then
 		if self.skeleton then
-			love.graphics.setColor(255, 255, 0)
+			love.graphics.setColor(255, 0, 0)
 			love.graphics.polygon('line', self.points)
 
 			for i = 1, #self.points, 2 do
-				love.graphics.circle('fill', self.points[i], self.points[i+1], 5)
+				love.graphics.circle('line', self.points[i], self.points[i+1], 5)
 			end
-		else
-			love.graphics.setColor(0, 255, 255, 100)
-			love.graphics.rectangle('fill', self:getBoundingBox())
-			love.graphics.setColor(0, 255, 255, 255)
-			love.graphics.rectangle('line', self:getBoundingBox())
 		end
+		
+		love.graphics.setColor(0, 255, 255, 100)
+		love.graphics.polygon('fill', self.points)
+		love.graphics.setColor(0, 255, 255, 255)
+		love.graphics.polygon('line', self.points)
 	end
 end
 
@@ -46,6 +46,9 @@ end
 -- Select
 ----------------
 function WallEditorComponent:select(x, y)
+	print('selecting')
+	self.selected = true
+	do return self end
 	if math.inside(x, y, self:getBoundingBox()) then
 		self.selected = true
 		return self
@@ -64,6 +67,6 @@ function WallEditorComponent:save()
 	return {
 		x = x,
 		y = y,
-		points = self.points
+		points = self.shape:getPoints()
 	}
 end
