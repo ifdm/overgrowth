@@ -12,7 +12,7 @@ Style Guide
 - Classes are StudlyCased, not camelCased or snake_cased.
 
 ### Editor
-Set your text editor to indent using tabs.  The tab width should be 2.  As a general rule, indentation used to indent functional code blocks should use tabs, and any indentation used to visually align any text should use spaces.  Example:
+Set your text editor to indent using tabs.  I hate tabs too, but it makes things easier when working on a collaborative project.  As a general rule, indentation used to indent functional code blocks should use tabs, and any indentation used to visually align any text should use spaces.  Example:
 
 	[1] if not moving then
 	[2] 	speed = 0
